@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DracoDaily</title>
+
+    <!-- FONT -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* =========================================================
+           GLOBAL
+        ========================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #070b14;
+            --card: rgba(17, 25, 40, 0.85);
+            --cardBorder: rgba(255, 255, 255, 0.08);
+            --primary: #4f8cff;
+            --secondary: #7c4dff;
+            --text: #ffffff;
+            --secondaryText: #b8c0d3;
+            --shadow: 0 10px 35px rgba(0, 0, 0, 0.4);
+            --gradient:
+                linear-gradient(135deg,
+                    #4f8cff,
+                    #7c4dff);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background:
+                radial-gradient(circle at top left,
+                    rgba(79, 140, 255, 0.18),
+                    transparent 30%),
+
+                radial-gradient(circle at bottom right,
+                    rgba(124, 77, 255, 0.18),
+                    transparent 30%),
+
+                var(--bg);
+
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 30px 15px;
+        }
+
+        body::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        body::-webkit-scrollbar-thumb {
+            background: linear-gradient(#4f8cff, #7c4dff);
+            border-radius: 30px;
+        }
+
+        body::-webkit-scrollbar-track {
+            background: #101827;
+        }
+
+        /* =========================================================
+           BACKGROUND BLURS
+        ========================================================== */
+
+        .blur1,
+        .blur2 {
+            position: fixed;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+        }
+
+        .blur1 {
+            background: rgba(79, 140, 255, 0.22);
+            top: -50px;
+            left: -50px;
+        }
+
+        .blur2 {
+            background: rgba(124, 77, 255, 0.18);
+            right: -50px;
+            bottom: -50px;
+        }
+
+        /* =========================================================
+           CONTAINER
+        ========================================================== */
+
+        .container {
+            max-width: 1350px;
+            margin: auto;
+        }
+
+        /* =========================================================
+           HEADER
+        ========================================================== */
+
+        .topBar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 30px;
+            margin-bottom: 45px;
+            flex-wrap: wrap;
+        }
+
+        .logoSection h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .logoSection p {
+            color: var(--secondaryText);
+            margin-top: 10px;
+            font-size: 17px;
+        }
+
+        /* =========================================================
+           CLOCK
+        ========================================================== */
+
+        .clockBox {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 25px;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            box-shadow: var(--shadow);
+        }
+
+        .clockIcon {
+            font-size: 38px;
+        }
+
+        .clockContent {
+            text-align: right;
+        }
+
+        .clockTime {
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+            line-height: 1;
+        }
+
+        .clockTime span {
+            font-size: 1rem;
+            color: #8faeff;
+        }
+
+        .clockDate {
+            margin-top: 8px;
+            color: var(--secondaryText);
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        /* =========================================================
+           SEARCH
+        ========================================================== */
+
+        .controls {
+            margin-bottom: 35px;
+        }
+
+        .searchBox {
+            position: relative;
+        }
+
+        .searchBox input {
+            width: 100%;
+            height: 78px;
+            padding: 0 25px 0 75px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            outline: none;
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-size: 20px;
+            backdrop-filter: blur(12px);
+            transition: 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .searchBox input:focus {
+            border-color: #4f8cff;
+            box-shadow:
+                0 0 0 5px rgba(79, 140, 255, 0.15),
+                var(--shadow);
+        }
+
+        .searchBox input::placeholder {
+            color: #94a3b8;
+        }
+
+        .searchIcon {
+            position: absolute;
+            top: 50%;
+            left: 28px;
+            transform: translateY(-50%);
+            font-size: 28px;
+            color: #9db5ff;
+        }
+
+        /* =========================================================
+           CATEGORY BUTTONS
+        ========================================================== */
+
+        .categoryWrapper {
+            display: flex;
+            gap: 14px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 45px;
+        }
+
+        .categoryWrapper::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .categoryWrapper::-webkit-scrollbar-thumb {
+            background: #2d3b58;
+            border-radius: 20px;
+        }
+
+        .categoryBtn {
+            border: none;
+            outline: none;
+            padding: 14px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: 0.3s ease;
+
+            background: rgba(255, 255, 255, 0.05);
+
+            border: 1px solid rgba(255, 255, 255, 0.08);
+
+            backdrop-filter: blur(10px);
+        }
+
+        .categoryBtn:hover {
+            transform: translateY(-3px);
+            background: rgba(79, 140, 255, 0.2);
+        }
+
+        .categoryBtn.active {
+            background: var(--gradient);
+            box-shadow:
+                0 10px 25px rgba(79, 140, 255, 0.35);
+        }
+
+        /* =========================================================
+           NEWS GRID
+        ========================================================== */
+
+        #newsContainer {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        /* =========================================================
+           NEWS CARD
+        ========================================================== */
+
+        .newsCard {
+            background: var(--card);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--cardBorder);
+            transition: 0.4s ease;
+            position: relative;
+            backdrop-filter: blur(12px);
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .newsCard:hover {
+            transform: translateY(-10px);
+            border-color: rgba(79, 140, 255, 0.4);
+        }
+
+        .newsImage {
+            width: 100%;
+            height: 240px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .newsImage img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s ease;
+        }
+
+        .newsCard:hover img {
+            transform: scale(1.08);
+        }
+
+        .newsOverlay {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(to top,
+                    rgba(0, 0, 0, 0.65),
+                    transparent);
+        }
+
+        .newsContent {
+            padding: 24px;
+        }
+
+        .newsMeta {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+            color: var(--secondaryText);
+            font-size: 13px;
+        }
+
+        .source {
+            background: rgba(79, 140, 255, 0.15);
+            padding: 6px 12px;
+            border-radius: 50px;
+            color: #8db3ff;
+            font-weight: 600;
+        }
+
+        .newsTitle {
+            font-size: 20px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .newsDescription {
+            color: var(--secondaryText);
+            line-height: 1.8;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        /* =========================================================
+           BUTTON
+        ========================================================== */
+
+        .readBtn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            padding: 13px 22px;
+            border-radius: 14px;
+            background: var(--gradient);
+            color: white;
+            font-weight: 700;
+            transition: 0.3s ease;
+            box-shadow:
+                0 10px 25px rgba(79, 140, 255, 0.25);
+        }
+
+        .readBtn:hover {
+            transform: translateY(-3px);
+        }
+
+        /* =========================================================
+           LOADER
+        ========================================================== */
+
+        .loader {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 5px solid rgba(255, 255, 255, 0.08);
+            border-top: 5px solid #4f8cff;
+            margin: 80px auto;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* =========================================================
+           EMPTY MESSAGE
+        ========================================================== */
+
+        .empty,
+        .endMessage {
+            width: 100%;
+            text-align: center;
+            padding: 25px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #9fb3d9;
+            backdrop-filter: blur(10px);
+            margin-top: 20px;
+        }
+
+        /* =========================================================
+           ANIMATION
+        ========================================================== */
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================== */
+
+        @media(max-width: 950px) {
+
+            .topBar {
+                flex-direction: column;
+            }
+
+            .clockBox {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .clockContent {
+                text-align: center;
+            }
+        }
+
+        @media(max-width: 700px) {
+
+            .logoSection h1 {
+                font-size: 2.8rem;
+            }
+
+            .clockTime {
+                font-size: 1.5rem;
+            }
+
+            .searchBox input {
+                height: 65px;
+                font-size: 16px;
+            }
+
+            .searchIcon {
+                font-size: 22px;
+            }
+        }
+
+        @media(max-width: 450px) {
+
+            #newsContainer {
+                grid-template-columns: 1fr;
+            }
+
+            .clockBox {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .clockContent {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- BLURS -->
+    <div class="blur1"></div>
+    <div class="blur2"></div>
+
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="topBar">
+
+            <div class="logoSection">
+                <h1>DracoDaily</h1>
+                <p>Latest News & world updates in real time   :)</p>
+            </div>
+
+            <!-- CLOCK -->
+            <div class="clockBox">
+
+                <div class="clockIcon">
+                    🕒
+                </div>
+
+                <div class="clockContent">
+
+                    <div class="clockTime" id="clockTime">
+                        00:00:00 <span>IST</span>
+                    </div>
+
+                    <div class="clockDate" id="clockDate">
+                        Loading date...
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- SEARCH -->
+        <div class="controls">
+
+            <div class="searchBox">
+
+                <span class="searchIcon">🔍</span>
+
+                <input type="text"
+                    id="searchInput"
+                    placeholder="Search latest news..." />
+
+            </div>
+
+        </div>
+
+        <!-- CATEGORY -->
+        <div class="categoryWrapper">
+
+      
+
+        </div>
+
+        <!-- NEWS -->
+        <div id="newsContainer"></div>
+
+    </div>
+<div id="newsContainer"></div>
+<script>
+    
+    function safeUpdateClock() {
+
+    const timeEl = document.getElementById("clockTime");
+    const dateEl = document.getElementById("clockDate");
+
+    if (!timeEl || !dateEl) return;
+
+    const now = new Date();
+
+    timeEl.innerHTML =
+        now.toLocaleTimeString("en-IN", {
+            timeZone: "Asia/Kolkata",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: true
+        }) + " <span>IST</span>";
+
+    dateEl.innerHTML =
+        now.toLocaleDateString("en-IN", {
+            timeZone: "Asia/Kolkata",
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+        });
+}
+
+safeUpdateClock();
+setInterval(safeUpdateClock, 1000);
+// =========================================
+// CONFIG
+// =========================================
+
+const BASE = "https://hacker-news.firebaseio.com/v0";
+const BATCH_SIZE = 12;
+const PREFETCH_AHEAD = 2;
+
+// =========================================
+// CACHE
+// =========================================
+
+const IMAGE_CACHE_KEY = "hn_image_cache_v2";
+let imageCache = JSON.parse(localStorage.getItem(IMAGE_CACHE_KEY)) || {};
+
+function saveCache() {
+    localStorage.setItem(IMAGE_CACHE_KEY, JSON.stringify(imageCache));
+}
+
+// =========================================
+// STATE
+// =========================================
+
+let storyIds = [];
+let currentIndex = 0;
+let isLoading = false;
+let reachedEnd = false;
+
+let currentCategory = "technology";
+let currentSearch = "";
+
+// =========================================
+// CATEGORY FILTER
+// =========================================
+
+const CATEGORY_KEYWORDS = {
+    technology: ["ai","software","app","tech","google","microsoft","github","openai","api","code"],
+    business: ["startup","stock","market","finance","company","ceo","money","investment"],
+    sports: ["football","cricket","nba","tennis","soccer","match","league"],
+    science: ["space","nasa","research","quantum","physics","science"],
+    health: ["health","medical","doctor","covid","virus","medicine"],
+    entertainment: ["movie","film","music","netflix","actor"]
+};
+
+function matchesCategory(title) {
+    const keys = CATEGORY_KEYWORDS[currentCategory] || [];
+    if (!keys.length) return true;
+
+    title = title.toLowerCase();
+    return keys.some(k => title.includes(k));
+}
+
+// =========================================
+// FETCH IDS
+// =========================================
+
+async function loadIds() {
+
+    const endpoint = `${BASE}/topstories.json`;
+
+    const res = await fetch(endpoint);
+    storyIds = await res.json();
+
+    currentIndex = 0;
+}
+
+// =========================================
+// GET STORY
+// =========================================
+
+async function getStory(id) {
+    const res = await fetch(`${BASE}/item/${id}.json`);
+    return await res.json();
+}
+
+// =========================================
+// FAST IMAGE (NON-BLOCKING)
+// =========================================
+
+async function loadImageAsync(url, imgEl) {
+
+    if (!url) return;
+
+    if (imageCache[url]) {
+        imgEl.src = imageCache[url];
+        return;
+    }
+
+    try {
+        const res = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(url)}`);
+        const data = await res.json();
+
+        const img = data?.data?.image?.url;
+
+        if (img) {
+            imageCache[url] = img;
+            saveCache();
+            imgEl.src = img;
+        }
+
+    } catch {}
+}
+
+// =========================================
+// CREATE CARD (INSTANT RENDER)
+// =========================================
+
+function createCard(story) {
+
+    const date = new Date(story.time * 1000);
+
+    const div = document.createElement("div");
+    div.className = "newsCard";
+
+    div.innerHTML = `
+        <div class="newsImage" style="display:${story.url ? "block" : "none"}">
+            <img data-img alt="">
+        </div>
+
+        <div class="newsContent">
+
+            <div class="newsMeta">
+                <span class="source">Hacker News</span>
+                <span>⭐ ${story.score || 0}</span>
+                <span>${date.toDateString()}</span>
+            </div>
+
+            <h2 class="newsTitle">${story.title}</h2>
+
+            ${story.url ? `
+            <a href="${story.url}" target="_blank" class="readBtn">
+                Read Full Story →
+            </a>` : ""}
+
+        </div>
+    `;
+
+    // async image load (NON BLOCKING)
+    if (story.url) {
+        const imgEl = div.querySelector("[data-img]");
+        loadImageAsync(story.url, imgEl);
+    }
+
+    return div;
+}
+
+// =========================================
+// RENDER BATCH (FAST)
+// =========================================
+
+async function loadBatch() {
+
+    if (isLoading || reachedEnd) return;
+    isLoading = true;
+
+    const container = document.getElementById("newsContainer");
+
+    const batchIds = storyIds.slice(currentIndex, currentIndex + BATCH_SIZE);
+
+    if (!batchIds.length) {
+        reachedEnd = true;
+        isLoading = false;
+        return;
+    }
+
+    // fetch in parallel (FAST)
+    const stories = await Promise.all(
+        batchIds.map(id => getStory(id))
+    );
+
+    for (const story of stories) {
+
+        if (!story || !story.title) continue;
+
+        // SEARCH
+        if (currentSearch &&
+            !story.title.toLowerCase().includes(currentSearch.toLowerCase())
+        ) continue;
+
+        // CATEGORY
+        if (!matchesCategory(story.title)) continue;
+
+        container.appendChild(createCard(story));
+    }
+
+    currentIndex += BATCH_SIZE;
+    isLoading = false;
+
+    // PRELOAD NEXT BATCH (important for speed)
+    prefetchNext();
+}
+
+// =========================================
+// PREFETCH (KEY SPEED BOOST)
+// =========================================
+
+function prefetchNext() {
+
+    const nextIds = storyIds.slice(
+        currentIndex,
+        currentIndex + BATCH_SIZE * PREFETCH_AHEAD
+    );
+
+    nextIds.forEach(id => {
+        fetch(`${BASE}/item/${id}.json`).catch(()=>{});
+    });
+}
+
+// =========================================
+// INIT
+// =========================================
+
+async function init() {
+
+    await loadIds();
+
+    document.getElementById("newsContainer").innerHTML = "";
+
+    loadBatch();
+}
+
+init();
+
+// =========================================
+// INFINITE SCROLL (SMOOTH)
+// =========================================
+
+window.addEventListener("scroll", () => {
+
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 300) {
+        loadBatch();
+    }
+});
+
+// =========================================
+// CATEGORY + SEARCH HOOKS (keep your UI)
+// =========================================
+
+document.querySelectorAll(".categoryBtn").forEach(btn => {
+
+    btn.addEventListener("click", () => {
+
+        document.querySelectorAll(".categoryBtn")
+            .forEach(b => b.classList.remove("active"));
+
+        btn.classList.add("active");
+
+        currentCategory = btn.dataset.category;
+        currentSearch = "";
+
+        init();
+    });
+});
+
+const search = document.getElementById("searchInput");
+
+search.addEventListener("input", (e) => {
+
+    currentSearch = e.target.value;
+
+    document.getElementById("newsContainer").innerHTML = "";
+    currentIndex = 0;
+
+    loadBatch();
+});
+</script>
+<style>
+    /* =========================================
+   STICKY CLOCK
+========================================= */
+
+.clockBox{
+
+    position: fixed;
+
+    top: 40px;
+
+    right: 35px;
+
+    z-index: 999;
+
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    padding: 18px 25px;
+
+    border-radius: 22px;
+
+    background: rgba(255,255,255,0.05);
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter: blur(12px);
+
+    box-shadow: 0 10px 35px rgba(0,0,0,0.4);
+}
+
+/* MOBILE */
+
+@media(max-width:950px){
+
+    .clockBox{
+
+        position: static;
+
+        width: 100%;
+
+        justify-content: center;
+
+        margin-top: 20px;
+    }
+}
+</style>
+</body>
+
+</html>

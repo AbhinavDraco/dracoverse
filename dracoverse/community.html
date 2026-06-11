@@ -1,0 +1,3841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DracoCommunity</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        *{ margin:0; padding:0; box-sizing:border-box; }
+
+        :root{
+            --bg:#050816;
+            --card:#0d1325;
+            --border:rgba(255,255,255,0.08);
+            --gradient:linear-gradient(135deg,#4f8cff,#7c4dff);
+            --muted:#9ca3af;
+            --success:#51cf66;
+            --warning:#ffd700;
+            --danger:#ff4757;
+            --transition-fast:0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            --transition-smooth:0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-slow:1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        body{
+            font-family:'Poppins',sans-serif;
+            background:radial-gradient(circle at top left,rgba(79,140,255,0.18),transparent 25%),
+                       radial-gradient(circle at bottom right,rgba(124,77,255,0.18),transparent 25%),
+                       var(--bg);
+            color:white;
+            overflow:hidden;
+            height:100vh;
+            display:flex;
+            scroll-behavior:smooth;
+        }
+
+        /* ======== AUTH MODAL ======== */
+        .authModal{
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,0.9);
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            z-index:99999;
+            backdrop-filter:blur(10px);
+            animation:fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity:0; }
+            to { opacity:1; }
+        }
+
+        .authBox{
+            background:linear-gradient(135deg, rgba(79,140,255,0.1), rgba(124,77,255,0.1));
+            border:2px solid var(--gradient);
+            border-radius:30px;
+            padding:50px;
+            width:100%;
+            max-width:450px;
+            text-align:center;
+            box-shadow:0 20px 60px rgba(79,140,255,0.3);
+            animation:slideUp 0.4s var(--transition-smooth);
+        }
+
+        @keyframes slideUp {
+            from { opacity:0; transform:translateY(30px); }
+            to { opacity:1; transform:translateY(0); }
+        }
+
+        .authBox h1{
+            font-size:2.5rem;
+            margin-bottom:10px;
+            background:var(--gradient);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+            font-weight:800;
+        }
+
+        .authBox p{
+            color:#bcc6de;
+            margin-bottom:30px;
+            font-size:14px;
+        }
+
+        .authInput{
+            width:100%;
+            padding:14px 18px;
+            border:1px solid rgba(79,140,255,0.3);
+            border-radius:12px;
+            background:rgba(255,255,255,0.04);
+            color:white;
+            font-family:'Poppins',sans-serif;
+            font-size:14px;
+            margin-bottom:20px;
+            transition:all var(--transition-fast);
+        }
+
+        .authInput:focus{
+            outline:none;
+            border-color:rgba(79,140,255,0.8);
+            background:rgba(79,140,255,0.05);
+            box-shadow:0 0 20px rgba(79,140,255,0.2);
+            transform:translateY(-2px);
+        }
+
+        .authInput::placeholder{
+            color:#9ca3af;
+        }
+
+        .authBtn{
+            width:100%;
+            padding:14px;
+            border:none;
+            border-radius:12px;
+            background:var(--gradient);
+            color:white;
+            font-weight:600;
+            cursor:pointer;
+            font-size:15px;
+            transition:all var(--transition-fast);
+            margin-bottom:12px;
+        }
+
+        .authBtn:hover{
+            transform:translateY(-2px);
+            box-shadow:0 10px 30px rgba(79,140,255,0.4);
+        }
+
+        .authBtn:active{
+            transform:translateY(0);
+        }
+
+        .authBtn:disabled{
+            opacity:0.6;
+            cursor:not-allowed;
+        }
+
+        .authError{
+            color:#ff6b6b;
+            font-size:13px;
+            margin-bottom:15px;
+            min-height:20px;
+            animation:shake 0.4s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform:translateX(0); }
+            25% { transform:translateX(-5px); }
+            75% { transform:translateX(5px); }
+        }
+
+        .authGuest{
+            background:rgba(255,255,255,0.06);
+            border:1px solid rgba(255,255,255,0.1);
+            color:#bcc6de;
+            margin-top:15px;
+        }
+
+        .authGuest:hover{
+            background:rgba(255,255,255,0.1);
+            color:white;
+        }
+
+        /* ======== LAYOUT ======== */
+        .layout{
+            display:flex;
+            width:100%;
+            height:100vh;
+            overflow:hidden;
+        }
+
+        /* ======== SIDEBAR LEFT ======== */
+        .sidebar{
+            width:280px;
+            min-width:180px;
+            max-width:420px;
+            background:rgba(13,19,37,0.97);
+            border-right:1px solid var(--border);
+            display:flex;
+            flex-direction:column;
+            overflow:hidden;
+            position:relative;
+            flex-shrink:0;
+            transition:all var(--transition-smooth);
+        }
+
+        .sidebarInner{
+            flex:1;
+            overflow-y:auto;
+            padding:20px;
+            display:flex;
+            flex-direction:column;
+            gap:6px;
+        }
+
+        .sidebarInner::-webkit-scrollbar{ width:4px; }
+        .sidebarInner::-webkit-scrollbar-thumb{ background:#4f8cff44; border-radius:4px; transition:all var(--transition-fast); }
+        .sidebarInner::-webkit-scrollbar-thumb:hover{ background:#4f8cff99; }
+
+        .logo{
+            font-size:1.6rem;
+            font-weight:800;
+            background:var(--gradient);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+            padding-bottom:12px;
+            border-bottom:1px solid var(--border);
+            margin-bottom:10px;
+            flex-shrink:0;
+            letter-spacing:-0.5px;
+        }
+
+        /* Stats */
+        .statsRow{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:8px;
+            margin-bottom:10px;
+        }
+
+        .statBox{
+            background:rgba(255,255,255,0.04);
+            border:1px solid var(--border);
+            border-radius:10px;
+            padding:12px 8px;
+            text-align:center;
+            cursor:pointer;
+            transition:all var(--transition-fast);
+            position:relative;
+            overflow:hidden;
+        }
+
+        .statBox::before{
+            content:'';
+            position:absolute;
+            inset:0;
+            background:linear-gradient(135deg, rgba(79,140,255,0.1), transparent);
+            opacity:0;
+            transition:opacity var(--transition-smooth);
+        }
+
+        .statBox:hover{
+            background:rgba(79,140,255,0.12);
+            transform:translateY(-2px);
+            border-color:rgba(79,140,255,0.4);
+        }
+
+        .statBox:hover::before{ opacity:1; }
+
+        .statNum{
+            font-size:1.3rem;
+            font-weight:700;
+            background:var(--gradient);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+            position:relative;
+            z-index:1;
+        }
+
+        .statLbl{ 
+            font-size:10px; 
+            color:var(--muted); 
+            margin-top:4px; 
+            position:relative;
+            z-index:1;
+        }
+
+        .statBadge{
+            position:absolute;
+            top:-6px; right:-6px;
+            background:var(--danger);
+            color:white;
+            font-size:10px;
+            font-weight:700;
+            padding:2px 5px;
+            border-radius:10px;
+            display:none;
+            animation:pulse 1.5s infinite;
+        }
+
+        .statBadge.show{ display:block; }
+
+        /* Section labels */
+        .sectionLabel{
+            font-size:11px;
+            color:var(--muted);
+            text-transform:uppercase;
+            letter-spacing:1px;
+            margin:12px 0 6px;
+            padding-left:4px;
+            transition:color var(--transition-fast);
+        }
+
+        /* Search */
+        .sidebarSearch{
+            position:relative;
+            margin-bottom:6px;
+        }
+
+        .sidebarSearch input{
+            width:100%;
+            padding:9px 12px 9px 34px;
+            border-radius:10px;
+            background:rgba(255,255,255,0.05);
+            border:1px solid var(--border);
+            color:white;
+            font-family:'Poppins',sans-serif;
+            font-size:13px;
+            transition:all var(--transition-fast);
+        }
+
+        .sidebarSearch input:focus{ 
+            outline:none; 
+            border-color:rgba(79,140,255,0.4);
+            background:rgba(79,140,255,0.06);
+            box-shadow:0 0 12px rgba(79,140,255,0.15);
+        }
+
+        .sidebarSearch input::placeholder{ color:var(--muted); }
+
+        .sidebarSearch .searchIco{
+            position:absolute;
+            left:10px;
+            top:50%;
+            transform:translateY(-50%);
+            font-size:14px;
+            pointer-events:none;
+        }
+
+        /* Channel items */
+        .channelItem{
+            padding:10px 14px;
+            border-radius:10px;
+            background:rgba(255,255,255,0.03);
+            border:1px solid rgba(255,255,255,0.04);
+            color:#bcc6de;
+            cursor:pointer;
+            transition:all var(--transition-fast);
+            display:flex;
+            align-items:center;
+            gap:10px;
+            font-size:13px;
+            position:relative;
+            overflow:hidden;
+        }
+
+        .channelItem::before{
+            content:'';
+            position:absolute;
+            inset:0;
+            background:linear-gradient(90deg, transparent, rgba(79,140,255,0.1), transparent);
+            transform:translateX(-100%);
+            transition:transform var(--transition-smooth);
+        }
+
+        .channelItem:hover{
+            background:rgba(79,140,255,0.12);
+            color:white;
+            transform:translateX(2px);
+            border-color:rgba(79,140,255,0.2);
+        }
+
+        .channelItem:hover::before{ transform:translateX(100%); }
+
+        .channelItem.active{
+            background:var(--gradient);
+            color:white;
+            border-color:transparent;
+            box-shadow:0 4px 12px rgba(79,140,255,0.3);
+        }
+
+        .channelBadge{
+            margin-left:auto;
+            background:#ff4757;
+            color:white;
+            font-size:10px;
+            font-weight:700;
+            padding:2px 7px;
+            border-radius:20px;
+            display:none;
+            animation:pulse 1.5s infinite;
+        }
+
+        .channelBadge.show{ display:inline-block; }
+
+        @keyframes pulse { 
+            0%, 100% { transform:scale(1) } 
+            50% { transform:scale(1.05) } 
+        }
+
+        /* User profile bottom */
+        .userProfile{
+            background:rgba(255,255,255,0.04);
+            border:1px solid var(--border);
+            border-radius:14px;
+            padding:12px;
+            display:flex;
+            align-items:center;
+            gap:10px;
+            cursor:pointer;
+            transition:all var(--transition-fast);
+            margin-top:auto;
+            flex-shrink:0;
+        }
+
+        .userProfile:hover{
+            background:rgba(255,255,255,0.08);
+            border-color:rgba(79,140,255,0.3);
+            transform:translateY(-1px);
+            box-shadow:0 4px 12px rgba(79,140,255,0.15);
+        }
+
+        .avatar{
+            border-radius:50%;
+            background:var(--gradient);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-weight:700;
+            flex-shrink:0;
+            position:relative;
+            overflow:hidden;
+            transition:all var(--transition-smooth);
+        }
+
+        .avatar.lg{ width:40px; height:40px; font-size:16px; }
+        .avatar.md{ width:34px; height:34px; font-size:13px; }
+        .avatar.sm{ width:28px; height:28px; font-size:11px; }
+
+        .avatar img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+            transition:transform var(--transition-fast);
+        }
+
+        .avatar:hover img{
+            transform:scale(1.1);
+        }
+
+        .userName{ 
+            font-weight:600; 
+            font-size:13px; 
+            white-space:nowrap; 
+            overflow:hidden; 
+            text-overflow:ellipsis;
+            transition:color var(--transition-fast);
+        }
+
+        .userProfile:hover .userName{ color:#4f8cff; }
+
+        .userSub{ 
+            font-size:11px; 
+            color:var(--muted); 
+            display:flex; 
+            align-items:center; 
+            gap:4px;
+            transition:color var(--transition-fast);
+        }
+
+        .statusDot{ 
+            width:7px; 
+            height:7px; 
+            border-radius:50%; 
+            background:var(--success); 
+            animation:statusPulse 2s infinite;
+            flex-shrink:0;
+            transition:background var(--transition-fast);
+        }
+
+        @keyframes statusPulse { 
+            0%, 100% { opacity:1; transform:scale(1) } 
+            50% { opacity:0.6; transform:scale(0.9) } 
+        }
+
+        /* ======== RESIZE HANDLE ======== */
+        .resizeHandle{
+            width:5px;
+            cursor:col-resize;
+            background:transparent;
+            transition:all var(--transition-fast);
+            flex-shrink:0;
+            z-index:10;
+            position:relative;
+        }
+
+        .resizeHandle::after{
+            content:'';
+            position:absolute;
+            top:0; bottom:0;
+            left:2px;
+            width:1px;
+            background:var(--border);
+            transition:all var(--transition-fast);
+        }
+
+        .resizeHandle:hover::after,
+        .resizeHandle.dragging::after{
+            background:#4f8cff;
+            box-shadow:0 0 8px #4f8cff88;
+            width:2px;
+            left:1.5px;
+        }
+
+        /* ======== MAIN AREA ======== */
+        .mainArea{
+            flex:1;
+            display:flex;
+            flex-direction:column;
+            overflow:hidden;
+            min-width:300px;
+        }
+
+        /* Chat header */
+        .chatHeader{
+            padding:16px 22px;
+            border-bottom:1px solid var(--border);
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:12px;
+            flex-shrink:0;
+            transition:all var(--transition-smooth);
+        }
+
+        .channelTitle{ 
+            font-size:1.2rem; 
+            font-weight:700;
+            background:var(--gradient);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+            transition:all var(--transition-fast);
+        }
+
+        .channelSub{ 
+            font-size:12px; 
+            color:var(--muted); 
+            margin-top:3px;
+            transition:color var(--transition-fast);
+        }
+
+        .headerBtns{ 
+            display:flex; 
+            gap:8px;
+            transition:all var(--transition-fast);
+        }
+
+        .hBtn{
+            width:36px; height:36px;
+            border-radius:9px;
+            background:rgba(255,255,255,0.05);
+            border:1px solid var(--border);
+            color:white;
+            cursor:pointer;
+            font-size:16px;
+            display:flex; align-items:center; justify-content:center;
+            transition:all var(--transition-fast);
+            position:relative;
+        }
+
+        .hBtn:hover{ 
+            background:rgba(79,140,255,0.2); 
+            color:#4f8cff;
+            transform:translateY(-2px);
+            box-shadow:0 4px 12px rgba(79,140,255,0.2);
+        }
+
+        .hBtn.active{ 
+            background:var(--gradient); 
+            border-color:transparent;
+            box-shadow:0 4px 12px rgba(79,140,255,0.3);
+        }
+
+        .hBtn.danger{ color:var(--danger); }
+
+        .hBtn.danger:hover{ 
+            background:rgba(255,71,87,0.2);
+            transform:translateY(-2px);
+        }
+
+        /* Pinned bar */
+        .pinnedBar{
+            padding:10px 22px;
+            background:rgba(79,140,255,0.08);
+            border-bottom:1px solid var(--border);
+            display:none;
+            align-items:center;
+            gap:10px;
+            font-size:13px;
+            color:#bcc6de;
+            animation:slideDown 0.3s var(--transition-smooth);
+        }
+
+        @keyframes slideDown {
+            from { opacity:0; transform:translateY(-10px); }
+            to { opacity:1; transform:translateY(0); }
+        }
+
+        .pinnedBar.show{ display:flex; }
+        .pinnedText{ flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+        /* Search bar */
+        .searchBar{
+            padding:10px 22px;
+            border-bottom:1px solid var(--border);
+            display:none;
+            animation:slideDown 0.3s var(--transition-smooth);
+        }
+
+        .searchBar.show{ display:flex; }
+
+        .searchBar input{
+            width:100%;
+            padding:9px 14px;
+            border-radius:10px;
+            background:rgba(255,255,255,0.06);
+            border:1px solid var(--border);
+            color:white;
+            font-family:'Poppins',sans-serif;
+            font-size:13px;
+            transition:all var(--transition-fast);
+        }
+
+        .searchBar input:focus{ 
+            outline:none; 
+            border-color:rgba(79,140,255,0.4);
+            background:rgba(79,140,255,0.06);
+            box-shadow:0 0 12px rgba(79,140,255,0.15);
+        }
+
+        .searchBar input::placeholder{ color:var(--muted); }
+
+        /* Typing indicator */
+        .typingBar{
+            padding:4px 22px 0;
+            min-height:22px;
+            font-size:12px;
+            color:var(--muted);
+            font-style:italic;
+            display:flex;
+            align-items:center;
+            gap:6px;
+            flex-shrink:0;
+            animation:fadeIn 0.3s ease;
+        }
+
+        .typingDots span{
+            display:inline-block;
+            width:4px; height:4px;
+            background:#4f8cff;
+            border-radius:50%;
+            animation:bounce 1.2s infinite;
+        }
+
+        .typingDots span:nth-child(2){ animation-delay:0.2s; }
+        .typingDots span:nth-child(3){ animation-delay:0.4s; }
+
+        @keyframes bounce{ 
+            0%, 100% { transform:translateY(0) } 
+            50% { transform:translateY(-4px) } 
+        }
+
+        /* Messages */
+        .messagesContainer{
+            flex:1;
+            overflow-y:auto;
+            padding:18px 22px;
+            display:flex;
+            flex-direction:column;
+            gap:14px;
+        }
+
+        .messagesContainer::-webkit-scrollbar{ width:6px; }
+        .messagesContainer::-webkit-scrollbar-thumb{ 
+            background:linear-gradient(#4f8cff,#7c4dff); 
+            border-radius:3px;
+            transition:background var(--transition-fast);
+        }
+        .messagesContainer::-webkit-scrollbar-thumb:hover{ background:linear-gradient(#6b9cff,#8d60ff); }
+
+        .msgGroup{
+            display:flex;
+            gap:10px;
+            animation:slideIn 0.25s ease;
+            align-items:flex-end;
+            transition:all var(--transition-fast);
+        }
+
+        .msgGroup.own{
+            flex-direction:row-reverse;
+        }
+
+        @keyframes slideIn{ 
+            from { opacity:0; transform:translateY(8px) } 
+            to { opacity:1; transform:translateY(0) } 
+        }
+
+        .msgAvatar{
+            cursor:pointer;
+            transition:all var(--transition-smooth);
+            flex-shrink:0;
+        }
+
+        .msgAvatar:hover{ 
+            transform:scale(1.15);
+            box-shadow:0 0 20px rgba(79,140,255,0.6);
+            filter:drop-shadow(0 0 8px rgba(79,140,255,0.4));
+        }
+
+        .msgBody{ 
+            flex:1; 
+            min-width:0; 
+            display:flex; 
+            flex-direction:column;
+            transition:all var(--transition-fast);
+        }
+
+        .msgGroup.own .msgBody{ align-items:flex-end; }
+
+        .msgHeader{ 
+            display:flex; 
+            align-items:center; 
+            gap:8px; 
+            margin-bottom:5px; 
+            flex-wrap:wrap;
+            transition:all var(--transition-fast);
+        }
+
+        .msgGroup.own .msgHeader{ justify-content:flex-end; }
+
+        .msgName{ 
+            font-weight:600; 
+            color:#4f8cff; 
+            cursor:pointer; 
+            font-size:14px;
+            transition:all var(--transition-fast);
+        }
+
+        .msgName:hover{ 
+            color:#7c4dff;
+            text-decoration:underline;
+            text-underline-offset:3px;
+        }
+
+        .msgBadge{
+            font-size:10px;
+            background:rgba(79,140,255,0.25);
+            padding:2px 7px;
+            border-radius:8px;
+            color:#4f8cff;
+            transition:all var(--transition-fast);
+        }
+
+        .msgBadge.admin{
+            background:linear-gradient(135deg, rgba(255,107,157,0.3), rgba(255,215,0,0.3));
+            color:#ff6b9d;
+        }
+
+        .msgTime{ 
+            font-size:11px; 
+            color:var(--muted);
+            transition:color var(--transition-fast);
+        }
+
+        .msgBubble{
+            background:rgba(255,255,255,0.05);
+            padding:10px 14px;
+            border-radius:12px;
+            border-left:3px solid rgba(79,140,255,0.3);
+            color:#d5def1;
+            line-height:1.6;
+            word-break:break-word;
+            font-size:14px;
+            position:relative;
+            transition:all var(--transition-smooth);
+            max-width:500px;
+            box-shadow:0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .msgGroup.own .msgBubble{
+            background:linear-gradient(135deg, rgba(79,140,255,0.15), rgba(124,77,255,0.15));
+            border-left-color:#4f8cff;
+            color:#ffffff;
+            box-shadow:0 2px 8px rgba(79,140,255,0.15);
+        }
+
+        .msgBubble:hover{ 
+            background:rgba(255,255,255,0.08);
+            transform:translateX(2px);
+            box-shadow:0 4px 16px rgba(79,140,255,0.15);
+        }
+
+        .msgGroup.own .msgBubble:hover{ 
+            background:linear-gradient(135deg, rgba(79,140,255,0.22), rgba(124,77,255,0.22));
+            transform:translateX(-2px);
+            box-shadow:0 4px 16px rgba(79,140,255,0.25);
+        }
+
+        .msgBubble.pinned{ 
+            border-left-color:#ffd700; 
+            background:linear-gradient(135deg, rgba(255,215,0,0.05), rgba(255,215,0,0.02));
+            box-shadow:0 0 16px rgba(255,215,0,0.15);
+        }
+
+        /* Image in message */
+        .msgImage{
+            max-width:100%;
+            max-height:300px;
+            border-radius:8px;
+            margin-top:8px;
+            cursor:pointer;
+            transition:all var(--transition-smooth);
+        }
+
+        .msgImage:hover{ 
+            transform:scale(1.03);
+            filter:drop-shadow(0 4px 12px rgba(79,140,255,0.3));
+        }
+
+        /* Reply quote */
+        .replyQuote{
+            background:rgba(79,140,255,0.1);
+            border-left:3px solid #4f8cff;
+            padding:6px 10px;
+            border-radius:6px;
+            margin-bottom:8px;
+            font-size:12px;
+            color:#aab4d6;
+            transition:all var(--transition-fast);
+        }
+
+        .replyQuote:hover{ background:rgba(79,140,255,0.15); }
+
+        /* Message actions (appear on hover with smooth delay) */
+        .msgActions{
+            display:flex;
+            gap:4px;
+            margin-top:6px;
+            flex-wrap:wrap;
+            max-height:0;
+            overflow:hidden;
+            opacity:0;
+            transition:all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform:translateY(-8px);
+        }
+
+        .msgGroup:hover .msgActions{ 
+            max-height:60px;
+            opacity:1;
+            transform:translateY(0);
+        }
+
+        .msgGroup.own .msgActions{ justify-content:flex-end; }
+
+        .msgActionBtn{
+            padding:6px 10px;
+            border-radius:8px;
+            background:rgba(255,255,255,0.08);
+            border:1px solid rgba(255,255,255,0.15);
+            color:var(--muted);
+            font-size:11px;
+            cursor:pointer;
+            transition:all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            white-space:nowrap;
+            opacity:0;
+            animation:buttonReveal 0.4s ease forwards;
+        }
+
+        .msgActionBtn:nth-child(1) { animation-delay:0.05s; }
+        .msgActionBtn:nth-child(2) { animation-delay:0.1s; }
+        .msgActionBtn:nth-child(3) { animation-delay:0.15s; }
+        .msgActionBtn:nth-child(4) { animation-delay:0.2s; }
+        .msgActionBtn:nth-child(5) { animation-delay:0.25s; }
+        .msgActionBtn:nth-child(6) { animation-delay:0.3s; }
+        .msgActionBtn:nth-child(7) { animation-delay:0.35s; }
+
+        @keyframes buttonReveal {
+            from { 
+                opacity:0; 
+                transform:translateX(-4px) scale(0.8);
+            }
+            to { 
+                opacity:1; 
+                transform:translateX(0) scale(1);
+            }
+        }
+
+        .msgGroup:not(:hover) .msgActionBtn { opacity:0; }
+
+        .msgActionBtn:hover{ 
+            background:rgba(79,140,255,0.25); 
+            color:white;
+            transform:translateY(-2px);
+            border-color:rgba(79,140,255,0.5);
+            box-shadow:0 4px 12px rgba(79,140,255,0.25);
+        }
+
+        .msgActionBtn.danger{ color:#ff4757; }
+
+        .msgActionBtn.danger:hover{ 
+            background:rgba(255,71,87,0.2);
+            border-color:rgba(255,71,87,0.4);
+        }
+
+        /* Reactions */
+        .msgReactions{ 
+            display:flex; 
+            gap:6px; 
+            margin-top:6px; 
+            flex-wrap:wrap;
+            animation:slideIn 0.3s var(--transition-smooth);
+        }
+
+        .msgGroup.own .msgReactions{ justify-content:flex-end; }
+
+        .rxBubble{
+            background:rgba(255,255,255,0.07);
+            border:1px solid var(--border);
+            padding:4px 9px;
+            border-radius:20px;
+            font-size:12px;
+            cursor:pointer;
+            transition:all var(--transition-fast);
+            display:flex; align-items:center; gap:4px;
+        }
+
+        .rxBubble:hover{ 
+            background:rgba(79,140,255,0.2); 
+            border-color:rgba(79,140,255,0.4);
+            transform:scale(1.05);
+        }
+
+        .rxCount{ 
+            font-size:10px; 
+            color:var(--muted);
+            transition:color var(--transition-fast);
+        }
+
+        .rxBubble:hover .rxCount{ color:#4f8cff; }
+
+        /* Emoji panel */
+        .emojiPanel{
+            position:absolute;
+            background:rgba(13,19,37,0.98);
+            border:1px solid var(--border);
+            border-radius:14px;
+            padding:12px;
+            display:none;
+            flex-wrap:wrap;
+            gap:4px;
+            width:250px;
+            z-index:1000;
+            bottom:60px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.5);
+            backdrop-filter:blur(10px);
+            animation:slideUp 0.3s var(--transition-smooth);
+        }
+
+        .emojiPanel.show{ display:flex; }
+
+        .emojiBtn{
+            width:34px; height:34px;
+            border-radius:8px;
+            border:none;
+            background:transparent;
+            font-size:18px;
+            cursor:pointer;
+            transition:all var(--transition-fast);
+            display:flex; align-items:center; justify-content:center;
+        }
+
+        .emojiBtn:hover{ 
+            background:rgba(255,255,255,0.1); 
+            transform:scale(1.25);
+        }
+
+        /* Input area */
+        .inputArea{
+            padding:14px 22px;
+            border-top:1px solid var(--border);
+            flex-shrink:0;
+            transition:all var(--transition-smooth);
+        }
+
+        /* Reply preview */
+        .replyPreview{
+            background:rgba(79,140,255,0.1);
+            border:1px solid rgba(79,140,255,0.2);
+            border-radius:10px;
+            padding:8px 12px;
+            margin-bottom:8px;
+            display:none;
+            align-items:center;
+            gap:10px;
+            font-size:12px;
+            color:#aab4d6;
+            animation:slideDown 0.3s var(--transition-smooth);
+        }
+
+        .replyPreview.show{ display:flex; }
+
+        .replyCancel{
+            margin-left:auto;
+            cursor:pointer;
+            color:var(--muted);
+            font-size:16px;
+            transition:all var(--transition-fast);
+        }
+
+        .replyCancel:hover{ 
+            color:white;
+            transform:rotate(90deg) scale(1.2);
+        }
+
+        .inputRow{ 
+            display:flex; 
+            gap:8px; 
+            align-items:flex-end; 
+            position:relative;
+            transition:all var(--transition-fast);
+        }
+
+        .msgInput{
+            flex:1;
+            padding:11px 14px;
+            border-radius:12px;
+            background:rgba(255,255,255,0.06);
+            border:1px solid var(--border);
+            color:white;
+            font-family:'Poppins',sans-serif;
+            font-size:13px;
+            resize:none;
+            max-height:110px;
+            transition:all var(--transition-fast);
+        }
+
+        .msgInput:focus{ 
+            outline:none; 
+            background:rgba(255,255,255,0.09); 
+            border-color:rgba(79,140,255,0.35);
+            box-shadow:0 0 12px rgba(79,140,255,0.15);
+        }
+
+        .msgInput::placeholder{ color:var(--muted); }
+
+        .inputBtns{ 
+            display:flex; 
+            gap:6px; 
+            align-items:center;
+            transition:all var(--transition-fast);
+        }
+
+        .iBtn{
+            width:36px; height:36px;
+            border-radius:9px;
+            background:rgba(255,255,255,0.05);
+            border:1px solid var(--border);
+            color:white;
+            cursor:pointer;
+            font-size:16px;
+            display:flex; align-items:center; justify-content:center;
+            transition:all var(--transition-fast);
+        }
+
+        .iBtn:hover{ 
+            background:rgba(79,140,255,0.2);
+            transform:translateY(-2px);
+            box-shadow:0 2px 8px rgba(79,140,255,0.2);
+        }
+
+        .iBtn input{ display:none; }
+
+        .sendBtn{
+            width:38px; height:38px;
+            border-radius:10px;
+            background:var(--gradient);
+            border:none;
+            color:white;
+            cursor:pointer;
+            font-size:16px;
+            display:flex; align-items:center; justify-content:center;
+            transition:all var(--transition-fast);
+        }
+
+        .sendBtn:hover:not(:disabled){ 
+            transform:translateY(-2px); 
+            box-shadow:0 5px 18px rgba(79,140,255,0.45);
+        }
+
+        .sendBtn:active:not(:disabled){ transform:translateY(0); }
+
+        .sendBtn:disabled{ 
+            opacity:0.4; 
+            cursor:not-allowed;
+        }
+
+        /* Char counter */
+        .charCount{ 
+            font-size:11px; 
+            color:var(--muted); 
+            text-align:right; 
+            margin-top:4px;
+            transition:all var(--transition-fast);
+        }
+
+        .charCount.warn{ color:var(--warning); }
+        .charCount.over{ color:var(--danger); }
+
+        /* ======== RIGHT SIDEBAR ======== */
+        .rightSidebar{
+            width:0;
+            min-width:0;
+            max-width:360px;
+            background:rgba(13,19,37,0.97);
+            border-left:1px solid var(--border);
+            overflow:hidden;
+            transition:all var(--transition-smooth);
+            flex-shrink:0;
+            display:flex;
+            flex-direction:column;
+        }
+
+        .rightSidebar.open{ width:260px; }
+
+        .rightResizeHandle{
+            width:5px;
+            cursor:col-resize;
+            background:transparent;
+            transition:all var(--transition-fast);
+            flex-shrink:0;
+            z-index:10;
+            position:relative;
+            order:-1;
+        }
+
+        .rightResizeHandle::after{
+            content:'';
+            position:absolute;
+            top:0; bottom:0;
+            right:2px;
+            width:1px;
+            background:var(--border);
+            transition:all var(--transition-fast);
+        }
+
+        .rightResizeHandle:hover::after,
+        .rightResizeHandle.dragging::after{ 
+            background:#4f8cff; 
+            box-shadow:0 0 8px #4f8cff88;
+            width:2px;
+            right:1.5px;
+        }
+
+        .rightInner{ 
+            padding:18px; 
+            overflow-y:auto; 
+            flex:1;
+            transition:all var(--transition-smooth);
+        }
+
+        .rightInner::-webkit-scrollbar{ width:4px; }
+        .rightInner::-webkit-scrollbar-thumb{ 
+            background:#4f8cff44; 
+            border-radius:4px;
+            transition:background var(--transition-fast);
+        }
+        .rightInner::-webkit-scrollbar-thumb:hover{ background:#4f8cff99; }
+
+        .rightTitle{ 
+            font-size:1rem; 
+            font-weight:700; 
+            margin-bottom:16px;
+            background:var(--gradient);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+        }
+
+        .memberItem{
+            padding:10px;
+            border-radius:10px;
+            background:rgba(255,255,255,0.03);
+            border:1px solid rgba(255,255,255,0.05);
+            display:flex; align-items:center; gap:10px;
+            cursor:pointer;
+            transition:all var(--transition-fast);
+            margin-bottom:8px;
+            position:relative;
+        }
+
+        .memberItem:hover{ 
+            background:rgba(79,140,255,0.12);
+            transform:translateX(2px);
+            border-color:rgba(79,140,255,0.2);
+        }
+
+        .memberOnlineDot{
+            width:9px; height:9px;
+            border-radius:50%;
+            background:var(--success);
+            position:absolute;
+            bottom:8px; left:32px;
+            border:2px solid #0d1325;
+            animation:statusPulse 2s infinite;
+        }
+
+        .memberOnlineDot.offline{ 
+            background:var(--muted);
+            animation:none;
+        }
+
+        .memberName{ 
+            font-weight:600; 
+            font-size:12px;
+            transition:color var(--transition-fast);
+        }
+
+        .memberItem:hover .memberName{ color:#4f8cff; }
+
+        .memberRole{ 
+            font-size:10px; 
+            color:var(--muted);
+            transition:color var(--transition-fast);
+        }
+
+        /* ======== MODALS ======== */
+        .modal{
+            position:fixed; inset:0;
+            background:rgba(0,0,0,0.75);
+            display:none; justify-content:center; align-items:center;
+            z-index:9999;
+            backdrop-filter:blur(5px);
+            animation:fadeIn 0.3s ease;
+        }
+
+        .modal.show{ display:flex; }
+
+        .modalBox{
+            background:#0d1325;
+            border:1px solid var(--border);
+            border-radius:24px;
+            padding:30px;
+            max-width:550px;
+            width:90%;
+            max-height:85vh;
+            overflow-y:auto;
+            animation:popIn 0.3s var(--transition-smooth);
+        }
+
+        @keyframes popIn{ 
+            from { opacity:0; transform:scale(0.93) } 
+            to { opacity:1; transform:scale(1) } 
+        }
+
+        .modalTitle{ 
+            font-size:1.4rem; 
+            font-weight:700; 
+            margin-bottom:20px;
+            background:var(--gradient);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+        }
+
+        .field{ margin-bottom:16px; }
+
+        .field label{ 
+            display:block; 
+            font-size:13px; 
+            color:#b8c0d3; 
+            margin-bottom:7px;
+            font-weight:500;
+        }
+
+        .field input,
+        .field textarea,
+        .field select{
+            width:100%;
+            padding:11px 14px;
+            border-radius:11px;
+            background:rgba(255,255,255,0.05);
+            border:1px solid var(--border);
+            color:white;
+            font-family:'Poppins',sans-serif;
+            font-size:13px;
+            transition:all var(--transition-fast);
+        }
+
+        .field input:focus,
+        .field textarea:focus,
+        .field select:focus{
+            outline:none; 
+            border-color:rgba(79,140,255,0.4);
+            background:rgba(79,140,255,0.06);
+            box-shadow:0 0 12px rgba(79,140,255,0.15);
+        }
+
+        .field textarea{ resize:vertical; min-height:90px; }
+        .field select option{ background:#0d1325; }
+
+        .mBtn{
+            width:100%;
+            padding:13px;
+            border-radius:12px;
+            background:var(--gradient);
+            border:none;
+            color:white;
+            font-weight:600;
+            cursor:pointer;
+            transition:all var(--transition-fast);
+            font-family:'Poppins',sans-serif;
+        }
+
+        .mBtn:hover:not(:disabled){ 
+            transform:translateY(-2px); 
+            box-shadow:0 5px 18px rgba(79,140,255,0.35);
+        }
+
+        .mBtn:active:not(:disabled){ transform:translateY(0); }
+
+        .mBtn.secondary{
+            background:rgba(255,255,255,0.07);
+            border:1px solid var(--border);
+            margin-top:8px;
+        }
+
+        .mBtn.danger{
+            background:linear-gradient(135deg, #ff6b6b, #ff4757);
+        }
+
+        .mBtn.danger:hover:not(:disabled){
+            box-shadow:0 5px 18px rgba(255,71,87,0.35);
+        }
+
+        /* Avatar customization */
+        .avatarPreview{
+            width:100px;
+            height:100px;
+            border-radius:50%;
+            background:var(--gradient);
+            margin:20px auto;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:40px;
+            font-weight:700;
+            border:2px solid rgba(79,140,255,0.3);
+            transition:all var(--transition-smooth);
+            overflow:hidden;
+        }
+
+        .avatarPreview:hover{
+            border-color:rgba(79,140,255,0.6);
+            box-shadow:0 0 20px rgba(79,140,255,0.3);
+            transform:scale(1.05);
+        }
+
+        .avatarPreview img{
+            width:100%;
+            height:100%;
+            border-radius:50%;
+            object-fit:cover;
+            transition:transform var(--transition-smooth);
+        }
+
+        .avatarPreview:hover img{ transform:scale(1.1); }
+
+        .gradientGrid{
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:12px;
+            margin:15px 0;
+        }
+
+        .gradientOption{
+            width:100%;
+            aspect-ratio:1;
+            border-radius:12px;
+            cursor:pointer;
+            border:3px solid transparent;
+            transition:all var(--transition-fast);
+        }
+
+        .gradientOption:hover{ 
+            transform:scale(1.08);
+            box-shadow:0 0 12px rgba(255,255,255,0.2);
+        }
+
+        .gradientOption.active{ 
+            border-color:white; 
+            box-shadow:0 0 20px rgba(255,255,255,0.4);
+            transform:scale(1.05);
+        }
+
+        /* Poll */
+        .pollOption{ display:flex; gap:8px; align-items:center; margin-bottom:8px; }
+        .pollOption input{ flex:1; }
+
+        .pollOptionDel{
+            width:30px; height:30px;
+            border-radius:8px;
+            background:rgba(255,71,87,0.15);
+            border:none;
+            color:#ff4757;
+            cursor:pointer;
+            font-size:16px;
+            display:flex; align-items:center; justify-content:center;
+            transition:all var(--transition-fast);
+        }
+
+        .pollOptionDel:hover{
+            background:rgba(255,71,87,0.3);
+            transform:scale(1.1);
+        }
+
+        .addOptionBtn{
+            background:rgba(255,255,255,0.05);
+            border:1px dashed var(--border);
+            border-radius:8px;
+            padding:8px;
+            width:100%;
+            color:var(--muted);
+            cursor:pointer;
+            font-family:'Poppins',sans-serif;
+            font-size:12px;
+            transition:all var(--transition-smooth);
+        }
+
+        .addOptionBtn:hover{ 
+            border-color:#4f8cff; 
+            color:#4f8cff;
+            background:rgba(79,140,255,0.08);
+        }
+
+        /* Poll in message */
+        .pollCard{
+            background:rgba(255,255,255,0.04);
+            border:1px solid var(--border);
+            border-radius:12px;
+            padding:14px;
+            margin-top:8px;
+            transition:all var(--transition-smooth);
+        }
+
+        .pollCard:hover{ background:rgba(255,255,255,0.06); }
+
+        .pollQuestion{ 
+            font-weight:600; 
+            margin-bottom:12px; 
+            font-size:14px;
+        }
+
+        .pollOptRow{
+            margin-bottom:8px;
+            cursor:pointer;
+            transition:all var(--transition-fast);
+        }
+
+        .pollOptRow:hover{ transform:translateX(2px); }
+
+        .pollOptLabel{ 
+            display:flex; 
+            justify-content:space-between; 
+            font-size:12px; 
+            margin-bottom:4px; 
+            color:#bcc6de;
+            transition:color var(--transition-fast);
+        }
+
+        .pollOptRow:hover .pollOptLabel{ color:#4f8cff; }
+
+        .pollBar{ 
+            height:6px; 
+            border-radius:3px; 
+            background:rgba(255,255,255,0.08); 
+            overflow:hidden;
+            transition:background var(--transition-smooth);
+        }
+
+        .pollOptRow:hover .pollBar{ background:rgba(79,140,255,0.15); }
+
+        .pollFill{ 
+            height:100%; 
+            background:var(--gradient); 
+            border-radius:3px; 
+            transition:width 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .pollMeta{ 
+            font-size:11px; 
+            color:var(--muted); 
+            margin-top:8px;
+        }
+
+        /* Toast */
+        .toastContainer{
+            position:fixed;
+            bottom:20px; right:20px;
+            z-index:99999;
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+        }
+
+        .toast{
+            background:#0d1325;
+            border:1px solid var(--border);
+            border-radius:12px;
+            padding:12px 18px;
+            font-size:13px;
+            color:white;
+            animation:toastIn 0.3s var(--transition-smooth);
+            box-shadow:0 8px 24px rgba(0,0,0,0.4);
+            display:flex; align-items:center; gap:10px;
+            max-width:320px;
+            backdrop-filter:blur(10px);
+        }
+
+        @keyframes toastIn{ 
+            from { opacity:0; transform:translateY(10px) } 
+            to { opacity:1; transform:translateY(0) } 
+        }
+
+        .toastIcon{ font-size:18px; }
+
+        /* Notification popup */
+        .notificationPopup{
+            position:fixed;
+            top:20px; right:20px;
+            background:linear-gradient(135deg, rgba(79,140,255,0.2), rgba(124,77,255,0.2));
+            border:2px solid rgba(79,140,255,0.5);
+            border-radius:16px;
+            padding:16px 20px;
+            max-width:320px;
+            z-index:99999;
+            animation:slideInNotif 0.4s var(--transition-smooth);
+            box-shadow:0 10px 40px rgba(0,0,0,0.3);
+            backdrop-filter:blur(10px);
+        }
+
+        @keyframes slideInNotif{ 
+            from { opacity:0; transform:translateX(100%) } 
+            to { opacity:1; transform:translateX(0) } 
+        }
+
+        .notifHeader{
+            font-weight:700;
+            margin-bottom:6px;
+            color:#4f8cff;
+        }
+
+        .notifText{
+            font-size:12px;
+            color:#bcc6de;
+            line-height:1.5;
+        }
+
+        /* WhatsApp-style notification (floating above everything) */
+        .whatsappNotification {
+            position:fixed;
+            top:20px;
+            right:20px;
+            background:linear-gradient(135deg, rgba(13,19,37,0.95), rgba(13,19,37,0.9));
+            border:1px solid rgba(79,140,255,0.3);
+            border-radius:12px;
+            padding:14px 16px;
+            max-width:340px;
+            z-index:999999;
+            box-shadow:0 8px 32px rgba(79,140,255,0.25);
+            backdrop-filter:blur(10px);
+            animation:popUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor:pointer;
+            transition:all var(--transition-smooth);
+            border-left:4px solid #4f8cff;
+        }
+
+        @keyframes popUp {
+            from {
+                opacity:0;
+                transform:translateY(-20px) scale(0.95);
+            }
+            to {
+                opacity:1;
+                transform:translateY(0) scale(1);
+            }
+        }
+
+        .whatsappNotification:hover {
+            transform:translateY(-4px);
+            box-shadow:0 12px 40px rgba(79,140,255,0.35);
+            border-color:rgba(79,140,255,0.6);
+        }
+
+        .whatsappNotification.closing {
+            animation:popDown 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        @keyframes popDown {
+            from {
+                opacity:1;
+                transform:translateY(0) scale(1);
+            }
+            to {
+                opacity:0;
+                transform:translateY(-20px) scale(0.95);
+            }
+        }
+
+        .notifContent {
+            display:flex;
+            gap:12px;
+            align-items:flex-start;
+        }
+
+        .notifAvatar {
+            width:40px;
+            height:40px;
+            border-radius:50%;
+            background:var(--gradient);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-weight:700;
+            color:white;
+            flex-shrink:0;
+            font-size:14px;
+        }
+
+        .notifAvatar img {
+            width:100%;
+            height:100%;
+            object-fit:cover;
+            border-radius:50%;
+        }
+
+        .notifBody {
+            flex:1;
+            min-width:0;
+        }
+
+        .notifName {
+            font-weight:700;
+            color:#4f8cff;
+            font-size:13px;
+            margin-bottom:4px;
+        }
+
+        .notifChannel {
+            font-size:10px;
+            color:var(--muted);
+            margin-bottom:6px;
+        }
+
+        .notifMessage {
+            font-size:12px;
+            color:#d5def1;
+            line-height:1.4;
+            word-break:break-word;
+            white-space:pre-wrap;
+            max-height:50px;
+            overflow:hidden;
+            text-overflow:ellipsis;
+        }
+
+        .notifClose {
+            position:absolute;
+            top:8px;
+            right:8px;
+            width:24px;
+            height:24px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            cursor:pointer;
+            color:var(--muted);
+            font-size:16px;
+            transition:all var(--transition-fast);
+            border-radius:6px;
+        }
+
+        .notifClose:hover {
+            background:rgba(79,140,255,0.15);
+            color:#4f8cff;
+            transform:rotate(90deg) scale(1.1);
+        }
+
+        .notifProgressBar {
+            position:absolute;
+            bottom:0;
+            left:0;
+            height:2px;
+            background:var(--gradient);
+            border-radius:0 0 12px 0;
+            animation:progress 5s linear forwards;
+        }
+
+        @keyframes progress {
+            from { width:100%; }
+            to { width:0; }
+        }
+
+        /* No msgs */
+        .noMsgs{
+            flex:1;
+            display:flex; align-items:center; justify-content:center;
+            color:var(--muted); font-size:15px; text-align:center;
+            animation:fadeIn 0.5s ease;
+        }
+
+        /* Divider */
+        .divider{ 
+            height:1px; 
+            background:var(--border);
+            margin:10px 0;
+            transition:background var(--transition-smooth);
+        }
+
+        /* Scrollbar global */
+        ::-webkit-scrollbar{ width:6px; }
+        ::-webkit-scrollbar-thumb{ 
+            background:#ffffff22; 
+            border-radius:3px;
+            transition:background var(--transition-fast);
+        }
+        ::-webkit-scrollbar-thumb:hover{ background:#ffffff44; }
+
+        .userCardModal{
+            position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:99999;backdrop-filter:blur(5px);animation:fadeIn 0.3s ease;
+        }
+
+        .userCardModal.show{display:flex;}
+
+        .userCardBox{
+            background:#0d1325;border:1px solid var(--border);border-radius:18px;padding:20px;width:320px;text-align:center;animation:popIn 0.3s var(--transition-smooth);
+        }
+
+        .userCardBox h3{
+            background:var(--gradient);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+            margin:10px 0 8px;
+            font-size:1.1rem;
+        }
+
+        /* NEW FEATURES STYLES */
+
+        /* Edit mode for messages */
+        .msgEditBox{
+            background:rgba(79,140,255,0.1);
+            border:1px solid rgba(79,140,255,0.3);
+            border-radius:8px;
+            padding:8px 12px;
+            margin-bottom:8px;
+            display:none;
+        }
+
+        .msgEditBox textarea{
+            width:100%;
+            padding:8px;
+            border-radius:6px;
+            background:rgba(255,255,255,0.06);
+            border:1px solid var(--border);
+            color:white;
+            font-family:'Poppins',sans-serif;
+            font-size:13px;
+            resize:vertical;
+            min-height:60px;
+            transition:all var(--transition-fast);
+        }
+
+        .msgEditBox textarea:focus{
+            outline:none;
+            border-color:rgba(79,140,255,0.4);
+            background:rgba(79,140,255,0.08);
+        }
+
+        .msgEditBtns{
+            display:flex;
+            gap:6px;
+            margin-top:8px;
+        }
+
+        .msgEditBtn{
+            padding:6px 12px;
+            border-radius:6px;
+            border:none;
+            background:rgba(79,140,255,0.2);
+            color:white;
+            cursor:pointer;
+            font-size:12px;
+            transition:all var(--transition-fast);
+        }
+
+        .msgEditBtn:hover{
+            background:rgba(79,140,255,0.3);
+            transform:translateY(-1px);
+        }
+
+        /* Bookmarks */
+        .bookmarkBtn{
+            background:rgba(255,215,0,0.15);
+            border:1px solid rgba(255,215,0,0.3);
+            color:#ffd700;
+        }
+
+        .bookmarkBtn:hover{
+            background:rgba(255,215,0,0.25);
+            border-color:rgba(255,215,0,0.5);
+        }
+
+        .bookmarkBtn.bookmarked{
+            background:rgba(255,215,0,0.3);
+            color:#ffd700;
+        }
+
+        /* Mention styling */
+        .mention{
+            background:rgba(79,140,255,0.2);
+            color:#4f8cff;
+            padding:2px 6px;
+            border-radius:4px;
+            cursor:pointer;
+            transition:all var(--transition-fast);
+            font-weight:500;
+        }
+
+        .mention:hover{
+            background:rgba(79,140,255,0.3);
+            text-decoration:underline;
+        }
+
+        /* DM Panel */
+        .dmPanel{
+            position:fixed;
+            bottom:20px;
+            right:20px;
+            width:320px;
+            background:#0d1325;
+            border:1px solid var(--border);
+            border-radius:16px;
+            display:none;
+            flex-direction:column;
+            z-index:8000;
+            box-shadow:0 10px 30px rgba(0,0,0,0.4);
+            animation:slideUp 0.3s var(--transition-smooth);
+            max-height:500px;
+        }
+
+        .dmPanel.show{ display:flex; }
+
+        .dmHeader{
+            padding:12px;
+            border-bottom:1px solid var(--border);
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            font-weight:600;
+            background:linear-gradient(135deg, rgba(79,140,255,0.1), rgba(124,77,255,0.1));
+        }
+
+        .dmClose{
+            cursor:pointer;
+            font-size:18px;
+            transition:all var(--transition-fast);
+        }
+
+        .dmClose:hover{ transform:rotate(90deg) scale(1.2); }
+
+        /* Smooth transitions for all */
+        *:not(button):not(input):not(textarea){
+            transition:color var(--transition-fast), background var(--transition-fast);
+        }
+
+        @media(max-width:900px){
+            .sidebar,.rightSidebar{ display:none !important; }
+            .mainArea{ width:100%; }
+        }
+
+        @media(max-width:500px){
+            .authBox{
+                padding:30px;
+                max-width:90%;
+            }
+            .authBox h1{
+                font-size:1.8rem;
+            }
+        }
+
+        /* Enhanced checkbox styling */
+        input[type="checkbox"] {
+            appearance:none;
+            -webkit-appearance:none;
+            width:18px;
+            height:18px;
+            border:2px solid rgba(79,140,255,0.4);
+            border-radius:6px;
+            background:rgba(255,255,255,0.04);
+            cursor:pointer;
+            transition:all var(--transition-fast);
+            position:relative;
+        }
+
+        input[type="checkbox"]:hover {
+            border-color:rgba(79,140,255,0.7);
+            background:rgba(79,140,255,0.08);
+            box-shadow:0 0 8px rgba(79,140,255,0.2);
+        }
+
+        input[type="checkbox"]:checked {
+            background:var(--gradient);
+            border-color:transparent;
+            box-shadow:0 0 12px rgba(79,140,255,0.3);
+        }
+
+        input[type="checkbox"]:checked::after {
+            content:'✓';
+            position:absolute;
+            top:50%;
+            left:50%;
+            transform:translate(-50%, -50%);
+            color:white;
+            font-size:12px;
+            font-weight:bold;
+        }
+
+        /* Notification channel item */
+        .notifChannelItem {
+            background:rgba(255,255,255,0.03);
+            border:1px solid rgba(255,255,255,0.08);
+            border-radius:12px;
+            padding:14px;
+            margin-bottom:12px;
+            transition:all var(--transition-fast);
+        }
+
+        .notifChannelItem:hover {
+            background:rgba(79,140,255,0.08);
+            border-color:rgba(79,140,255,0.2);
+            transform:translateX(2px);
+            box-shadow:0 4px 12px rgba(79,140,255,0.1);
+        }
+
+        .notifChannelItem > div:first-child {
+            display:flex;
+            align-items:center;
+            gap:10px;
+            margin-bottom:10px;
+        }
+
+        .notifChannelItem > div:first-child > span:first-child {
+            font-weight:600;
+            color:#4f8cff;
+            font-size:13px;
+        }
+
+        .notifChannelItem > div:last-child {
+            display:flex;
+            gap:12px;
+            flex-wrap:wrap;
+        }
+
+        .notifOption {
+            label {
+                display:flex;
+                align-items:center;
+                gap:8px;
+                cursor:pointer;
+                font-size:12px;
+                color:#bcc6de;
+                transition:color var(--transition-fast);
+            }
+
+            label:hover {
+                color:#4f8cff;
+            }
+        }
+
+        /* Channel notification controls */
+        .notifChannelItem label {
+            display:flex;
+            align-items:center;
+            gap:8px;
+            cursor:pointer;
+            font-size:12px;
+            color:#bcc6de;
+            transition:color var(--transition-fast);
+        }
+
+        .notifChannelItem label:hover {
+            color:#4f8cff;
+        }
+
+        /* Enhanced gradient overlays */
+        .sidebarInner::before {
+            content:'';
+            position:absolute;
+            top:0;
+            left:0;
+            right:0;
+            height:100px;
+            background:linear-gradient(180deg, rgba(79,140,255,0.05), transparent);
+            pointer-events:none;
+        }
+
+        .rightInner::before {
+            content:'';
+            position:absolute;
+            top:0;
+            left:0;
+            right:0;
+            height:80px;
+            background:linear-gradient(180deg, rgba(79,140,255,0.05), transparent);
+            pointer-events:none;
+        }
+
+        /* Smooth message bubble glow effect */
+        .msgBubble::before {
+            content:'';
+            position:absolute;
+            inset:0;
+            border-radius:12px;
+            background:linear-gradient(135deg, rgba(255,255,255,0.05), transparent);
+            opacity:0;
+            transition:opacity var(--transition-smooth);
+            pointer-events:none;
+        }
+
+        .msgGroup:hover .msgBubble::before {
+            opacity:1;
+        }
+
+        /* Enhanced reaction bubbles */
+        .rxBubble {
+            position:relative;
+            overflow:hidden;
+        }
+
+        .rxBubble::before {
+            content:'';
+            position:absolute;
+            inset:0;
+            background:linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+            opacity:0;
+            transition:opacity var(--transition-fast);
+        }
+
+        .rxBubble:hover::before {
+            opacity:1;
+        }
+
+        /* Smooth avatar glow on hover */
+        .msgAvatar::after {
+            content:'';
+            position:absolute;
+            inset:-2px;
+            border-radius:50%;
+            background:linear-gradient(135deg, rgba(79,140,255,0.5), rgba(124,77,255,0.5));
+            opacity:0;
+            transition:opacity var(--transition-smooth);
+            z-index:-1;
+        }
+
+        .msgAvatar:hover::after {
+            opacity:0.3;
+        }
+
+        /* Enhanced button glow effects */
+        .hBtn::before {
+            content:'';
+            position:absolute;
+            inset:0;
+            border-radius:9px;
+            background:linear-gradient(135deg, rgba(79,140,255,0.2), transparent);
+            opacity:0;
+            transition:opacity var(--transition-fast);
+        }
+
+        .hBtn:hover::before {
+            opacity:1;
+        }
+
+        /* Smooth divider animation */
+        .divider {
+            position:relative;
+            overflow:hidden;
+        }
+
+        .divider::before {
+            content:'';
+            position:absolute;
+            top:50%;
+            left:0;
+            right:0;
+            height:1px;
+            background:linear-gradient(90deg, transparent, rgba(79,140,255,0.3), transparent);
+            animation:diagonalMove 3s linear infinite;
+        }
+
+        @keyframes diagonalMove {
+            0% { transform:translateX(-100%); }
+            100% { transform:translateX(100%); }
+        }
+
+        /* Enhanced shadow on messages */
+        .msgGroup {
+            position:relative;
+        }
+
+        .msgGroup::before {
+            content:'';
+            position:absolute;
+            inset:-2px;
+            background:linear-gradient(135deg, rgba(79,140,255,0.1), rgba(124,77,255,0.1));
+            border-radius:12px;
+            opacity:0;
+            transition:opacity var(--transition-smooth);
+            z-index:-1;
+        }
+
+        .msgGroup:hover::before {
+            opacity:0.5;
+        }
+
+        /* Animated background particles effect on modals */
+        .modalBox::before {
+            content:'';
+            position:absolute;
+            inset:0;
+            background:radial-gradient(circle at 20% 50%, rgba(79,140,255,0.05), transparent),
+                        radial-gradient(circle at 80% 80%, rgba(124,77,255,0.05), transparent);
+            border-radius:24px;
+            pointer-events:none;
+            z-index:0;
+        }
+
+        .modalBox {
+            position:relative;
+            z-index:1;
+        }
+
+        /* Enhanced input focus states */
+        .field input:focus,
+        .field textarea:focus,
+        .field select:focus {
+            position:relative;
+            z-index:1;
+        }
+
+        .field input::placeholder,
+        .field textarea::placeholder {
+            opacity:0.7;
+            transition:opacity var(--transition-fast);
+        }
+
+        .field input:focus::placeholder,
+        .field textarea:focus::placeholder {
+            opacity:0.5;
+        }
+
+        /* Smooth transitions for all interactive elements */
+        button, input, textarea, select {
+            transition:all var(--transition-fast);
+        }
+
+        /* Add some decorative gradients */
+        .channelItem::after {
+            content:'';
+            position:absolute;
+            inset:0;
+            background:linear-gradient(90deg, transparent, rgba(79,140,255,0.05), transparent);
+            opacity:0;
+            transition:opacity var(--transition-smooth);
+            pointer-events:none;
+            border-radius:10px;
+        }
+
+        .channelItem:hover::after {
+            opacity:1;
+        }
+
+        /* Better tooltip-like effects */
+        .statBox::after {
+            content:attr(title);
+            position:absolute;
+            bottom:-30px;
+            left:50%;
+            transform:translateX(-50%);
+            background:rgba(13,19,37,0.9);
+            color:#4f8cff;
+            padding:6px 10px;
+            border-radius:6px;
+            font-size:10px;
+            white-space:nowrap;
+            opacity:0;
+            pointer-events:none;
+            transition:opacity var(--transition-fast);
+            border:1px solid rgba(79,140,255,0.3);
+        }
+
+        .statBox:hover::after {
+            opacity:1;
+        }
+    </style>
+</head>
+<body>
+
+<!-- AUTH MODAL -->
+<div class="authModal" id="authModal">
+    <div class="authBox">
+        <h1>🐉 DracoCommunity</h1>
+        <p id="authPrompt">Enter your username</p>
+        
+        <input 
+            type="text" 
+            id="authUsername" 
+            class="authInput" 
+            placeholder="Username"
+            maxlength="20">
+        
+        <input 
+            type="password" 
+            id="authPassword" 
+            class="authInput" 
+            placeholder="Password (only for admin)" 
+            style="display:none;"
+            maxlength="50">
+        
+        <div class="authError" id="authError"></div>
+        
+        <button class="authBtn" id="authSubmitBtn">Continue →</button>
+        <button class="authBtn authGuest" id="authGuestBtn">Continue as Guest</button>
+    </div>
+</div>
+
+<div class="layout">
+
+    <!-- LEFT SIDEBAR -->
+    <div class="sidebar" id="leftSidebar">
+        <div class="sidebarInner">
+
+            <div class="logo">🐉 DracoCommunity</div>
+
+            <div class="statsRow">
+                <div class="statBox" id="activeUsersBox" title="Active users online">
+                    <div class="statNum" id="statMembers">0</div>
+                    <div class="statLbl">Active</div>
+                </div>
+                <div class="statBox" id="unreadBox" title="Unread messages">
+                    <div class="statNum" id="statUnread">0</div>
+                    <div class="statLbl">Unread</div>
+                    <div class="statBadge" id="unreadBadge"></div>
+                </div>
+            </div>
+
+            <div class="sidebarSearch">
+                <span class="searchIco">🔍</span>
+                <input type="text" id="sidebarSearchInput" placeholder="Search messages..." />
+            </div>
+
+            <div class="sectionLabel">Channels</div>
+            <div id="channelList">
+                <div class="channelItem active" data-channel="general" data-desc="Main discussion for everyone">
+                    <span>#</span><span>General</span>
+                    <span class="channelBadge" id="badge-general">0</span>
+                </div>
+                <div class="channelItem" data-channel="ideas" data-desc="Share your innovative ideas">
+                    <span>💡</span><span>Ideas</span>
+                    <span class="channelBadge" id="badge-ideas">0</span>
+                </div>
+                <div class="channelItem" data-channel="tech" data-desc="All things technology">
+                    <span>⚙️</span><span>Tech</span>
+                    <span class="channelBadge" id="badge-tech">0</span>
+                </div>
+                <div class="channelItem" data-channel="offtopic" data-desc="Memes, fun, random stuff">
+                    <span>🎉</span><span>Off-topic</span>
+                    <span class="channelBadge" id="badge-offtopic">0</span>
+                </div>
+                <div class="channelItem" data-channel="announcements" data-desc="Important announcements">
+                    <span>📢</span><span>Announcements</span>
+                    <span class="channelBadge" id="badge-announcements">0</span>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+            <div class="sectionLabel">Quick Actions</div>
+            <div class="channelItem" id="openPollBtn">
+                <span>📊</span><span>Create Poll</span>
+            </div>
+            <div class="channelItem" id="openNotificationsBtn">
+                <span>🔔</span><span>Notifications</span>
+            </div>
+            <div class="channelItem" id="openProfileBtn">
+                <span>👤</span><span>Edit Profile</span>
+            </div>
+
+            <div style="margin-top:auto; padding-top:14px;">
+                <div class="userProfile" id="userProfileBtn">
+                    <div class="avatar lg" id="sidebarAvatar">U</div>
+                    <div style="flex:1; min-width:0;">
+                        <div class="userName" id="sidebarUsername">User</div>
+                        <div class="userSub"><div class="statusDot"></div><span>Online</span></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- LEFT RESIZE -->
+    <div class="resizeHandle" id="leftResizeHandle"></div>
+
+    <!-- MAIN AREA -->
+    <div class="mainArea">
+
+        <div class="chatHeader">
+            <div>
+                <div class="channelTitle" id="channelTitleEl"># general</div>
+                <div class="channelSub" id="channelSubEl">Main discussion for everyone</div>
+            </div>
+            <div class="headerBtns">
+                <button class="hBtn" id="searchToggleBtn" title="Search messages">🔍</button>
+                <button class="hBtn" id="pinnedToggleBtn" title="Pinned messages">📌</button>
+                <button class="hBtn" id="bookmarksBtn" title="View bookmarks">⭐</button>
+                <button class="hBtn" id="membersToggleBtn" title="Toggle members">👥</button>
+                <button class="hBtn danger" id="deleteAllBtn" title="Delete all messages (Admin only)" style="display:none;">🗑️</button>
+            </div>
+        </div>
+
+        <div class="pinnedBar" id="pinnedBar">
+            <span>📌</span>
+            <span class="pinnedText" id="pinnedText">No pinned message</span>
+            <span style="cursor:pointer;color:var(--muted);font-size:16px;" id="closePinnedBar">✕</span>
+        </div>
+
+        <div class="searchBar" id="searchBarEl">
+            <input type="text" id="messageSearchInput" placeholder="Search messages in this channel..." />
+        </div>
+
+        <div class="messagesContainer" id="messagesContainer">
+            <div class="noMsgs">👋 Welcome! Start a conversation...</div>
+        </div>
+
+        <div class="typingBar" id="typingBar"></div>
+
+        <div class="inputArea">
+            <div class="replyPreview" id="replyPreview">
+                <span>↩️ Replying to</span>
+                <strong id="replyName"></strong>:
+                <span id="replyText" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px;"></span>
+                <span class="replyCancel" id="replyCancel">✕</span>
+            </div>
+
+            <div class="inputRow">
+                <textarea class="msgInput" id="msgInput" placeholder="Type a message... (Enter to send, Shift+Enter for newline, @ to mention)" maxlength="1000"></textarea>
+
+                <!-- Emoji panel -->
+                <div class="emojiPanel" id="emojiPanel">
+                    <!-- populated by JS -->
+                </div>
+
+                <div class="inputBtns">
+                    <button class="iBtn" id="imageUploadBtn" title="Upload image/GIF (max 2MB)">🖼️
+                        <input type="file" id="imageInput" accept="image/*,.gif" />
+                    </button>
+                    <button class="iBtn" id="emojiToggleBtn" title="Emoji">😊</button>
+                    <button class="sendBtn" id="sendBtn" title="Send">➤</button>
+                </div>
+            </div>
+            <div class="charCount" id="charCount">0 / 1000</div>
+        </div>
+
+    </div>
+
+    <!-- RIGHT RESIZE -->
+    <div class="rightResizeHandle" id="rightResizeHandle"></div>
+
+    <!-- RIGHT SIDEBAR -->
+    <div class="rightSidebar" id="rightSidebar">
+        <div class="rightInner">
+            <div class="rightTitle">👥 Members</div>
+            <div id="membersList">
+                <!-- populated by JS -->
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toastContainer" id="toastContainer"></div>
+
+<!-- PROFILE MODAL -->
+<div class="modal" id="profileModal">
+    <div class="modalBox">
+        <div class="modalTitle">👤 Edit Profile</div>
+        
+        <div class="field">
+            <label>Profile Picture</label>
+            <div class="avatarPreview" id="avatarPreview">👤</div>
+            <input type="file" id="avatarImageInput" accept="image/*" style="display:none;" />
+            <button class="mBtn secondary" style="width:100%; margin-top:10px;" onclick="document.getElementById('avatarImageInput').click()">
+                📸 Upload Picture (Optional)
+            </button>
+        </div>
+
+        <div class="field">
+            <label>Avatar Gradient</label>
+            <div class="gradientGrid" id="gradientGrid">
+                <!-- populated by JS -->
+            </div>
+        </div>
+
+        <div class="field">
+            <label>Username</label>
+            <input type="text" id="profileUsername" maxlength="20" placeholder="Username" />
+        </div>
+
+        <div class="field">
+            <label>Bio</label>
+            <textarea id="profileBio" maxlength="200" placeholder="Tell us about yourself..."></textarea>
+        </div>
+
+        <div class="field">
+            <label>Status</label>
+            <select id="profileStatus">
+                <option value="Online">🟢 Online</option>
+                <option value="Busy">🔴 Busy</option>
+                <option value="Away">🟡 Away</option>
+            </select>
+        </div>
+
+        <button class="mBtn" id="saveProfileBtn">Save Profile</button>
+        <button class="mBtn secondary" id="closeProfileModal">Cancel</button>
+    </div>
+</div>
+
+<!-- POLL MODAL -->
+<div class="modal" id="pollModal">
+    <div class="modalBox">
+        <div class="modalTitle">📊 Create Poll</div>
+        <div class="field">
+            <label>Question</label>
+            <input type="text" id="pollQuestion" maxlength="150" placeholder="What do you want to ask?" />
+        </div>
+        <div class="field">
+            <label>Options</label>
+            <div id="pollOptions">
+                <div class="pollOption">
+                    <input type="text" placeholder="Option 1" maxlength="80" />
+                    <button class="pollOptionDel" onclick="removePollOption(this)">✕</button>
+                </div>
+                <div class="pollOption">
+                    <input type="text" placeholder="Option 2" maxlength="80" />
+                    <button class="pollOptionDel" onclick="removePollOption(this)">✕</button>
+                </div>
+            </div>
+            <button class="addOptionBtn" id="addPollOption">+ Add Option</button>
+        </div>
+        <button class="mBtn" id="publishPollBtn">Launch Poll 🚀</button>
+        <button class="mBtn secondary" id="closePollModal">Cancel</button>
+    </div>
+</div>
+
+<!-- BOOKMARKS MODAL -->
+<div class="modal" id="bookmarksModal">
+    <div class="modalBox">
+        <div class="modalTitle">⭐ Bookmarked Messages</div>
+        <div id="bookmarksList">
+            <p style="color:var(--muted); text-align:center; padding:20px;">No bookmarks yet</p>
+        </div>
+        <button class="mBtn secondary" id="closeBookmarksModal">Close</button>
+    </div>
+</div>
+
+<!-- NOTIFICATIONS SETTINGS MODAL -->
+<div class="modal" id="notificationsModal">
+    <div class="modalBox">
+        <div class="modalTitle">🔔 Notification Settings</div>
+        
+        <div style="margin-bottom:20px;">
+            <p style="color:#bcc6de; font-size:13px; margin-bottom:15px;">Customize how you receive notifications for each channel</p>
+        </div>
+
+        <div id="notificationChannels">
+            <!-- Populated by JS -->
+        </div>
+
+        <div style="margin-top:20px; padding-top:20px; border-top:1px solid var(--border);">
+            <div class="field" style="margin-bottom:0;">
+                <label style="display:flex; align-items:center; gap:10px; cursor:pointer; margin-bottom:15px;">
+                    <input type="checkbox" id="soundNotif" style="width:18px; height:18px; cursor:pointer;" checked />
+                    <span>Enable sound notifications</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:10px; cursor:pointer; margin-bottom:15px;">
+                    <input type="checkbox" id="desktopNotif" style="width:18px; height:18px; cursor:pointer;" checked />
+                    <span>Enable desktop notifications</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:10px; cursor:pointer;">
+                    <input type="checkbox" id="muteAll" style="width:18px; height:18px; cursor:pointer;" />
+                    <span>Mute all notifications</span>
+                </label>
+            </div>
+        </div>
+
+        <button class="mBtn" id="saveNotificationsBtn">Save Settings</button>
+        <button class="mBtn secondary" id="closeNotificationsModal">Close</button>
+    </div>
+</div>
+
+<div class="userCardModal" id="userCardModal">
+ <div class="userCardBox">
+   <div class="avatar lg" id="userCardAvatar" style="margin:0 auto 10px;">U</div>
+   <h3 id="userCardName">User</h3>
+   <p id="userCardBio">No bio</p>
+   <p id="userCardStatus">🟢 Online</p>
+   <button class="mBtn secondary" onclick="document.getElementById('userCardModal').classList.remove('show')">Close</button>
+ </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import {
+    getFirestore, collection, addDoc, doc,
+    query, orderBy, onSnapshot, updateDoc, getDoc, deleteDoc, where
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+// ── Firebase ──────────────────────────────────────────
+const firebaseConfig = {
+    apiKey:"AIzaSyCHkxuxZ-KWzQEoZt-XLXz1XX8ObTENQR4",
+    authDomain:"dracoblog-27113.firebaseapp.com",
+    projectId:"dracoblog-27113",
+    storageBucket:"dracoblog-27113.appspot.com",
+    messagingSenderId:"1086959854616",
+    appId:"1:1086959854616:web:64ac860d7a4a28706bcf6d"
+};
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+// ── ADMIN PASSWORD ────────────────────────────────────
+const ADMIN_USERNAME = "abhi67";
+const ADMIN_PASSWORD = "admin67";
+
+// ── Predefined Gradients ──────────────────────────────
+const GRADIENTS = [
+    "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+    "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+    "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+    "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
+    "linear-gradient(135deg, #30cfd0 0%, #330867 100%)",
+    "linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)",
+    "linear-gradient(135deg, #ff9a56 0%, #ff6a88 100%)"
+];
+
+// ── State ─────────────────────────────────────────────
+let currentUser = null;
+let currentChannel = "general";
+let allMessages   = [];
+let unsubscribe   = null;
+let replyingTo    = null;
+let typingTimer   = null;
+let unreadCounts  = {};
+let pinnedMsg     = null;
+let isSearching   = false;
+let channelUnread = {};
+let lastMessageTime = 0;
+let bookmarkedMsgs = [];
+let editingMsgId = null;
+
+// ── Authentication ───────────────────────────────────
+function initializeAuth() {
+    const authModal = document.getElementById("authModal");
+    const authUsername = document.getElementById("authUsername");
+    const authPassword = document.getElementById("authPassword");
+    const authPrompt = document.getElementById("authPrompt");
+    const authError = document.getElementById("authError");
+    const authSubmitBtn = document.getElementById("authSubmitBtn");
+    const authGuestBtn = document.getElementById("authGuestBtn");
+
+    const savedUser = localStorage.getItem("communityUser");
+    if (savedUser) {
+        currentUser = JSON.parse(savedUser);
+        authModal.style.display = "none";
+        document.body.style.overflow = "auto";
+        initSidebar();
+        loadMessages();
+        showPinnedBar();
+        setupNotifications();
+        return;
+    }
+
+    authUsername.addEventListener("input", () => {
+        authError.textContent = "";
+        if (authUsername.value === ADMIN_USERNAME) {
+            authPassword.style.display = "block";
+            authPrompt.textContent = "👑 Admin Login - Enter your password";
+        } else {
+            authPassword.style.display = "none";
+            authPrompt.textContent = "Enter your username";
+        }
+    });
+
+    authSubmitBtn.addEventListener("click", () => {
+        const username = authUsername.value.trim();
+        const password = authPassword.value;
+
+        authError.textContent = "";
+
+        if (!username || username.length < 3) {
+            authError.textContent = "Username must be at least 3 characters";
+            return;
+        }
+
+        if (username === ADMIN_USERNAME) {
+            if (password !== ADMIN_PASSWORD) {
+                authError.textContent = "❌ Incorrect admin password";
+                authPassword.value = "";
+                return;
+            }
+        }
+
+        currentUser = { 
+            username, 
+            isAdmin: username === ADMIN_USERNAME, 
+            bio: "", 
+            status: "Online",
+            avatar: null,
+            gradient: GRADIENTS[0]
+        };
+        localStorage.setItem("communityUser", JSON.stringify(currentUser));
+        authModal.style.display = "none";
+        document.body.style.overflow = "auto";
+        initSidebar();
+        loadMessages();
+        showPinnedBar();
+        setupNotifications();
+    });
+
+    authGuestBtn.addEventListener("click", () => {
+        const username = authUsername.value.trim();
+        
+        // SECURITY FIX: Block guest login for admin account
+        if (username === ADMIN_USERNAME) {
+            authError.textContent = "❌ Admin account requires password. Use the main login button.";
+            return;
+        }
+        
+        if (!username || username.length < 3) {
+            authError.textContent = "Username must be at least 3 characters";
+            return;
+        }
+        currentUser = { 
+            username, 
+            isAdmin: false, 
+            bio: "", 
+            status: "Online",
+            avatar: null,
+            gradient: GRADIENTS[0]
+        };
+        localStorage.setItem("communityUser", JSON.stringify(currentUser));
+        authModal.style.display = "none";
+        document.body.style.overflow = "auto";
+        initSidebar();
+        loadMessages();
+        showPinnedBar();
+        setupNotifications();
+    });
+
+    authUsername.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+            if (authUsername.value === ADMIN_USERNAME && authPassword.style.display !== "none") {
+                authPassword.focus();
+            } else {
+                authSubmitBtn.click();
+            }
+        }
+    });
+
+    authPassword.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+            authSubmitBtn.click();
+        }
+    });
+
+    setTimeout(() => authUsername.focus(), 100);
+}
+
+// ── Helpers ───────────────────────────────────────────
+function isAdmin() {
+    return currentUser && currentUser.isAdmin;
+}
+
+function sanitize(s) {
+    if (typeof s !== "string") return "";
+    return s.replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+}
+
+function initials(u) { return (u||"?").substring(0,2).toUpperCase(); }
+
+function getAvatarStyle(u) {
+    const user = allMessages.find(m => m.author === u);
+    if (user && user.authorGradient) {
+        return `background: ${user.authorGradient}`;
+    }
+    const cols = ["#4f8cff","#7c4dff","#ff6b9d","#ffd700","#51cf66","#ff9f43"];
+    let h = 0;
+    for (let i=0;i<u.length;i++) h = u.charCodeAt(i)+((h<<5)-h);
+    return `background: ${cols[Math.abs(h)%cols.length]}`;
+}
+
+function timeAgo(ts) {
+    const d = Date.now()-ts, m=Math.floor(d/60000), h=Math.floor(d/3600000), dy=Math.floor(d/86400000);
+    if (m<1) return "just now";
+    if (m<60) return m+"m ago";
+    if (h<24) return h+"h ago";
+    if (dy<7) return dy+"d ago";
+    return new Date(ts).toLocaleDateString();
+}
+
+function toast(msg, icon="✅") {
+    const c = document.getElementById("toastContainer");
+    const t = document.createElement("div");
+    t.className = "toast";
+    t.innerHTML = `<span class="toastIcon">${icon}</span><span>${msg}</span>`;
+    c.appendChild(t);
+    setTimeout(() => t.remove(), 3000);
+}
+
+// ── Update Avatar Immediately ─────────────────────────
+function updateAvatarInUI() {
+    const avatar = document.getElementById("sidebarAvatar");
+    if (currentUser.avatar) {
+        avatar.innerHTML = `<img src="${currentUser.avatar}" />`;
+    } else {
+        avatar.textContent = initials(currentUser.username);
+        avatar.style.background = currentUser.gradient;
+    }
+    // Update all messages from current user with new avatar
+    updateAllUserMessages();
+}
+
+// ── Update all messages from current user ──────────────
+async function updateAllUserMessages() {
+    try {
+        // Update all messages in allMessages array
+        const userMessages = allMessages.filter(m => m.author === currentUser.username);
+        
+        for (const msg of userMessages) {
+            await updateDoc(doc(db, "communityMessages", msg.id), {
+                authorImage: currentUser.avatar,
+                authorGradient: currentUser.gradient,
+                authorBio: currentUser.bio || '',
+                authorStatus: currentUser.status || 'Online'
+            });
+        }
+        
+        // Re-render to show updated avatars immediately
+        renderMessages();
+    } catch(err) {
+        console.error("Error updating user messages:", err);
+    }
+}
+
+// ── Notification Popup (WhatsApp Style) ───────────────
+function showWhatsAppNotification(username, messageText, channel, avatarUrl, gradient) {
+    const container = document.body;
+    
+    // Check if notification already exists for this, prevent duplicates
+    const existing = document.querySelector(`.whatsappNotification[data-user="${username}"]`);
+    if (existing) {
+        existing.remove();
+    }
+
+    const notif = document.createElement("div");
+    notif.className = "whatsappNotification";
+    notif.setAttribute("data-user", username);
+    
+    const avatarHTML = avatarUrl 
+        ? `<img src="${avatarUrl}" alt="${username}"/>`
+        : `<span style="background:${gradient}">${initials(username)}</span>`;
+
+    notif.innerHTML = `
+        <div class="notifContent">
+            <div class="notifAvatar">
+                ${avatarHTML}
+            </div>
+            <div class="notifBody">
+                <div class="notifName">💬 ${sanitize(username)}</div>
+                <div class="notifChannel">#${sanitize(channel)}</div>
+                <div class="notifMessage">${sanitize(messageText || "[Image]").substring(0, 80)}</div>
+            </div>
+        </div>
+        <div class="notifClose" onclick="this.parentElement.remove()">✕</div>
+        <div class="notifProgressBar"></div>
+    `;
+    
+    container.appendChild(notif);
+
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        if (notif.parentElement) {
+            notif.classList.add("closing");
+            setTimeout(() => notif.remove(), 300);
+        }
+    }, 5000);
+
+    // Click notification to go to that channel
+    notif.addEventListener("click", function(e) {
+        if (e.target.closest(".notifClose")) return;
+        switchChannel(channel, `View ${channel} messages`);
+        this.remove();
+    });
+
+    // Play notification sound
+    playNotificationSound();
+}
+
+// ── Play Notification Sound ───────────────────────────
+function playNotificationSound() {
+    try {
+        const settings = JSON.parse(localStorage.getItem("globalNotifications") || '{"sound":true,"desktop":true,"muteAll":false}');
+        if (settings.muteAll || !settings.sound) return;
+
+        // Create a simple beep sound using Web Audio API
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.value = 800;
+        oscillator.type = 'sine';
+        
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+        
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.1);
+    } catch(err) {
+        // Silently fail if audio context not available
+    }
+}
+function setupNotifications() {
+    if ("Notification" in window && Notification.permission === "granted") {
+        // Already granted
+    } else if ("Notification" in window && Notification.permission !== "denied") {
+        Notification.requestPermission();
+    }
+}
+
+// ── Sidebar init ──────────────────────────────────────
+function initSidebar() {
+    if (!currentUser) return;
+    updateAvatarInUI();
+    document.getElementById("sidebarUsername").textContent = currentUser.username + (isAdmin() ? " 👑" : "");
+    document.getElementById("deleteAllBtn").style.display = isAdmin() ? "flex" : "none";
+}
+
+// ── Load messages ─────────────────────────────────────
+function loadMessages() {
+    const container = document.getElementById("messagesContainer");
+    container.innerHTML = '<div class="noMsgs">⏳ Loading...</div>';
+    const q = query(collection(db,"communityMessages"), orderBy("timestamp","asc"));
+    if (unsubscribe) unsubscribe();
+    unsubscribe = onSnapshot(q, snap => {
+        allMessages = [];
+        snap.forEach(d => allMessages.push({ id:d.id, ...d.data() }));
+        renderMessages();
+        updateStats();
+        updateChannelBadges();
+    });
+}
+
+function renderMessages(filtered) {
+    const msgs = filtered || allMessages.filter(m => m.channel === currentChannel);
+    const container = document.getElementById("messagesContainer");
+    const wasAtBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 80;
+
+    if (!msgs.length) {
+        container.innerHTML = '<div class="noMsgs">💬 No messages yet. Be the first!</div>';
+        return;
+    }
+
+    container.innerHTML = msgs.map(msg => buildMsgHTML(msg)).join("");
+
+    // Bind action buttons
+    container.querySelectorAll("[data-action]").forEach(btn => {
+        btn.addEventListener("click", function(e) {
+            e.stopPropagation();
+            const action = this.dataset.action;
+            const id     = this.dataset.id;
+            const text   = this.dataset.text || "";
+            const author = this.dataset.author || "";
+            if (action === "reply")  startReply(id, author, text);
+            if (action === "copy")   copyMsg(text);
+            if (action === "pin")    pinMessage(id, text);
+            if (action === "react")  openReactPanel(id, this);
+            if (action === "delete") deleteMessage(id, author);
+            if (action === "edit")   startEditMessage(id, text);
+            if (action === "bookmark") toggleBookmark(id, text, author);
+        });
+    });
+
+    // Reaction bubbles
+    container.querySelectorAll(".rxBubble").forEach(b => {
+        b.addEventListener("click", function() {
+            addReaction(this.dataset.id, this.dataset.emoji);
+        });
+    });
+
+    // Avatar click
+    container.querySelectorAll(".msgAvatar").forEach(a => {
+        a.addEventListener("click", function() {
+            showUserCard(this.dataset.user);
+        });
+    });
+
+    // Poll vote
+    container.querySelectorAll(".pollOptRow").forEach(row => {
+        row.addEventListener("click", function() {
+            votePoll(this.dataset.msgId, this.dataset.idx);
+        });
+    });
+
+    // Image click
+    container.querySelectorAll(".msgImage").forEach(img => {
+        img.addEventListener("click", function() {
+            window.open(this.src, "_blank");
+        });
+    });
+
+    if (wasAtBottom) container.scrollTop = container.scrollHeight;
+}
+
+function buildMsgHTML(msg) {
+    const isOwn = msg.author === currentUser?.username;
+    const style = msg.authorGradient ? `background: ${msg.authorGradient}` : getAvatarStyle(msg.author);
+    const time  = timeAgo(msg.timestamp);
+    const sName = sanitize(msg.author);
+    const sText = sanitize(msg.text || "");
+
+    let replyHTML = "";
+    if (msg.replyTo) {
+        replyHTML = `<div class="replyQuote">↩️ <strong>${sanitize(msg.replyTo.author)}</strong>: ${sanitize(msg.replyTo.text.substring(0,80))}${msg.replyTo.text.length>80?"...":""}</div>`;
+    }
+
+    let contentHTML = "";
+    if (msg.type === "poll") {
+        contentHTML = buildPollHTML(msg);
+    } else {
+        contentHTML = `<div class="msgBubble${isOwn?" own":""}${msg.pinned?" pinned":""}">${replyHTML}${sText}`;
+        if (msg.imageUrl) {
+            contentHTML += `<img src="${msg.imageUrl}" class="msgImage" />`;
+        }
+        contentHTML += `</div>`;
+    }
+
+    let reactionsHTML = "";
+    if (msg.reactions && Object.keys(msg.reactions).length) {
+        reactionsHTML = '<div class="msgReactions">';
+        Object.entries(msg.reactions).forEach(([emoji, count]) => {
+            reactionsHTML += `<div class="rxBubble" data-id="${msg.id}" data-emoji="${emoji}" title="Click to react">${emoji}<span class="rxCount">${count}</span></div>`;
+        });
+        reactionsHTML += '</div>';
+    }
+
+    const escaped = sText.replace(/'/g, "&#039;").replace(/"/g, "&quot;").substring(0,100);
+    const canDelete = isOwn || isAdmin();
+    const canEdit = isOwn;
+    const isBookmarked = bookmarkedMsgs.includes(msg.id);
+    
+    const deleteButton = canDelete ? 
+        `<button class="msgActionBtn danger" data-action="delete" data-id="${msg.id}" data-author="${sName}">🗑️ ${isAdmin() && !isOwn ? "Delete (Admin)" : "Delete"}</button>` : "";
+    
+    const editButton = canEdit ?
+        `<button class="msgActionBtn" data-action="edit" data-id="${msg.id}" data-text="${escaped}">✏️ Edit</button>` : "";
+
+    const bookmarkButton = `<button class="msgActionBtn bookmarkBtn${isBookmarked?" bookmarked":""}" data-action="bookmark" data-id="${msg.id}" data-text="${escaped}">⭐ ${isBookmarked?"Bookmarked":"Bookmark"}</button>`;
+    
+    const actionsHTML = `
+        <div class="msgActions">
+            <button class="msgActionBtn" data-action="reply" data-id="${msg.id}" data-text="${escaped}" data-author="${sName}">↩️ Reply</button>
+            <button class="msgActionBtn" data-action="react" data-id="${msg.id}">😊 React</button>
+            <button class="msgActionBtn" data-action="copy" data-text="${escaped}">📋 Copy</button>
+            <button class="msgActionBtn" data-action="pin" data-id="${msg.id}" data-text="${escaped}">📌 Pin</button>
+            ${bookmarkButton}
+            ${editButton}
+            ${deleteButton}
+        </div>`;
+
+    let badge = "";
+    if (msg.author === "abhi67") badge = '<span class="msgBadge admin">👑 Admin</span>';
+
+    let editBoxHTML = editingMsgId === msg.id ? `
+        <div class="msgEditBox show">
+            <textarea id="editText-${msg.id}">${msg.text}</textarea>
+            <div class="msgEditBtns">
+                <button class="msgEditBtn" onclick="saveEditMessage('${msg.id}')">✓ Save</button>
+                <button class="msgEditBtn" onclick="cancelEditMessage()">✕ Cancel</button>
+            </div>
+        </div>
+    ` : "";
+
+    return `
+    <div class="msgGroup${isOwn?" own":""}">
+        <div class="avatar md msgAvatar" style="${style}" data-user="${sName}">${msg.authorImage ? `<img src="${msg.authorImage}" />` : initials(msg.author)}</div>
+        <div class="msgBody">
+            ${editBoxHTML}
+            <div class="msgHeader">
+                <span class="msgName">${sName}</span>
+                ${badge}
+                <span class="msgTime">${time}</span>
+            </div>
+            ${contentHTML}
+            ${reactionsHTML}
+            ${actionsHTML}
+        </div>
+    </div>`;
+}
+
+function buildPollHTML(msg) {
+    const poll = msg.poll;
+    if (!poll) return "";
+    const totalVotes = poll.options.reduce((a,o) => a + (o.votes||0), 0);
+    let optHTML = poll.options.map((opt, i) => {
+        const pct = totalVotes ? Math.round((opt.votes||0)/totalVotes*100) : 0;
+        return `<div class="pollOptRow" data-msg-id="${msg.id}" data-idx="${i}">
+            <div class="pollOptLabel"><span>${sanitize(opt.text)}</span><span>${pct}% (${opt.votes||0})</span></div>
+            <div class="pollBar"><div class="pollFill" style="width:${pct}%"></div></div>
+        </div>`;
+    }).join("");
+    return `<div class="msgBubble">
+        <div class="pollCard">
+            <div class="pollQuestion">📊 ${sanitize(poll.question)}</div>
+            ${optHTML}
+            <div class="pollMeta">${totalVotes} vote${totalVotes!==1?"s":""} · by ${sanitize(msg.author)}</div>
+        </div>
+    </div>`;
+}
+
+// ── Stats ─────────────────────────────────────────────
+function updateStats() {
+    const members = new Set(allMessages.map(m=>m.author));
+    document.getElementById("statMembers").textContent = members.size || 1;
+    
+    const unread = Object.values(channelUnread).reduce((a,b) => a+b, 0);
+    document.getElementById("statUnread").textContent = unread;
+    document.getElementById("unreadBadge").textContent = unread > 0 ? unread : "";
+    document.getElementById("unreadBadge").classList.toggle("show", unread > 0);
+}
+
+function updateChannelBadges() {
+    Object.keys(channelUnread).forEach(ch => {
+        const badge = document.getElementById(`badge-${ch}`);
+        if (badge) {
+            badge.textContent = channelUnread[ch] || 0;
+            badge.classList.toggle("show", channelUnread[ch] > 0);
+        }
+    });
+}
+
+function showUserCard(username){
+ const profile=(allMessages.filter(m=>m.author===username).pop())||{};
+ const a=document.getElementById('userCardAvatar');
+ if(profile.authorImage){a.innerHTML=`<img src="${profile.authorImage}" />`;}
+ else{a.textContent=(username||'U').substring(0,2).toUpperCase(); a.style.background=profile.authorGradient||'#4f8cff';}
+ document.getElementById('userCardName').textContent=username;
+ document.getElementById('userCardBio').textContent=profile.authorBio||'No bio available';
+ document.getElementById('userCardStatus').textContent='🟢 '+(profile.authorStatus||'Online');
+ document.getElementById('userCardModal').classList.add('show');
+}
+
+// ── Send ──────────────────────────────────────────────
+async function sendMessage() {
+    const input = document.getElementById("msgInput");
+    const text  = input.value.trim();
+    if (!text || !currentUser) return;
+    if(Date.now()-lastMessageTime<1000){toast('Wait 1 second before sending again','⏳');return;}
+
+    const btn = document.getElementById("sendBtn");
+    btn.disabled = true;
+
+    try {
+        const payload = {
+            text,
+            author: currentUser.username,
+            channel: currentChannel,
+            timestamp: Date.now(),
+            reactions: {},
+            authorGradient: currentUser.gradient,
+            authorImage: currentUser.avatar,
+            authorBio: currentUser.bio || '',
+            authorStatus: currentUser.status || 'Online'
+        };
+        if (replyingTo) {
+            payload.replyTo = { author: replyingTo.author, text: replyingTo.text };
+            clearReply();
+        }
+        await addDoc(collection(db,"communityMessages"), payload);
+        lastMessageTime=Date.now();
+        input.value = "";
+        input.style.height = "auto";
+        updateCharCount();
+    } catch(err) {
+        console.error(err);
+        toast("Failed to send","❌");
+    } finally {
+        btn.disabled = false;
+        input.focus();
+    }
+}
+
+// ── Message Editing ───────────────────────────────────
+function startEditMessage(msgId, currentText) {
+    editingMsgId = msgId;
+    renderMessages();
+    setTimeout(() => {
+        const textarea = document.getElementById(`editText-${msgId}`);
+        if (textarea) textarea.focus();
+    }, 50);
+}
+
+window.saveEditMessage = async function(msgId) {
+    const textarea = document.getElementById(`editText-${msgId}`);
+    const newText = textarea?.value.trim();
+    if (!newText) { toast("Message cannot be empty","❗"); return; }
+
+    try {
+        await updateDoc(doc(db, "communityMessages", msgId), { text: newText });
+        editingMsgId = null;
+        toast("Message edited ✓", "✏️");
+    } catch(err) {
+        console.error(err);
+        toast("Failed to edit","❌");
+    }
+};
+
+window.cancelEditMessage = function() {
+    editingMsgId = null;
+    renderMessages();
+};
+
+// ── Bookmarks ─────────────────────────────────────────
+function toggleBookmark(msgId, text, author) {
+    const idx = bookmarkedMsgs.indexOf(msgId);
+    if (idx > -1) {
+        bookmarkedMsgs.splice(idx, 1);
+        toast("Removed from bookmarks","📭");
+    } else {
+        bookmarkedMsgs.push(msgId);
+        toast("Added to bookmarks ⭐");
+    }
+    localStorage.setItem("bookmarkedMsgs", JSON.stringify(bookmarkedMsgs));
+    renderMessages();
+}
+
+function showBookmarks() {
+    const bookmarked = allMessages.filter(m => bookmarkedMsgs.includes(m.id));
+    const list = document.getElementById("bookmarksList");
+    if (!bookmarked.length) {
+        list.innerHTML = '<p style="color:var(--muted); text-align:center; padding:20px;">No bookmarks yet</p>';
+        return;
+    }
+    list.innerHTML = bookmarked.map(msg => `
+        <div style="background:rgba(255,255,255,0.04); border-radius:8px; padding:12px; margin-bottom:8px; border-left:3px solid #ffd700;">
+            <div style="font-weight:600; margin-bottom:4px;">${sanitize(msg.author)}</div>
+            <div style="font-size:13px; color:#d5def1; margin-bottom:8px;">${sanitize(msg.text || '[Image]')}</div>
+            <div style="font-size:11px; color:var(--muted);">#${msg.channel} · ${timeAgo(msg.timestamp)}</div>
+        </div>
+    `).join("");
+}
+
+// ── Notification Settings ─────────────────────────────
+let channelNotifications = {
+    "general": "all",
+    "ideas": "all",
+    "tech": "all",
+    "offtopic": "mentions",
+    "announcements": "all"
+};
+
+function showNotificationSettings() {
+    // Load saved settings
+    const saved = localStorage.getItem("notificationSettings");
+    if (saved) {
+        channelNotifications = JSON.parse(saved);
+    }
+
+    const container = document.getElementById("notificationChannels");
+    const CHANNELS = ["general", "ideas", "tech", "offtopic", "announcements"];
+    
+    container.innerHTML = CHANNELS.map(ch => `
+        <div class="notifChannelItem">
+            <div>
+                <span>#${ch}</span>
+            </div>
+            <div>
+                <label class="notifOption">
+                    <input type="radio" name="notif-${ch}" value="all" ${channelNotifications[ch] === "all" ? "checked" : ""} />
+                    All messages
+                </label>
+                <label class="notifOption">
+                    <input type="radio" name="notif-${ch}" value="mentions" ${channelNotifications[ch] === "mentions" ? "checked" : ""} />
+                    Mentions only
+                </label>
+                <label class="notifOption">
+                    <input type="radio" name="notif-${ch}" value="off" ${channelNotifications[ch] === "off" ? "checked" : ""} />
+                    Off
+                </label>
+            </div>
+        </div>
+    `).join("");
+
+    // Load global settings
+    const settings = JSON.parse(localStorage.getItem("globalNotifications") || '{"sound":true,"desktop":true,"muteAll":false}');
+    document.getElementById("soundNotif").checked = settings.sound;
+    document.getElementById("desktopNotif").checked = settings.desktop;
+    document.getElementById("muteAll").checked = settings.muteAll;
+
+    document.getElementById("notificationsModal").classList.add("show");
+}
+
+function saveNotificationSettings() {
+    const CHANNELS = ["general", "ideas", "tech", "offtopic", "announcements"];
+    CHANNELS.forEach(ch => {
+        const selected = document.querySelector(`input[name="notif-${ch}"]:checked`);
+        if (selected) {
+            channelNotifications[ch] = selected.value;
+        }
+    });
+
+    const globalSettings = {
+        sound: document.getElementById("soundNotif").checked,
+        desktop: document.getElementById("desktopNotif").checked,
+        muteAll: document.getElementById("muteAll").checked
+    };
+
+    localStorage.setItem("notificationSettings", JSON.stringify(channelNotifications));
+    localStorage.setItem("globalNotifications", JSON.stringify(globalSettings));
+    toast("Notification settings saved! 🔔");
+    document.getElementById("notificationsModal").classList.remove("show");
+}
+
+// ── Image Upload ──────────────────────────────────────
+document.getElementById("imageUploadBtn").addEventListener("click", () => {
+    document.getElementById("imageInput").click();
+});
+
+document.getElementById("imageInput").addEventListener("change", async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (file.size > 2 * 1024 * 1024) {
+        toast("Image must be less than 2MB", "❌");
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+        const imageUrl = event.target.result;
+        const input = document.getElementById("msgInput");
+        const btn = document.getElementById("sendBtn");
+        btn.disabled = true;
+
+        try {
+            const payload = {
+                text: input.value.trim() || "[Image]",
+                author: currentUser.username,
+                channel: currentChannel,
+                timestamp: Date.now(),
+                reactions: {},
+                imageUrl,
+                authorGradient: currentUser.gradient,
+                authorImage: currentUser.avatar
+            };
+            if (replyingTo) {
+                payload.replyTo = { author: replyingTo.author, text: replyingTo.text };
+                clearReply();
+            }
+            await addDoc(collection(db,"communityMessages"), payload);
+            input.value = "";
+            input.style.height = "auto";
+            updateCharCount();
+            toast("Image sent! 🖼️");
+        } catch(err) {
+            console.error(err);
+            toast("Failed to send image","❌");
+        } finally {
+            btn.disabled = false;
+            e.target.value = "";
+        }
+    };
+    reader.readAsDataURL(file);
+});
+
+// ── Delete Message ────────────────────────────────────
+async function deleteMessage(msgId, author) {
+    if (currentUser.username !== author && !isAdmin()) {
+        toast("Only the author or admin can delete messages","❌");
+        return;
+    }
+
+    if (!confirm("Delete this message? This cannot be undone.")) return;
+
+    try {
+        await deleteDoc(doc(db, "communityMessages", msgId));
+        toast("Message deleted ✓", "🗑️");
+    } catch(err) {
+        console.error(err);
+        toast("Failed to delete message","❌");
+    }
+}
+
+// ── Delete All Messages (Admin Only) ──────────────────
+async function deleteAllMessages() {
+    if (!isAdmin()) {
+        toast("Only admins can delete all messages","❌");
+        return;
+    }
+
+    if (!confirm(`Delete ALL messages in #${currentChannel}? This cannot be undone!`)) return;
+
+    try {
+        const q = query(collection(db,"communityMessages"), where("channel","==",currentChannel));
+        const snap = await new Promise((resolve) => {
+            const unsubTemp = onSnapshot(q, resolve);
+            setTimeout(() => unsubTemp(), 5000);
+        });
+
+        snap.forEach(d => {
+            deleteDoc(doc(db, "communityMessages", d.id));
+        });
+
+        toast(`All messages in #${currentChannel} deleted! 🗑️`, "🗑️");
+    } catch(err) {
+        console.error(err);
+        toast("Failed to delete messages","❌");
+    }
+}
+
+document.getElementById("deleteAllBtn").addEventListener("click", deleteAllMessages);
+
+// ── Poll ──────────────────────────────────────────────
+async function publishPoll() {
+    const question = document.getElementById("pollQuestion").value.trim();
+    const inputs   = document.querySelectorAll("#pollOptions .pollOption input");
+    const options  = Array.from(inputs).map(i=>i.value.trim()).filter(Boolean);
+
+    if (!question)         { toast("Enter a question","❗"); return; }
+    if (options.length < 2){ toast("At least 2 options needed","❗"); return; }
+
+    try {
+        await addDoc(collection(db,"communityMessages"), {
+            type: "poll",
+            text: `📊 Poll: ${question}`,
+            author: currentUser.username,
+            channel: currentChannel,
+            timestamp: Date.now(),
+            reactions: {},
+            poll: { question, options: options.map(t=>({text:t,votes:0,voters:[]})) },
+            authorGradient: currentUser.gradient,
+            authorImage: currentUser.avatar
+        });
+        closePollModal();
+        toast("Poll launched! 🚀");
+    } catch(err) { console.error(err); toast("Failed","❌"); }
+}
+
+async function votePoll(msgId, optIdx) {
+    try {
+        const ref  = doc(db,"communityMessages",msgId);
+        const snap = await getDoc(ref);
+        if (!snap.exists()) return;
+        const poll = snap.data().poll;
+        if (!poll) return;
+        const opt = poll.options[optIdx];
+        if (opt.voters && opt.voters.includes(currentUser.username)) {
+            toast("Already voted!","ℹ️"); return;
+        }
+        opt.votes = (opt.votes||0)+1;
+        opt.voters = [...(opt.voters||[]), currentUser.username];
+        await updateDoc(ref, { poll });
+        toast("Vote recorded! 🗳️");
+    } catch(err) { console.error(err); }
+}
+
+// ── Reactions ─────────────────────────────────────────
+async function addReaction(msgId, emoji) {
+    try {
+        const ref  = doc(db,"communityMessages",msgId);
+        const snap = await getDoc(ref);
+        if (!snap.exists()) return;
+        let reactions = snap.data().reactions || {};
+        reactions[emoji] = (reactions[emoji]||0)+1;
+        await updateDoc(ref,{reactions});
+        toast("Reacted! " + emoji);
+    } catch(err){ console.error(err); }
+}
+
+function openReactPanel(msgId, btn) {
+    const panel = document.getElementById("emojiPanel");
+    panel.dataset.target = msgId;
+    panel.dataset.mode   = "react";
+    panel.classList.add("show");
+    const rect = btn.getBoundingClientRect();
+    panel.style.bottom = (window.innerHeight - rect.top + 8) + "px";
+    panel.style.left   = rect.left + "px";
+    panel.style.position = "fixed";
+}
+
+// ── Reply ─────────────────────────────────────────────
+function startReply(id, author, text) {
+    replyingTo = {id, author, text};
+    document.getElementById("replyPreview").classList.add("show");
+    document.getElementById("replyName").textContent = author;
+    document.getElementById("replyText").textContent = text.substring(0,60);
+    document.getElementById("msgInput").focus();
+}
+
+function clearReply() {
+    replyingTo = null;
+    document.getElementById("replyPreview").classList.remove("show");
+}
+
+// ── Copy ──────────────────────────────────────────────
+function copyMsg(text) {
+    navigator.clipboard.writeText(text).then(() => toast("Copied!","📋")).catch(()=>{});
+}
+
+// ── Pin ───────────────────────────────────────────────
+function pinMessage(id, text) {
+    pinnedMsg = {id, text};
+    localStorage.setItem("pinnedMsg_"+currentChannel, JSON.stringify(pinnedMsg));
+    showPinnedBar();
+    toast("Message pinned 📌");
+}
+
+function showPinnedBar() {
+    if (!pinnedMsg) return;
+    document.getElementById("pinnedText").textContent = pinnedMsg.text.substring(0,80);
+    document.getElementById("pinnedBar").classList.add("show");
+}
+
+// ── Typing indicator ──────────────────────────────────
+function handleTyping() {
+    updateCharCount();
+    clearTimeout(typingTimer);
+    const bar = document.getElementById("typingBar");
+    bar.innerHTML = `<div class="typingDots"><span></span><span></span><span></span></div> <span>${currentUser.username} is typing...</span>`;
+    typingTimer = setTimeout(()=>{ bar.innerHTML = ""; }, 2000);
+}
+
+function updateCharCount() {
+    const len = document.getElementById("msgInput").value.length;
+    const el  = document.getElementById("charCount");
+    el.textContent = `${len} / 1000`;
+    el.className = "charCount" + (len>900?" over": len>700?" warn":"");
+}
+
+// ── Search ────────────────────────────────────────────
+function searchMessages(query) {
+    const q = query.toLowerCase();
+    if (!q) { renderMessages(); return; }
+    const results = allMessages.filter(m =>
+        m.channel === currentChannel &&
+        (m.text||"").toLowerCase().includes(q)
+    );
+    renderMessages(results);
+}
+
+// ── Channel switch ────────────────────────────────────
+function switchChannel(ch, desc) {
+    currentChannel = ch;
+    pinnedMsg = JSON.parse(localStorage.getItem("pinnedMsg_"+ch)||"null");
+    document.querySelectorAll(".channelItem[data-channel]").forEach(el => {
+        el.classList.toggle("active", el.dataset.channel === ch);
+    });
+    document.getElementById("channelTitleEl").textContent =
+        (["general","tech","offtopic","announcements"].includes(ch) ? "# " : "") + ch;
+    document.getElementById("channelSubEl").textContent = desc;
+    document.getElementById("pinnedBar").classList.remove("show");
+    if (pinnedMsg) showPinnedBar();
+    channelUnread[ch] = 0;
+    updateStats();
+    updateChannelBadges();
+    renderMessages();
+}
+
+// ── Members panel ─────────────────────────────────────
+function renderMembers() {
+    const members = [...new Set(allMessages.map(m=>m.author))];
+    if (currentUser && !members.includes(currentUser.username))
+        members.unshift(currentUser.username);
+    const list = document.getElementById("membersList");
+    list.innerHTML = members.slice(0,20).map(u => {
+        const userMsg = allMessages.find(m => m.author === u);
+        const gradient = userMsg?.authorGradient || "linear-gradient(135deg, #667eea, #764ba2)";
+        const isMe  = u === currentUser?.username;
+        const online = isMe || Math.random()>0.4;
+        const admin = u === "abhi67" ? " 👑" : "";
+        return `<div class="memberItem">
+            <div class="avatar sm" style="background: ${gradient}">${userMsg?.authorImage ? `<img src="${userMsg.authorImage}" />` : initials(u)}</div>
+            <div class="memberOnlineDot${online?"":" offline"}"></div>
+            <div>
+                <div class="memberName">${sanitize(u)}${admin}${isMe?" (you)":""}</div>
+                <div class="memberRole">${isMe?"You":u==="abhi67"?"Admin":"Member"}</div>
+            </div>
+        </div>`;
+    }).join("");
+}
+
+// ── Emoji panel ───────────────────────────────────────
+const EMOJIS = ["😊","❤️","🔥","🚀","💡","👍","😂","🎉","😮","😢","👀","🙌","✨","💯","🤔","😎","🥳","🤩","💪","🎯","👏","🌟","⚡","🎮","💻","🐉","🌈","🍕","☕","🎵"];
+
+function buildEmojiPanel() {
+    const panel = document.getElementById("emojiPanel");
+    panel.innerHTML = EMOJIS.map(e =>
+        `<button class="emojiBtn" data-emoji="${e}">${e}</button>`
+    ).join("");
+    panel.querySelectorAll(".emojiBtn").forEach(btn => {
+        btn.addEventListener("click", function() {
+            const emoji = this.dataset.emoji;
+            if (panel.dataset.mode === "react" && panel.dataset.target) {
+                addReaction(panel.dataset.target, emoji);
+                panel.classList.remove("show");
+                panel.dataset.mode = "";
+            } else {
+                const inp = document.getElementById("msgInput");
+                inp.value += emoji;
+                inp.focus();
+                updateCharCount();
+            }
+        });
+    });
+}
+
+buildEmojiPanel();
+
+// ── Avatar Customization ──────────────────────────────
+function buildGradientGrid() {
+    const grid = document.getElementById("gradientGrid");
+    grid.innerHTML = GRADIENTS.map((grad, i) => {
+        const isActive = currentUser.gradient === grad;
+        return `<div class="gradientOption${isActive?" active":""}" style="background: ${grad}" data-gradient="${grad}"></div>`;
+    }).join("");
+    grid.querySelectorAll(".gradientOption").forEach(opt => {
+        opt.addEventListener("click", function() {
+            document.querySelectorAll(".gradientOption").forEach(o => o.classList.remove("active"));
+            this.classList.add("active");
+            currentUser.gradient = this.dataset.gradient;
+            localStorage.setItem("communityUser", JSON.stringify(currentUser));
+            updateAvatarInUI();
+        });
+    });
+}
+
+document.getElementById("avatarImageInput").addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (file.size > 2 * 1024 * 1024) {
+        toast("Image must be less than 2MB", "❌");
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+        currentUser.avatar = event.target.result;
+        localStorage.setItem("communityUser", JSON.stringify(currentUser));
+        updateAvatarInUI();
+        updateAvatarPreview();
+        toast("Avatar updated! ✨");
+    };
+    reader.readAsDataURL(file);
+});
+
+function updateAvatarPreview() {
+    const preview = document.getElementById("avatarPreview");
+    if (currentUser.avatar) {
+        preview.innerHTML = `<img src="${currentUser.avatar}" />`;
+    } else {
+        preview.textContent = initials(currentUser.username);
+        preview.style.background = currentUser.gradient;
+    }
+}
+
+// ── Poll modal helpers ────────────────────────────────
+window.removePollOption = function(btn) {
+    const opts = document.querySelectorAll("#pollOptions .pollOption");
+    if (opts.length <= 2) { toast("Need at least 2 options","❗"); return; }
+    btn.closest(".pollOption").remove();
+};
+
+function closePollModal() {
+    document.getElementById("pollModal").classList.remove("show");
+    document.getElementById("pollQuestion").value = "";
+    document.querySelectorAll("#pollOptions .pollOption input").forEach((i,idx) => {
+        i.value = "";
+        i.placeholder = "Option "+(idx+1);
+    });
+}
+
+// ── Resizable sidebars ────────────────────────────────
+function makeResizable(handleId, targetId, direction) {
+    const handle = document.getElementById(handleId);
+    const target = document.getElementById(targetId);
+    let startX, startW;
+
+    handle.addEventListener("mousedown", e => {
+        startX = e.clientX;
+        startW = parseInt(getComputedStyle(target).width, 10);
+        handle.classList.add("dragging");
+        document.body.style.userSelect = "none";
+        document.body.style.cursor = "col-resize";
+
+        function onMove(e) {
+            const delta = direction === "right" ? e.clientX - startX : startX - e.clientX;
+            const newW  = Math.min(Math.max(startW + delta, parseInt(target.style.minWidth||"180")), parseInt(target.style.maxWidth||"420"));
+            if (direction === "right") {
+                target.style.width = newW + "px";
+            } else {
+                if (newW > 80) {
+                    target.style.width = newW + "px";
+                    target.classList.add("open");
+                } else {
+                    target.style.width = "0";
+                    target.classList.remove("open");
+                }
+            }
+        }
+
+        function onUp() {
+            handle.classList.remove("dragging");
+            document.body.style.userSelect = "";
+            document.body.style.cursor = "";
+            document.removeEventListener("mousemove", onMove);
+            document.removeEventListener("mouseup", onUp);
+        }
+
+        document.addEventListener("mousemove", onMove);
+        document.addEventListener("mouseup", onUp);
+        e.preventDefault();
+    });
+}
+
+makeResizable("leftResizeHandle",  "leftSidebar",  "right");
+makeResizable("rightResizeHandle", "rightSidebar", "left");
+
+// ── Event listeners ───────────────────────────────────
+document.getElementById("msgInput").addEventListener("keydown", e => {
+    if (e.key==="Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+
+document.getElementById("msgInput").addEventListener("input", handleTyping);
+document.getElementById("sendBtn").addEventListener("click", sendMessage);
+
+document.querySelectorAll(".channelItem[data-channel]").forEach(el => {
+    el.addEventListener("click", () => switchChannel(el.dataset.channel, el.dataset.desc));
+});
+
+document.getElementById("searchToggleBtn").addEventListener("click", () => {
+    const bar = document.getElementById("searchBarEl");
+    const isOpen = bar.classList.toggle("show");
+    document.getElementById("searchToggleBtn").classList.toggle("active", isOpen);
+    if (isOpen) document.getElementById("messageSearchInput").focus();
+    else { document.getElementById("messageSearchInput").value = ""; renderMessages(); }
+});
+
+document.getElementById("messageSearchInput").addEventListener("input", function() {
+    searchMessages(this.value);
+});
+
+document.getElementById("sidebarSearchInput").addEventListener("input", function() {
+    searchMessages(this.value);
+});
+
+document.getElementById("pinnedToggleBtn").addEventListener("click", () => {
+    document.getElementById("pinnedBar").classList.toggle("show");
+});
+
+document.getElementById("closePinnedBar").addEventListener("click", () => {
+    document.getElementById("pinnedBar").classList.remove("show");
+});
+
+document.getElementById("bookmarksBtn").addEventListener("click", () => {
+    bookmarkedMsgs = JSON.parse(localStorage.getItem("bookmarkedMsgs")||"[]");
+    showBookmarks();
+    document.getElementById("bookmarksModal").classList.add("show");
+});
+
+document.getElementById("closeBookmarksModal").addEventListener("click", () => {
+    document.getElementById("bookmarksModal").classList.remove("show");
+});
+
+document.getElementById("openNotificationsBtn").addEventListener("click", () => {
+    showNotificationSettings();
+});
+
+document.getElementById("saveNotificationsBtn").addEventListener("click", () => {
+    saveNotificationSettings();
+});
+
+document.getElementById("closeNotificationsModal").addEventListener("click", () => {
+    document.getElementById("notificationsModal").classList.remove("show");
+});
+
+document.getElementById("membersToggleBtn").addEventListener("click", () => {
+    const rs = document.getElementById("rightSidebar");
+    const isOpen = rs.classList.toggle("open");
+    document.getElementById("membersToggleBtn").classList.toggle("active", isOpen);
+    if (isOpen) {
+        rs.style.width = "260px";
+        renderMembers();
+    } else {
+        rs.style.width = "0";
+    }
+});
+
+document.getElementById("openProfileBtn").addEventListener("click", () => {
+    document.getElementById("profileUsername").value = currentUser.username;
+    document.getElementById("profileBio").value = currentUser.bio||"";
+    document.getElementById("profileStatus").value = currentUser.status||"Online";
+    buildGradientGrid();
+    updateAvatarPreview();
+    document.getElementById("profileModal").classList.add("show");
+});
+
+document.getElementById("userProfileBtn").addEventListener("click", () => {
+    document.getElementById("openProfileBtn").click();
+});
+
+document.getElementById("saveProfileBtn").addEventListener("click", () => {
+    const u = document.getElementById("profileUsername").value.trim();
+    if (u.length<3) { toast("Username too short","❗"); return; }
+    currentUser.username = u;
+    currentUser.bio      = document.getElementById("profileBio").value.trim();
+    currentUser.status   = document.getElementById("profileStatus").value;
+    localStorage.setItem("communityUser", JSON.stringify(currentUser));
+    initSidebar();
+    document.getElementById("profileModal").classList.remove("show");
+    toast("Profile updated! ✨");
+});
+
+document.getElementById("closeProfileModal").addEventListener("click", () => {
+    document.getElementById("profileModal").classList.remove("show");
+});
+
+document.getElementById("openPollBtn").addEventListener("click", () => {
+    document.getElementById("pollModal").classList.add("show");
+});
+
+document.getElementById("closePollModal").addEventListener("click", closePollModal);
+document.getElementById("publishPollBtn").addEventListener("click", publishPoll);
+
+document.getElementById("addPollOption").addEventListener("click", () => {
+    const cnt = document.querySelectorAll("#pollOptions .pollOption").length;
+    if (cnt >= 6) { toast("Max 6 options","❗"); return; }
+    const div = document.createElement("div");
+    div.className = "pollOption";
+    div.innerHTML = `<input type="text" placeholder="Option ${cnt+1}" maxlength="80" />
+                     <button class="pollOptionDel" onclick="removePollOption(this)">✕</button>`;
+    document.getElementById("pollOptions").appendChild(div);
+});
+
+document.getElementById("replyCancel").addEventListener("click", clearReply);
+
+document.addEventListener("click", e => {
+    const panel = document.getElementById("emojiPanel");
+    if (!panel.contains(e.target) && e.target.id !== "emojiToggleBtn") {
+        panel.classList.remove("show");
+        panel.dataset.mode = "";
+    }
+});
+
+document.getElementById("emojiToggleBtn").addEventListener("click", e => {
+    e.stopPropagation();
+    const panel = document.getElementById("emojiPanel");
+    panel.style.position = "";
+    panel.style.bottom   = "";
+    panel.style.left     = "";
+    panel.dataset.mode   = "input";
+    panel.classList.toggle("show");
+});
+
+document.querySelectorAll(".modal").forEach(m => {
+    m.addEventListener("click", e => { if (e.target === m) m.classList.remove("show"); });
+});
+
+document.addEventListener("keydown", e => {
+    if (e.key==="Escape") {
+        document.querySelectorAll(".modal").forEach(m => m.classList.remove("show"));
+        document.getElementById("emojiPanel").classList.remove("show");
+    }
+});
+
+// Load bookmarks from localStorage
+bookmarkedMsgs = JSON.parse(localStorage.getItem("bookmarkedMsgs")||"[]");
+
+// Track unread messages and show notifications
+unsubscribe = onSnapshot(query(collection(db,"communityMessages"), orderBy("timestamp","desc")), (snap) => {
+    snap.docs.slice(0,1).forEach(d => {
+        const msg = d.data();
+        if (msg.channel !== currentChannel && msg.author !== currentUser?.username) {
+            channelUnread[msg.channel] = (channelUnread[msg.channel] || 0) + 1;
+            updateStats();
+            updateChannelBadges();
+            
+            // Show WhatsApp-style notification with avatar
+            showWhatsAppNotification(
+                msg.author,
+                msg.text,
+                msg.channel,
+                msg.authorImage || null,
+                msg.authorGradient || '#4f8cff'
+            );
+
+            // Also request desktop notification if enabled
+            const settings = JSON.parse(localStorage.getItem("globalNotifications") || '{"sound":true,"desktop":true,"muteAll":false}');
+            if (settings.desktop && !settings.muteAll && "Notification" in window) {
+                if (Notification.permission === "granted") {
+                    new Notification(`${msg.author} in #${msg.channel}`, {
+                        body: (msg.text || "[Image]").substring(0, 100),
+                        icon: msg.authorImage || '🐉',
+                        badge: '🐉',
+                        tag: msg.channel
+                    });
+                }
+            }
+        }
+    });
+});
+
+// ── Kick off ──────────────────────────────────────────
+initializeAuth();
+
+</script>
+</body>
+</html>
