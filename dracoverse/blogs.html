@@ -1,3018 +1,1731 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1307099726971871"
-     crossorigin="anonymous"></script>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DracoBlog Pro - Advanced Tech Community</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DracoLogs - Advanced Community Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GG7CQ1TL2G"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-GG7CQ1TL2G');
+    </script>
 
     <style>
-        /* ================================================== */
-        /* RESET & VARIABLES */
-        /* ================================================== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         :root {
-            --bg: #050816;
-            --card: #0d1325;
-            --border: rgba(255,255,255,0.08);
-            --border-light: rgba(255,255,255,0.04);
-            --gradient: linear-gradient(135deg, #4f8cff, #7c4dff);
-            --gradient-soft: linear-gradient(135deg, rgba(79,140,255,0.1), rgba(124,77,255,0.1));
-            --text: #fff;
-            --text-secondary: #bcc6de;
-            --text-tertiary: #9ca3af;
-            --accent: #4f8cff;
-            --accent-alt: #7c4dff;
-            --upvote: #ff4500;
-            --upvote-light: rgba(255,69,0,0.1);
-            --downvote: #818a91;
-            --downvote-light: rgba(129,138,145,0.1);
+            --primary: #1a1a1b;
+            --secondary: #30363d;
+            --accent: #818cf8;
+            --accent-light: #a5b4fc;
+            --accent-dark: #6366f1;
             --success: #10b981;
+            --danger: #ef4444;
             --warning: #f59e0b;
-            --error: #ef4444;
-            --shadow-sm: 0 2px 8px rgba(0,0,0,0.1);
-            --shadow-md: 0 4px 16px rgba(0,0,0,0.15);
-            --shadow-lg: 0 8px 32px rgba(0,0,0,0.2);
-            --shadow-xl: 0 20px 60px rgba(0,0,0,0.3);
-            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --text-primary: #ffffff;
+            --text-secondary: #818890;
+            --border: #343536;
+            --card-bg: #1a1a1b;
+            --upvote: #ff4500;
+            --downvote: #818a91;
+            --transition: 0.2s ease;
         }
 
-        /* ================================================== */
-        /* GLOBAL STYLES */
-        /* ================================================== */
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: 
-                radial-gradient(circle at top left, rgba(79,140,255,0.18), transparent 25%),
-                radial-gradient(circle at bottom right, rgba(124,77,255,0.18), transparent 25%),
-                var(--bg);
-            color: var(--text);
-            overflow-x: hidden;
-            padding: 20px;
+            background: var(--primary);
+            color: var(--text-primary);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        body::-webkit-scrollbar {
-            width: 12px;
-        }
+        body::-webkit-scrollbar { width: 10px; }
+        body::-webkit-scrollbar-track { background: var(--primary); }
+        body::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+        body::-webkit-scrollbar-thumb:hover { background: var(--accent-light); }
 
-        body::-webkit-scrollbar-track {
-            background: rgba(255,255,255,0.02);
-        }
-
-        body::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, #4f8cff, #7c4dff);
-            border-radius: 20px;
-            border: 3px solid rgba(5,8,22,0.8);
-        }
-
-        body::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(180deg, #6fa3ff, #9966ff);
-        }
-
-        /* ================================================== */
-        /* TYPOGRAPHY */
-        /* ================================================== */
-        h1, h2, h3, h4, h5, h6 {
-            font-weight: 700;
-            line-height: 1.2;
-            margin: 0;
-        }
-
-        h1 { font-size: 3.5rem; }
-        h2 { font-size: 2.8rem; }
-        h3 { font-size: 1.8rem; }
-        h4 { font-size: 1.4rem; }
-        h5 { font-size: 1.1rem; }
-        h6 { font-size: 0.95rem; }
-
-        p {
-            margin: 0;
-        }
-
-        /* ================================================== */
-        /* CONTAINER & LAYOUT */
-        /* ================================================== */
-        .container {
-            max-width: 1000px;
+        .container-fluid {
+            display: grid;
+            grid-template-columns: 280px 1fr 300px;
+            gap: 20px;
+            padding: 20px;
+            max-width: 1400px;
             margin: 0 auto;
-            width: 100%;
         }
 
-        /* ================================================== */
-        /* HEADER SECTION */
-        /* ================================================== */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 50px;
-            flex-wrap: wrap;
-            gap: 24px;
-            animation: slideDown 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        /* ======================== SIDEBAR ======================== */
+        .sidebar {
+            height: fit-content;
+            position: sticky;
+            top: 20px;
         }
 
-        .logo {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .logo h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.5px;
-        }
-
-        .logo p {
-            color: var(--text-secondary);
-            font-size: 14px;
-            font-weight: 500;
-            letter-spacing: 0.3px;
-        }
-
-        .adminBadge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: linear-gradient(135deg, #ff6b9d, #ffd700);
-            color: #000;
-            padding: 8px 16px;
-            border-radius: 24px;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            margin-left: 12px;
-            text-transform: uppercase;
-            box-shadow: 0 4px 15px rgba(255,107,157,0.3);
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        .addBlogBtn {
-            padding: 13px 32px;
-            border: none;
-            border-radius: 28px;
-            background: var(--gradient);
-            color: white;
-            font-weight: 700;
-            font-size: 15px;
-            cursor: pointer;
-            transition: all var(--transition-base);
-            box-shadow: 0 8px 24px rgba(79,140,255,0.3);
-            letter-spacing: 0.3px;
-            position: relative;
+        .sidebar-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 20px;
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
-        .addBlogBtn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left var(--transition-base);
-        }
-
-        .addBlogBtn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(79,140,255,0.4);
-        }
-
-        .addBlogBtn:hover::before {
-            left: 100%;
-        }
-
-        .addBlogBtn:active {
-            transform: translateY(-2px);
-        }
-
-        .addBlogBtn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* ================================================== */
-        /* CONTROLS & SEARCH */
-        /* ================================================== */
-        .controls {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .searchBox {
-            flex: 1;
-            min-width: 250px;
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .searchIcon {
-            position: absolute;
-            left: 16px;
-            color: var(--text-tertiary);
-            font-size: 18px;
-            pointer-events: none;
-            transition: color var(--transition-fast);
-        }
-
-        .searchBox input {
-            width: 100%;
-            padding: 14px 20px 14px 48px;
-            border-radius: 24px;
-            background: rgba(255,255,255,0.06);
-            border: 2px solid var(--border);
-            color: var(--text);
-            font-family: 'Poppins', sans-serif;
+        .sidebar-header {
+            padding: 15px 20px;
+            font-weight: 700;
+            border-bottom: 1px solid var(--border);
             font-size: 14px;
-            transition: all var(--transition-base);
-            backdrop-filter: blur(10px);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
         }
 
-        .searchBox input:focus {
-            outline: none;
-            background: rgba(255,255,255,0.1);
-            border-color: var(--accent);
-            box-shadow: 0 0 24px rgba(79,140,255,0.2);
+        .sidebar-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 3px solid transparent;
         }
 
-        .searchBox input:focus + .searchIcon {
+        .sidebar-item:hover {
+            background: var(--secondary);
+            border-left-color: var(--accent);
+        }
+
+        .sidebar-item.active {
+            background: rgba(129, 140, 255, 0.1);
+            border-left-color: var(--accent);
             color: var(--accent);
         }
 
-        .searchBox input::placeholder {
-            color: var(--text-tertiary);
+        .sidebar-item-icon {
+            font-size: 18px;
+            min-width: 24px;
         }
 
-        .filterSelect, .sortSelect {
-            padding: 12px 18px;
-            border-radius: 24px;
-            background: rgba(255,255,255,0.06);
-            border: 2px solid var(--border);
-            color: var(--text);
-            font-family: 'Poppins', sans-serif;
+        .sidebar-item-text {
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 500;
+        }
+
+        .create-post-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #818cf8, #6366f1);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
             cursor: pointer;
-            transition: all var(--transition-base);
-            backdrop-filter: blur(10px);
-        }
-
-        .filterSelect:hover, .sortSelect:hover {
-            border-color: var(--accent);
-            background: rgba(79,140,255,0.05);
-        }
-
-        .filterSelect:focus, .sortSelect:focus {
-            outline: none;
-            background: rgba(255,255,255,0.1);
-            border-color: var(--accent);
-            box-shadow: 0 0 24px rgba(79,140,255,0.2);
-        }
-
-        .filterSelect option, .sortSelect option {
-            background: var(--card);
-            color: var(--text);
-            padding: 8px;
-        }
-
-        /* ================================================== */
-        /* CLOCK WIDGET */
-        /* ================================================== */
-        .clock {
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            width: 320px;
-            padding: 20px 24px;
-            border-radius: 24px;
-            background: transparent;
-            border: 2px solid var(--border);
-            backdrop-filter: blur(20px);
-            box-shadow: var(--shadow-xl);
-            text-align: center;
-            z-index: 999;
-            animation: slideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .clockTime {
-            font-size: 2rem;
-            font-weight: 800;
-            letter-spacing: 3px;
-            color: var(--gradient);
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .clockDate {
-            margin-top: 12px;
-            color: var(--text-secondary);
-            font-size: 13px;
-            font-weight: 500;
-            letter-spacing: 0.3px;
-        }
-
-        /* ================================================== */
-        /* FEATURED SECTION */
-        /* ================================================== */
-        .featured {
-            background: var(--gradient-soft);
-            border: 2px solid var(--gradient);
-            border-radius: 32px;
-            padding: 60px 50px;
-            margin-bottom: 50px;
-            text-align: center;
-            animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .featured::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(79,140,255,0.2), transparent);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .featured::after {
-            content: '';
-            position: absolute;
-            bottom: -30%;
-            left: -5%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(124,77,255,0.2), transparent);
-            border-radius: 50%;
-            animation: float 8s ease-in-out infinite reverse;
-        }
-
-        .featured h2 {
-            font-size: 3.5rem;
             margin-bottom: 20px;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            position: relative;
-            z-index: 2;
+            transition: all var(--transition);
+            font-size: 15px;
         }
 
-        .featured p {
-            color: var(--text-secondary);
-            margin-bottom: 0;
-            font-size: 17px;
-            position: relative;
-            z-index: 2;
-            font-weight: 500;
+        .create-post-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(129, 140, 255, 0.3);
         }
 
-        /* ================================================== */
-        /* BLOG FEED */
-        /* ================================================== */
-        .blogFeed {
+        /* ======================== MAIN FEED ======================== */
+        .main-feed { min-height: 100vh; }
+
+        .feed-header {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .feed-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .feed-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .feed-select {
+            padding: 8px 12px;
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all var(--transition);
+        }
+
+        .feed-select:hover {
+            border-color: var(--accent);
+            background: rgba(129, 140, 255, 0.1);
+        }
+
+        /* ======================== POST CARD ======================== */
+        .post {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            display: flex;
+            margin-bottom: 15px;
+            transition: all var(--transition);
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .post:hover {
+            border-color: var(--accent);
+            box-shadow: 0 8px 24px rgba(129, 140, 255, 0.1);
+        }
+
+        .post-voting {
+            background: var(--secondary);
+            padding: 8px;
             display: flex;
             flex-direction: column;
-            gap: 24px;
-            margin-bottom: 60px;
+            align-items: center;
+            gap: 6px;
+            min-width: 50px;
         }
 
-        /* ================================================== */
-        /* BLOG CARD - REDDIT STYLE */
-        /* ================================================== */
-        .blogCard {
-            background: rgba(13,19,37,0.92);
-            border: 2px solid var(--border);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all var(--transition-base);
-            animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            height: 300px;
-            box-shadow: var(--shadow-md);
-            position: relative;
+        .vote-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
             cursor: pointer;
+            font-size: 18px;
+            transition: all var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .blogCard::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--gradient);
-            opacity: 0;
-            transition: opacity var(--transition-base);
-            z-index: 1;
+        .vote-btn:hover {
+            background: rgba(129, 140, 255, 0.2);
+            color: var(--accent);
         }
 
-        .blogCard:hover {
-            border-color: var(--accent);
-            box-shadow: 0 12px 40px rgba(79,140,255,0.2);
-            transform: translateY(-6px);
+        .vote-btn.upvoted {
+            background: rgba(255, 69, 0, 0.2);
+            color: var(--upvote);
         }
 
-        .blogCard:hover::before {
-            opacity: 1;
+        .vote-btn.downvoted {
+            background: rgba(129, 138, 145, 0.2);
+            color: var(--downvote);
         }
 
-        .blogCard:hover .blogImage img {
-            transform: scale(1.12);
+        .vote-count {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            min-height: 16px;
+            text-align: center;
         }
 
-        /* IMAGE SECTION */
-        .blogImage {
-            width: 36%;
-            height: 100%;
-            overflow: hidden;
-            flex-shrink: 0;
-            background: linear-gradient(135deg, rgba(79,140,255,0.15), rgba(124,77,255,0.15));
-            position: relative;
-        }
-
-        .blogImage img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform var(--transition-base);
-        }
-
-        .blogImage::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(79,140,255,0.1), transparent);
-            pointer-events: none;
-        }
-
-        /* CONTENT SECTION */
-        .blogContent {
+        .post-content {
             flex: 1;
-            padding: 28px;
+            padding: 12px 16px;
+            cursor: pointer;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            overflow: hidden;
         }
 
-        .blogMeta {
+        .post-header {
             display: flex;
-            gap: 14px;
-            margin-bottom: 14px;
-            color: var(--text-tertiary);
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
             font-size: 12px;
             flex-wrap: wrap;
-            align-items: center;
-            font-weight: 600;
         }
 
-        .badge {
-            background: linear-gradient(135deg, rgba(124,77,255,0.3), rgba(79,140,255,0.2));
-            color: #c4b1ff;
-            padding: 6px 14px;
-            border-radius: 16px;
-            font-size: 11px;
+        .post-community {
             font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-            border: 1px solid rgba(124,77,255,0.4);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
         }
 
-        .blogTitle {
-            font-size: 1.55rem;
-            font-weight: 800;
-            margin-bottom: 12px;
-            line-height: 1.3;
-            color: var(--text);
-            word-break: break-word;
-        }
+        .post-community:hover { text-decoration: underline; }
 
-        .blogDesc {
+        .post-meta {
             color: var(--text-secondary);
-            font-size: 14px;
-            line-height: 1.65;
-            margin-bottom: 16px;
-            flex: 1;
+            display: flex;
+            gap: 4px;
+        }
+
+        .post-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            line-height: 1.4;
+            transition: color var(--transition);
+        }
+
+        .post:hover .post-title { color: var(--accent); }
+
+        .post-description {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            line-height: 1.5;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
 
-        .blogStats {
-            display: flex;
-            gap: 18px;
-            margin-bottom: 16px;
-            font-size: 13px;
-            color: var(--text-secondary);
-            flex-wrap: wrap;
-            font-weight: 600;
-        }
-
-        .statItem {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(255,255,255,0.03);
-            padding: 6px 12px;
-            border-radius: 12px;
-            transition: all var(--transition-fast);
-        }
-
-        .blogCard:hover .statItem {
-            background: rgba(79,140,255,0.1);
-        }
-
-        .engagementBar {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        /* ================================================== */
-        /* BUTTONS */
-        /* ================================================== */
-        .voteBtn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 9px 14px;
-            border-radius: 14px;
-            border: 2px solid var(--border);
-            background: rgba(255,255,255,0.04);
-            color: var(--text-tertiary);
-            font-size: 13px;
-            cursor: pointer;
-            transition: all var(--transition-fast);
-            font-weight: 700;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .voteBtn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: translateX(-100%);
-            transition: transform var(--transition-fast);
-        }
-
-        .voteBtn:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-            background: rgba(79,140,255,0.08);
-            box-shadow: 0 4px 12px rgba(79,140,255,0.15);
-        }
-
-        .voteBtn:hover::before {
-            transform: translateX(100%);
-        }
-
-        .voteBtn:active {
-            transform: scale(0.98);
-        }
-
-        .voteBtn.voted {
-            color: var(--upvote);
-            border-color: var(--upvote);
-            background: var(--upvote-light);
-            font-weight: 800;
-            box-shadow: 0 4px 12px rgba(255,69,0,0.2);
-        }
-
-        .voteBtn.downvoted {
-            color: var(--downvote);
-            border-color: var(--downvote);
-            background: var(--downvote-light);
-            font-weight: 800;
-            box-shadow: 0 4px 12px rgba(129,138,145,0.2);
-        }
-
-        .actionBtn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 9px 14px;
-            border-radius: 14px;
-            border: 2px solid var(--border);
-            background: rgba(255,255,255,0.04);
-            color: var(--text-tertiary);
-            font-size: 13px;
-            cursor: pointer;
-            transition: all var(--transition-fast);
-            font-weight: 700;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .actionBtn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: translateX(-100%);
-            transition: transform var(--transition-fast);
-        }
-
-        .actionBtn:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-            background: rgba(79,140,255,0.08);
-            box-shadow: 0 4px 12px rgba(79,140,255,0.15);
-        }
-
-        .actionBtn:hover::before {
-            transform: translateX(100%);
-        }
-
-        .actionBtn:active {
-            transform: scale(0.98);
-        }
-
-        .editBtn {
-            background: linear-gradient(135deg, #ffcc00, #ffc400);
-            color: rgb(255, 98, 98);
-            border: 2px solid rgba(255, 149, 0, 0.5);
-            font-weight: 600;
-           
-            border-radius: 12px;
-            width: 80px;
-            height: 36px;
-        }
-
-        .editBtn:hover {
-            background: linear-gradient(135deg, #6fa3ff, #9966ff);
-            box-shadow: 0 6px 18px rgba(79,140,255,0.4);
-            border-color: rgba(79,140,255,0.8);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .deleteBtn {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-            color: white;
-            border: 2px solid rgba(239,68,68,0.5);
-            font-weight: 600;
-            border-radius: 12px;
-            width: 80px;
-            height: 36px;
-        }
-
-        .deleteBtn:hover {
-            background: linear-gradient(135deg, #f87171, #fca5a5);
-            box-shadow: 0 6px 18px rgba(239,68,68,0.4);
-            border-color: rgba(239,68,68,0.8);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        /* ================================================== */
-        /* AUTH MODAL */
-        /* ================================================== */
-        .authModal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.95);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 99999;
-            backdrop-filter: blur(10px);
-            animation: fadeIn 0.4s ease;
-        }
-
-        .authBox {
-            background: var(--gradient-soft);
-            border: 2px solid var(--gradient);
-            border-radius: 32px;
-            padding: 50px;
+        .post-image {
             width: 100%;
-            max-width: 450px;
-            text-align: center;
-            box-shadow: var(--shadow-xl);
-            animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .authBox::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(79,140,255,0.2), transparent);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-            z-index: -1;
-        }
-
-        .authBox h1 {
-            font-size: 2.8rem;
-            margin-bottom: 12px;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-
-        .authBox p {
-            color: var(--text-secondary);
-            margin-bottom: 32px;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .authInput {
-            width: 100%;
-            padding: 14px 18px;
-            border: 2px solid rgba(79,140,255,0.3);
-            border-radius: 14px;
-            background: rgba(255,255,255,0.05);
-            color: var(--text);
-            font-family: 'Poppins', sans-serif;
-            font-size: 14px;
-            margin-bottom: 16px;
-            transition: all var(--transition-base);
-            font-weight: 600;
-        }
-
-        .authInput:focus {
-            outline: none;
-            border-color: var(--accent);
-            background: rgba(79,140,255,0.08);
-            box-shadow: 0 0 24px rgba(79,140,255,0.2);
-        }
-
-        .authInput::placeholder {
-            color: var(--text-tertiary);
-        }
-
-        .authBtn {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 14px;
-            background: var(--gradient);
-            color: white;
-            font-weight: 700;
-            cursor: pointer;
-            font-size: 15px;
-            transition: all var(--transition-base);
-            margin-bottom: 12px;
-            letter-spacing: 0.3px;
-            box-shadow: 0 8px 24px rgba(79,140,255,0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .authBtn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left var(--transition-base);
-        }
-
-        .authBtn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(79,140,255,0.4);
-        }
-
-        .authBtn:hover::before {
-            left: 100%;
-        }
-
-        .authBtn:active {
-            transform: translateY(-1px);
-        }
-
-        .authBtn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .authError {
-            color: #ff6b6b;
-            font-size: 13px;
-            margin-bottom: 15px;
-            min-height: 18px;
-            font-weight: 600;
-            animation: shake 0.4s cubic-bezier(0.36, 0, 0.66, -0.56);
-        }
-
-        .authGuest {
-            background: rgba(255,255,255,0.06);
-            border: 2px solid var(--border);
-            color: var(--text-secondary);
-            box-shadow: none;
-        }
-
-        .authGuest:hover {
-            background: rgba(255,255,255,0.12);
-            color: var(--text);
-            border-color: var(--accent);
-        }
-
-        /* ================================================== */
-        /* BLOG MODAL */
-        /* ================================================== */
-        .modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.85);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            overflow-y: auto;
-            padding: 20px;
-            backdrop-filter: blur(5px);
-            animation: fadeIn 0.3s ease;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modalBox {
-            width: 100%;
-            max-width: 700px;
-            background: rgba(13,19,37,0.95);
-            border: 2px solid var(--border);
-            border-radius: 28px;
-            padding: 40px;
-            margin: 20px auto;
-            box-shadow: var(--shadow-xl);
-            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .modalBox h2 {
-            margin-bottom: 28px;
-            font-size: 2rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .inputGroup {
-            margin-bottom: 22px;
-        }
-
-        .inputGroup label {
-            display: block;
-            margin-bottom: 10px;
-            color: var(--text-secondary);
-            font-weight: 700;
-            font-size: 14px;
-            letter-spacing: 0.3px;
-        }
-
-        .inputGroup input,
-        .inputGroup textarea {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid var(--border);
-            outline: none;
-            border-radius: 14px;
-            background: rgba(255,255,255,0.05);
-            color: var(--text);
-            font-family: 'Poppins', sans-serif;
-            font-size: 14px;
-            transition: all var(--transition-base);
-            font-weight: 500;
-        }
-
-        .inputGroup input:focus,
-        .inputGroup textarea:focus {
-            border-color: var(--accent);
-            background: rgba(79,140,255,0.08);
-            box-shadow: 0 0 20px rgba(79,140,255,0.15);
-        }
-
-        .inputGroup textarea {
-            min-height: 140px;
-            resize: none;
-        }
-
-        .submitBtn {
-            width: 100%;
-            padding: 15px;
-            border: none;
-            border-radius: 14px;
-            background: var(--gradient);
-            color: white;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all var(--transition-base);
-            margin-top: 12px;
-            font-size: 15px;
-            letter-spacing: 0.3px;
-            box-shadow: 0 8px 24px rgba(79,140,255,0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .submitBtn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left var(--transition-base);
-        }
-
-        .submitBtn:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(79,140,255,0.4);
-        }
-
-        .submitBtn:hover::before:not(:disabled) {
-            left: 100%;
-        }
-
-        .submitBtn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .errorMsg {
-            color: #ff6b6b;
-            font-size: 12px;
-            margin-top: 6px;
-            min-height: 16px;
-            font-weight: 600;
-        }
-
-        /* ================================================== */
-        /* FULLSCREEN BLOG VIEW */
-        /* ================================================== */
-        .fullBlog {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.9);
-            backdrop-filter: blur(10px);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            z-index: 99999;
-            overflow-y: auto;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .fullBlog.active {
-            display: flex;
-        }
-
-        .fullBlogContent {
-            width: 100%;
-            max-width: 1100px;
-            background: rgba(13,19,37,0.95);
-            border: 2px solid var(--border);
-            border-radius: 32px;
-            overflow: hidden;
-            position: relative;
-            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            max-height: 90vh;
-            display: flex;
-            flex-direction: column;
-            box-shadow: var(--shadow-xl);
-        }
-
-        .fullImage {
-            width: 100%;
-            height: 420px;
-            overflow: hidden;
-            background: linear-gradient(135deg, rgba(79,140,255,0.1), rgba(124,77,255,0.1));
-        }
-
-        .fullImage img {
-            width: 100%;
-            height: 100%;
+            height: 200px;
+            background: var(--secondary);
+            border-radius: 4px;
             object-fit: cover;
-            transition: transform var(--transition-base);
+            margin-bottom: 10px;
         }
 
-        .fullBlog.active .fullImage img {
-            animation: zoomIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .fullDetails {
-            padding: 50px;
-            overflow-y: auto;
-            flex: 1;
-        }
-
-        .closeBtn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 56px;
-            height: 56px;
-            border: none;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.1);
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
-            transition: all var(--transition-base);
-            z-index: 10;
-            border: 2px solid var(--border);
+        .post-footer {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-        }
-
-        .closeBtn:hover {
-            background: rgba(255,255,255,0.2);
-            border-color: var(--accent);
-            transform: rotate(90deg);
-        }
-
-        .closeBtn:active {
-            transform: rotate(90deg) scale(0.95);
-        }
-
-        .fullDetails h1 {
-            font-size: 3.2rem;
-            margin-bottom: 20px;
-            line-height: 1.2;
-            color: var(--text);
-        }
-
-        .fullMeta {
-            display: flex;
-            gap: 24px;
+            gap: 12px;
             flex-wrap: wrap;
-            color: var(--text-secondary);
-            margin-bottom: 28px;
-            font-size: 13px;
-            padding-bottom: 24px;
-            border-bottom: 2px solid var(--border);
-            font-weight: 600;
         }
 
-        .fullMeta span {
+        .post-action {
             display: flex;
             align-items: center;
             gap: 8px;
-        }
-
-        .fullText {
+            padding: 6px 12px;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 4px;
             color: var(--text-secondary);
-            line-height: 1.9;
-            font-size: 16px;
-            margin-bottom: 40px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all var(--transition);
         }
 
-        /* ================================================== */
-        /* ENGAGEMENT SECTION */
-        /* ================================================== */
-        .engagementSection {
-            margin-bottom: 40px;
-            padding: 28px;
-            background: linear-gradient(135deg, rgba(79,140,255,0.08), rgba(124,77,255,0.08));
-            border: 2px solid var(--border);
-            border-radius: 20px;
-        }
-
-        .engagementStats {
-            display: flex;
-            gap: 24px;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-        }
-
-        .engagementStat {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 20px;
-            background: rgba(79,140,255,0.12);
-            border-radius: 14px;
-            border: 2px solid rgba(79,140,255,0.2);
-            transition: all var(--transition-fast);
-            cursor: default;
-        }
-
-        .engagementStat:hover {
-            border-color: var(--accent);
-            background: rgba(79,140,255,0.15);
-            transform: translateY(-2px);
-        }
-
-        .engagementStat strong {
+        .post-action:hover {
+            background: rgba(129, 140, 255, 0.1);
             color: var(--accent);
-            font-size: 18px;
-            font-weight: 800;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .reactionBar {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            color: white;
-        }
-
-        .reaction {
-            padding: 11px 20px;
-            border-radius: 14px;
-            background: rgba(255,255,255,0.06);
-            border: 2px solid var(--border);
-            cursor: pointer;
-            transition: all var(--transition-base);
-            font-weight: 700;
-            font-size: 14px;
-            position: relative;
-            overflow: hidden;
-            color: white;
-        }
-
-        .reaction::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: translateX(-100%);
-            transition: transform var(--transition-base);
-        }
-
-        .reaction:hover {
-            transform: translateY(-3px);
-            background: rgba(79,140,255,0.15);
             border-color: var(--accent);
-            box-shadow: 0 6px 16px rgba(79,140,255,0.2);
         }
 
-        .reaction:hover::before {
-            transform: translateX(100%);
-        }
-
-        .reaction:active {
-            transform: translateY(-1px);
-        }
-
-        .reaction.voted {
-            background: rgba(255,69,0,0.15);
-            border-color: var(--upvote);
-            color: var(--upvote);
-            font-weight: 800;
-        }
-
-        .reaction.downvoted {
-            background: rgba(129,138,145,0.15);
-            border-color: var(--downvote);
-            color: var(--downvote);
-            font-weight: 800;
-        }
-
-        /* ================================================== */
-        /* COMMENTS SECTION */
-        /* ================================================== */
-        .commentsSection {
-            margin-top: 40px;
-            padding-top: 40px;
-            border-top: 2px solid var(--border);
-        }
-
-        .commentsTitle {
-            font-size: 1.8rem;
-            margin-bottom: 28px;
-            font-weight: 800;
+        .shared-badge {
+            padding: 4px 8px;
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 4px;
         }
 
-        .commentForm {
-            margin-bottom: 32px;
-            padding: 24px;
-            background: rgba(255,255,255,0.04);
-            border: 2px solid var(--border);
-            border-radius: 20px;
-            transition: all var(--transition-base);
+        /* ======================== RIGHT SIDEBAR ======================== */
+        .right-sidebar { height: fit-content; position: sticky; top: 20px; }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
         }
 
-        .commentForm:focus-within {
-            border-color: var(--accent);
-            background: rgba(79,140,255,0.08);
-            box-shadow: 0 8px 24px rgba(79,140,255,0.1);
-        }
-
-        .commentInput {
-            width: 100%;
-            padding: 14px;
-            border-radius: 12px;
-            background: rgba(255,255,255,0.05);
-            border: 2px solid var(--border);
-            color: var(--text);
-            font-family: 'Poppins', sans-serif;
-            margin-bottom: 14px;
-            resize: none;
-            font-size: 14px;
-            transition: all var(--transition-base);
-            font-weight: 500;
-        }
-
-        .commentInput:focus {
-            outline: none;
-            background: rgba(255,255,255,0.08);
-            border-color: var(--accent);
-            box-shadow: 0 0 20px rgba(79,140,255,0.15);
-        }
-
-        .commentInput::placeholder {
-            color: var(--text-tertiary);
-        }
-
-        .commentBtn {
-            padding: 12px 28px;
-            border-radius: 12px;
-            background: var(--gradient);
-            color: white;
-            border: none;
-            cursor: pointer;
+        .card-title {
+            font-size: 16px;
             font-weight: 700;
-            transition: all var(--transition-base);
-            font-size: 14px;
-            letter-spacing: 0.2px;
-            box-shadow: 0 6px 18px rgba(79,140,255,0.25);
-            position: relative;
-            overflow: hidden;
+            margin-bottom: 15px;
+            color: var(--text-primary);
         }
 
-        .commentBtn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
+        .search-box {
             width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left var(--transition-base);
+            padding: 10px 15px;
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 13px;
+            margin-bottom: 20px;
+            transition: all var(--transition);
         }
 
-        .commentBtn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(79,140,255,0.3);
+        .search-box:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(129, 140, 255, 0.05);
         }
 
-        .commentBtn:hover::before:not(:disabled) {
-            left: 100%;
+        .trending-item {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: color var(--transition);
         }
 
-        .commentBtn:active {
-            transform: translateY(-1px);
+        .trending-item:last-child { border-bottom: none; }
+        .trending-item:hover { color: var(--accent); }
+
+        .trending-title {
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 4px;
         }
 
-        .commentBtn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
+        .trending-count {
+            font-size: 12px;
+            color: var(--text-secondary);
         }
 
-        .commentsList {
+        .user-card {
+            text-align: center;
+        }
+
+        .user-avatar-large {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #818cf8, #6366f1);
+            border-radius: 50%;
+            margin: 0 auto 15px;
             display: flex;
-            flex-direction: column;
-            gap: 18px;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 800;
         }
 
-        .commentCard {
-            background: rgba(255,255,255,0.03);
-            border: 2px solid var(--border);
-            border-radius: 14px;
-            padding: 18px;
-            margin-left: 0;
-            transition: all var(--transition-base);
+        .user-name {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 5px;
         }
 
-        .commentCard:hover {
-            border-color: var(--accent);
-            background: rgba(79,140,255,0.06);
+        .user-karma {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
         }
 
-        .commentCard.nested {
-            margin-left: 28px;
-            background: rgba(79,140,255,0.08);
-            border-color: rgba(79,140,255,0.3);
-        }
-
-        .commentCard.nested:hover {
-            border-color: var(--accent);
-            background: rgba(79,140,255,0.12);
-        }
-
-        .commentHeader {
+        .karma-item {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 12px;
-            gap: 12px;
-        }
-
-        .commentAuthor {
-            font-weight: 800;
-            color: var(--accent);
-            font-size: 14px;
-            letter-spacing: 0.2px;
-        }
-
-        .commentTime {
             font-size: 12px;
-            color: var(--text-tertiary);
-            white-space: nowrap;
-            font-weight: 600;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
         }
 
-        .commentText {
-            color: var(--text-secondary);
-            line-height: 1.6;
-            font-size: 14px;
-            margin-bottom: 12px;
-            word-wrap: break-word;
-        }
+        .karma-item:last-child { border-bottom: none; }
 
-        .commentActions {
-            display: flex;
-            gap: 12px;
-            margin-top: 12px;
-        }
+        .karma-label { color: var(--text-secondary); }
+        .karma-value { font-weight: 700; color: var(--accent); }
 
-        .replyBtn, .deleteCommentBtn {
-            padding: 6px 14px;
-            border-radius: 8px;
-            background: rgba(79,140,255,0.1);
-            color: var(--accent);
+        .btn-primary {
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(135deg, #818cf8, #6366f1);
+            color: white;
             border: none;
-            cursor: pointer;
-            font-size: 12px;
+            border-radius: 6px;
             font-weight: 700;
-            transition: all var(--transition-fast);
-            letter-spacing: 0.2px;
+            cursor: pointer;
+            transition: all var(--transition);
+            margin-top: 10px;
         }
 
-        .replyBtn:hover {
-            background: rgba(79,140,255,0.2);
+        .btn-primary:hover {
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(129, 140, 255, 0.3);
         }
 
-        .deleteCommentBtn {
-            background: rgba(255,59,59,0.1);
-            color: #ff3b3b;
+        /* ======================== MODALS ======================== */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-y: auto;
         }
 
-        .deleteCommentBtn:hover {
-            background: rgba(255,59,59,0.2);
-            transform: translateY(-2px);
-        }
+        .modal.active { display: flex; }
 
-        .noComments {
-            text-align: center;
-            color: var(--text-tertiary);
-            padding: 40px 20px;
-            font-style: italic;
-            font-weight: 600;
-        }
-
-        /* ================================================== */
-        /* ANIMATIONS */
-        /* ================================================== */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 8px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+            animation: slideUp 0.3s ease;
+            margin: auto;
         }
 
         @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        @keyframes zoomIn {
-            from {
-                transform: scale(0.95);
-            }
-            to {
-                transform: scale(1);
-            }
+        .modal-title {
+            font-size: 18px;
+            font-weight: 700;
         }
 
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(20px);
-            }
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 24px;
+            cursor: pointer;
+            transition: color var(--transition);
         }
 
-        @keyframes pulse {
-            0%, 100% {
-                box-shadow: 0 4px 15px rgba(255,107,157,0.3);
-            }
-            50% {
-                box-shadow: 0 4px 25px rgba(255,107,157,0.5);
-            }
+        .modal-close:hover { color: var(--text-primary); }
+
+        .modal-body { padding: 20px; }
+
+        .form-group {
+            margin-bottom: 20px;
         }
 
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
-            20%, 40%, 60%, 80% { transform: translateX(4px); }
+        .form-label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 14px;
         }
 
-        /* ================================================== */
-        /* LOADING & STATES */
-        /* ================================================== */
-        .loading {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 10px 12px;
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            transition: all var(--transition);
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(129, 140, 255, 0.05);
+        }
+
+        .form-textarea { min-height: 120px; resize: vertical; }
+
+        .form-input option { background: var(--card-bg); }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 15px 20px;
+            border-radius: 6px;
+            z-index: 10000;
+            animation: slideInRight 0.3s ease;
+        }
+
+        .toast.success { border-color: var(--success); }
+        .toast.error { border-color: var(--danger); color: var(--danger); }
+
+        @keyframes slideInRight {
+            from { transform: translateX(400px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* ======================== FULLSCREEN POST VIEW ======================== */
+        .fullscreen-post-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9998;
+            overflow-y: auto;
+            padding: 40px 20px;
+        }
+
+        .fullscreen-post-modal.active { display: block; }
+
+        .fullscreen-post-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 40px;
+            animation: slideUp 0.3s ease;
+        }
+
+        .fullscreen-post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 20px;
+        }
+
+        .fullscreen-post-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 32px;
+            cursor: pointer;
+            transition: color var(--transition);
+        }
+
+        .fullscreen-post-close:hover { color: var(--text-primary); }
+
+        .fullscreen-post-title {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .fullscreen-post-meta {
+            display: flex;
+            gap: 15px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            flex-wrap: wrap;
+        }
+
+        .fullscreen-post-content {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            color: var(--text-primary);
+        }
+
+        .fullscreen-post-image {
+            width: 100%;
+            max-height: 500px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-bottom: 25px;
+        }
+
+        .fullscreen-post-voting {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 15px;
+            background: var(--secondary);
+            border-radius: 8px;
+        }
+
+        .fullscreen-vote-btn {
+            padding: 10px 15px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all var(--transition);
+        }
+
+        .fullscreen-vote-btn:hover {
+            background: rgba(129, 140, 255, 0.2);
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .fullscreen-vote-btn.upvoted {
+            background: rgba(255, 69, 0, 0.2);
+            color: var(--upvote);
+            border-color: var(--upvote);
+        }
+
+        .fullscreen-vote-btn.downvoted {
+            background: rgba(129, 138, 145, 0.2);
+            color: var(--downvote);
+            border-color: var(--downvote);
+        }
+
+        /* ======================== COMMENTS ======================== */
+        .comments-section {
+            margin-top: 40px;
+            border-top: 1px solid var(--border);
+            padding-top: 30px;
+        }
+
+        .comments-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .comment-form {
+            margin-bottom: 30px;
+            padding: 15px;
+            background: var(--secondary);
+            border-radius: 8px;
+        }
+
+        .comment-input {
+            width: 100%;
+            padding: 10px 12px;
+            background: var(--primary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            margin-bottom: 10px;
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .comment-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(129, 140, 255, 0.05);
+        }
+
+        .comment-btn {
+            padding: 8px 16px;
             background: var(--accent);
-            border-radius: 50%;
-            animation: pulse 1.5s ease-in-out infinite;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
         }
 
-        /* ================================================== */
-        /* RESPONSIVE */
-        /* ================================================== */
-        @media (max-width: 900px) {
-            .container {
-                max-width: 100%;
-            }
-
-            h1 { font-size: 2.5rem; }
-            h2 { font-size: 2rem; }
-            h3 { font-size: 1.4rem; }
-
-            .header {
-                flex-direction: column;
-                align-items: flex-start;
-                margin-bottom: 30px;
-            }
-
-            .logo h1 {
-                font-size: 2rem;
-            }
-
-            .clock {
-                position: relative;
-                top: 0;
-                right: 0;
-                width: 100%;
-                margin-bottom: 30px;
-            }
-
-            .controls {
-                flex-direction: column;
-                gap: 12px;
-            }
-
-            .searchBox {
-                min-width: 100%;
-            }
-
-            .filterSelect, .sortSelect {
-                width: 100%;
-            }
-
-            .featured {
-                padding: 40px 30px;
-            }
-
-            .featured h2 {
-                font-size: 2.2rem;
-            }
-
-            .blogCard {
-                height: auto;
-                flex-direction: column;
-            }
-
-            .blogImage {
-                width: 100%;
-                height: 240px;
-            }
-
-            .fullImage {
-                height: 300px;
-            }
-
-            .fullDetails {
-                padding: 30px;
-            }
-
-            .fullDetails h1 {
-                font-size: 2.2rem;
-            }
-
-            .fullMeta {
-                flex-direction: column;
-                gap: 12px;
-            }
-
-            .fullText {
-                font-size: 15px;
-            }
-
-            .authBox {
-                padding: 35px;
-                max-width: 90%;
-            }
-
-            .authBox h1 {
-                font-size: 2rem;
-            }
-
-            .modalBox {
-                padding: 30px;
-            }
-
-            .commentCard.nested {
-                margin-left: 14px;
-            }
+        .comment-btn:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
         }
 
-        @media (max-width: 640px) {
-            body {
-                padding: 12px;
-            }
-
-            h1 { font-size: 1.8rem; }
-            h2 { font-size: 1.5rem; }
-            h3 { font-size: 1.2rem; }
-
-            .header {
-                gap: 16px;
-            }
-
-            .logo h1 {
-                font-size: 1.6rem;
-            }
-
-            .addBlogBtn {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .clock {
-                width: 100%;
-                padding: 16px 20px;
-                margin-bottom: 20px;
-            }
-
-            .clockTime {
-                font-size: 1.5rem;
-            }
-
-            .clockDate {
-                font-size: 12px;
-            }
-
-            .featured {
-                padding: 30px 20px;
-                margin-bottom: 30px;
-            }
-
-            .featured h2 {
-                font-size: 1.8rem;
-            }
-
-            .featured p {
-                font-size: 14px;
-            }
-
-            .blogCard {
-                margin-bottom: 16px;
-            }
-
-            .blogContent {
-                padding: 20px;
-            }
-
-            .blogTitle {
-                font-size: 1.2rem;
-            }
-
-            .blogStats {
-                gap: 10px;
-                font-size: 12px;
-            }
-
-            .engagementBar {
-                gap: 8px;
-            }
-
-            .voteBtn, .actionBtn {
-                padding: 8px 12px;
-                font-size: 12px;
-            }
-
-            .fullBlogContent {
-                border-radius: 20px;
-            }
-
-            .fullImage {
-                height: 240px;
-            }
-
-            .fullDetails {
-                padding: 20px;
-            }
-
-            .fullDetails h1 {
-                font-size: 1.6rem;
-            }
-
-            .fullMeta {
-                font-size: 12px;
-                gap: 16px;
-            }
-
-            .fullText {
-                font-size: 14px;
-            }
-
-            .engagementSection {
-                padding: 20px;
-                margin-bottom: 30px;
-            }
-
-            .engagementStats {
-                gap: 16px;
-            }
-
-            .engagementStat {
-                padding: 10px 16px;
-                font-size: 12px;
-            }
-
-            .reactionBar {
-                gap: 8px;
-            }
-
-            .reaction {
-                padding: 9px 16px;
-                font-size: 12px;
-            }
-
-            .commentsSection {
-                padding-top: 30px;
-            }
-
-            .commentsTitle {
-                font-size: 1.4rem;
-            }
-
-            .commentForm {
-                padding: 18px;
-                margin-bottom: 24px;
-            }
-
-            .commentInput {
-                padding: 12px;
-                margin-bottom: 12px;
-            }
-
-            .commentBtn {
-                width: 100%;
-                padding: 12px;
-            }
-
-            .commentCard {
-                padding: 14px;
-            }
-
-            .commentCard.nested {
-                margin-left: 12px;
-            }
-
-            .authBox {
-                padding: 28px;
-                max-width: 95%;
-            }
-
-            .modalBox {
-                padding: 24px;
-            }
-
-            .modalBox h2 {
-                font-size: 1.5rem;
-            }
-
-            .inputGroup label {
-                font-size: 13px;
-            }
-
-            .inputGroup input,
-            .inputGroup textarea {
-                font-size: 13px;
-                padding: 12px;
-            }
-
-            .inputGroup textarea {
-                min-height: 100px;
-            }
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
+
+        .comment {
+            padding: 15px;
+            background: var(--secondary);
+            border-radius: 6px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .comment-author {
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 5px;
+            font-size: 13px;
+        }
+
+        .comment-time {
+            color: var(--text-secondary);
+            font-size: 11px;
+            margin-bottom: 8px;
+        }
+
+        .comment-text {
+            color: var(--text-primary);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .no-comments {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        /* ======================== COMMUNITY CREATION ======================== */
+        .community-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .community-item {
+            padding: 10px 12px;
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all var(--transition);
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .community-item:hover {
+            background: rgba(129, 140, 255, 0.1);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        @media (max-width: 1200px) {
+            .container-fluid { grid-template-columns: 1fr 320px; }
+            .sidebar { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .container-fluid { grid-template-columns: 1fr; padding: 12px; gap: 12px; }
+            .right-sidebar { position: static; }
+            .post { flex-direction: column; }
+            .post-voting { flex-direction: row; padding: 8px 16px; border-bottom: 1px solid var(--border); }
+            .feed-header { flex-direction: column; align-items: flex-start; }
+            .feed-controls { width: 100%; }
+        }
+
+        .no-content {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+        }
+
+        .hidden { display: none !important; }
     </style>
 </head>
-
 <body>
+    <div class="container-fluid">
+        <!-- LEFT SIDEBAR -->
+        <div class="sidebar">
+            <div style="font-size: 24px; font-weight: 900; color: var(--accent); margin-bottom: 30px; cursor: pointer;" onclick="goHome()">
+                🐉 DracoLogs
+            </div>
+
+            <button class="create-post-btn" onclick="openCreatePostModal()">+ Create Post</button>
+
+            <div class="sidebar-section">
+                <div class="sidebar-header">Navigation</div>
+                <div class="sidebar-item active" onclick="switchFeed('home')">
+                    <span class="sidebar-item-icon">🏠</span>
+                    <span class="sidebar-item-text">Home</span>
+                </div>
+                <div class="sidebar-item" onclick="switchFeed('trending')">
+                    <span class="sidebar-item-icon">🔥</span>
+                    <span class="sidebar-item-text">Trending</span>
+                </div>
+                <div class="sidebar-item" onclick="switchFeed('recent')">
+                    <span class="sidebar-item-icon">⏰</span>
+                    <span class="sidebar-item-text">Recent</span>
+                </div>
+                <div class="sidebar-item" onclick="switchFeed('top')">
+                    <span class="sidebar-item-icon">⭐</span>
+                    <span class="sidebar-item-text">Top</span>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-header">Communities</div>
+                <div id="communitiesContainer" class="community-list" style="padding: 0 0 12px 0;"></div>
+                <div style="padding: 12px 20px;">
+                    <button class="create-post-btn" style="font-size: 12px; padding: 8px;" onclick="openCreateCommunityModal()">+ Create Community</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN FEED -->
+        <div class="main-feed">
+            <div class="feed-header">
+                <div class="feed-title" id="feedTitle">Home</div>
+                <div class="feed-controls">
+                    <select class="feed-select" id="sortSelect" onchange="applySorting()">
+                        <option value="newest">Newest</option>
+                        <option value="trending">Trending</option>
+                        <option value="top">Top</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="feedContainer"></div>
+        </div>
+
+        <!-- RIGHT SIDEBAR -->
+        <div class="right-sidebar">
+            <div class="card">
+                <div style="position: relative;">
+                    <input type="text" class="search-box" placeholder="🔍 Search posts..." id="searchInput" onkeyup="searchPosts()">
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">📊 Trending</div>
+                <div id="trendingContainer"></div>
+            </div>
+
+            <div class="card user-card">
+                <div class="user-avatar-large" id="userAvatarDisplay">A</div>
+                <div class="user-name" id="userDisplay">Loading...</div>
+                <div class="user-karma">Community Draco</div>
+                <div class="karma-item">
+                    <span class="karma-label">Post Score</span>
+                    <span class="karma-value" id="postKarma">0</span>
+                </div>
+                <button class="btn-primary" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CREATE POST MODAL -->
+    <div class="modal" id="createPostModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Create a Post</div>
+                <button class="modal-close" onclick="closeModal('createPostModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Title</label>
+                    <input type="text" class="form-input" id="postTitle" placeholder="What's on your mind?" maxlength="300">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Content</label>
+                    <textarea class="form-textarea" id="postContent" placeholder="Share your thoughts..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Image URL (Optional)</label>
+                    <input type="url" class="form-input" id="postImage" placeholder="https://example.com/image.jpg">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Community</label>
+                    <select class="form-input" id="postCommunity">
+                        <option value="">General</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">
+                        <input type="checkbox" id="shareToCommuntiy" checked /> Share to Community
+                    </label>
+                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 5px;">Your post will be shared in the community channel for discussion</div>
+                </div>
+                <button class="btn-primary" onclick="submitPost()">Post</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CREATE COMMUNITY MODAL -->
+    <div class="modal" id="createCommunityModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Create a Community</div>
+                <button class="modal-close" onclick="closeModal('createCommunityModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Community Name</label>
+                    <input type="text" class="form-input" id="communityName" placeholder="e.g., Gaming, Tech, Art" maxlength="50">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" id="communityDescription" placeholder="What is this community about?" maxlength="200"></textarea>
+                </div>
+                <button class="btn-primary" onclick="submitCommunity()">Create Community</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FULLSCREEN POST MODAL -->
+    <div class="fullscreen-post-modal" id="fullscreenPostModal" onclick="if(event.target === this) closeFullscreenPost()">
+        <div class="fullscreen-post-container" onclick="event.stopPropagation()">
+            <div class="fullscreen-post-header">
+                <div>
+                    <div class="fullscreen-post-title" id="fullscreenPostTitle"></div>
+                    <div class="fullscreen-post-meta" id="fullscreenPostMeta"></div>
+                </div>
+                <button class="fullscreen-post-close" onclick="closeFullscreenPost()">✕</button>
+            </div>
+
+            <div class="fullscreen-post-content" id="fullscreenPostContent"></div>
+            <img id="fullscreenPostImage" class="fullscreen-post-image" style="display: none;">
+
+            <div class="fullscreen-post-voting" id="fullscreenPostVoting"></div>
+
+            <div class="comments-section">
+                <div class="comments-title">Comments</div>
+                <div class="comment-form">
+                    <textarea class="comment-input" id="commentInput" placeholder="Share your thoughts..."></textarea>
+                    <button class="comment-btn" onclick="submitComment()">Post Comment</button>
+                </div>
+                <div id="commentsContainer" class="comments-list"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- AUTH MODAL -->
-    <div class="authModal" id="authModal">
-        <div class="authBox">
-            <h1>🐉 DracoBlog</h1>
-            <p id="authPrompt">Enter your username</p>
-            
-            <input type="text" id="authUsername" class="authInput" placeholder="Username" maxlength="20">
-            <input type="password" id="authPassword" class="authInput" placeholder="Password (only for admin)" style="display:none;" maxlength="50">
-            
-            <div class="authError" id="authError"></div>
-            
-            <button class="authBtn" id="authSubmitBtn">Continue →</button>
-            <button class="authBtn authGuest" id="authGuestBtn">Continue as Guest</button>
-        </div>
-    </div>
-
-    <!-- CLOCK -->
-    <div class="clock">
-        <div class="clockTime" id="clockTime">00:00:00</div>
-        <div class="clockDate" id="clockDate">Loading...</div>
-    </div>
-
-    <div class="container">
-        <!-- HEADER -->
-        <div class="header">
-            <div class="logo">
-                <h1>🐉 DracoBlog<span class="adminBadge" id="adminBadge" style="display:none;">👑 ADMIN</span></h1>
-                <p>Community-driven tech stories & ideas</p>
+    <div class="modal active" id="authModal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <div class="modal-title">🐉 DracoLogs</div>
             </div>
-            <button class="addBlogBtn" id="openModal">+ New Post</button>
-        </div>
-
-        <!-- CONTROLS -->
-        <div class="controls">
-            <div class="searchBox">
-                <span class="searchIcon">🔍</span>
-                <input type="text" id="searchInput" placeholder="Search posts...">
-            </div>
-            <select class="filterSelect" id="categoryFilter">
-                <option value="">All Categories</option>
-            </select>
-            <select class="sortSelect" id="sortSelect">
-                <option value="latest">Latest</option>
-                <option value="oldest">Oldest</option>
-                <option value="mostUpvoted">Most Upvoted</option>
-                <option value="mostViewed">Most Viewed</option>
-                <option value="mostCommented">Most Commented</option>
-            </select>
-        </div>
-
-        <!-- FEATURED -->
-        <div class="featured">
-            <h2>Welcome to DracoBlog Pro</h2>
-            <p>Discover amazing tech stories, share your ideas, and engage with our community. Vote, comment, and explore!</p>
-        </div>
-
-        <!-- BLOG FEED -->
-        <div class="blogFeed" id="blogFeed"></div>
-    </div>
-
-    <!-- CREATE/EDIT BLOG MODAL -->
-    <div class="modal" id="blogModal">
-        <div class="modalBox">
-            <h2 id="modalTitle">Create New Post</h2>
-
-            <div class="inputGroup">
-                <label>Post Title</label>
-                <input type="text" id="blogTitle" placeholder="Enter title" maxlength="100">
-                <div class="errorMsg" id="titleError"></div>
-            </div>
-
-            <div class="inputGroup">
-                <label>Category</label>
-                <input type="text" id="blogCategory" placeholder="Technology" maxlength="50">
-                <div class="errorMsg" id="categoryError"></div>
-            </div>
-
-            <div class="inputGroup">
-                <label>Image URL (Optional)</label>
-                <input type="url" id="blogImage" placeholder="https://example.com/image.jpg" maxlength="500">
-                <div class="errorMsg" id="imageError"></div>
-            </div>
-
-            <div class="inputGroup">
-                <label>Description</label>
-                <textarea id="blogDesc" placeholder="Write your post content..."></textarea>
-                <div class="errorMsg" id="descError"></div>
-            </div>
-
-            <button class="submitBtn" id="publishBlog">Publish Post</button>
-        </div>
-    </div>
-
-    <!-- FULLSCREEN BLOG VIEW -->
-    <div class="fullBlog" id="fullBlog">
-        <div class="fullBlogContent">
-            <button class="closeBtn" id="closeFullBlog" aria-label="Close">✕</button>
-
-            <div class="fullImage">
-                <img id="fullBlogImage" src="" alt="Blog image">
-            </div>
-
-            <div class="fullDetails">
-                <div class="fullMeta">
-                    <span id="fullCategory"></span>
-                    <span id="fullPublisher"></span>
-                    <span id="fullReadTime"></span>
-                    <span id="fullViews">👁️ 0 views</span>
+            <div class="modal-body">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="font-size: 32px; margin-bottom: 10px;">🐉</div>
+                    <div style="font-size: 20px; font-weight: 700; margin-bottom: 5px;">Welcome to DracoLogs</div>
+                    <div style="color: var(--text-secondary); font-size: 13px;">The next-generation community platform</div>
                 </div>
-
-                <h1 id="fullTitle"></h1>
-                <p class="fullText" id="fullDescription"></p>
-
-                <!-- ENGAGEMENT SECTION -->
-                <div class="engagementSection">
-                    <div class="engagementStats">
-                        <div class="engagementStat">
-                            ⬆️ <strong id="upvoteCount">0</strong> Upvotes
-                        </div>
-                        <div class="engagementStat">
-                            💬 <strong id="commentCount">0</strong> Comments
-                        </div>
-                        <div class="engagementStat">
-                            🔥 <strong id="heatScore">0</strong> Heat
-                        </div>
-                    </div>
-
-                    <div class="reactionBar">
-                        <button class="reaction" id="upvoteBtn">⬆️ Upvote</button>
-                        <button class="reaction" id="downvoteBtn">⬇️ Downvote</button>
-                        <button class="reaction">🔥 Hot</button>
-                        <button class="reaction">🚀 Future Tech</button>
-                        <button class="reaction">💡 Inspiring</button>
-                    </div>
+                <div id="authError" style="color: var(--danger); font-size: 13px; margin-bottom: 15px; display: none;"></div>
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <input type="text" class="form-input" id="authUsername" placeholder="Enter your username" maxlength="20" onkeyup="checkAdminUsername()">
                 </div>
-
-                <!-- COMMENTS SECTION -->
-                <div class="commentsSection">
-                    <h3 class="commentsTitle">💬 Comments</h3>
-
-                    <div class="commentForm">
-                        <textarea class="commentInput" id="commentInput" placeholder="Share your thoughts..." maxlength="500"></textarea>
-                        <button class="commentBtn" id="postCommentBtn">Post Comment</button>
-                    </div>
-
-                    <div class="commentsList" id="commentsList">
-                        <div class="noComments">No comments yet. Be the first!</div>
-                    </div>
+                <div class="form-group" id="passwordGroup" style="display: none;">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" id="authPassword" placeholder="Enter password" maxlength="50" onkeypress="if(event.key==='Enter') authenticate()">
                 </div>
+                <button class="btn-primary" onclick="authenticate()">Continue</button>
+                <button class="btn-primary" style="background: var(--secondary); color: var(--text-primary); margin-top: 10px;" onclick="authenticateAsGuest()">Continue as Guest</button>
             </div>
         </div>
     </div>
 
-<script type="module">
-// ======================================================
-// FIREBASE IMPORTS
-// ======================================================
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-import {
-    getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy,
-    updateDoc, arrayUnion, arrayRemove, getDoc
-} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-
-// ======================================================
-// FIREBASE CONFIG
-// ======================================================
-const firebaseConfig = {
-    apiKey: "AIzaSyCHkxuxZ-KWzQEoZt-XLXz1XX8ObTENQR4",
-    authDomain: "dracoblog-27113.firebaseapp.com",
-    projectId: "dracoblog-27113",
-    storageBucket: "dracoblog-27113.appspot.com",
-    messagingSenderId: "1086959854616",
-    appId: "1:1086959854616:web:64ac860d7a4a28706bcf6d",
-    measurementId: "G-1RDC1ZZMYY"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-// ======================================================
-// STATE MANAGEMENT
-// ======================================================
-let allBlogs = [];
-let filteredBlogs = [];
-let currentEditingId = null;
-let currentUser = null;
-let currentBlogId = null;
-let localBlogCache = {}; // Local cache for smooth UI updates
-
-const ADMIN_USERNAME = "abhi67";
-const ADMIN_PASSWORD = "admin67";
-
-// ======================================================
-// DEFAULT IMAGES
-// ======================================================
-const defaultImages = [
-    "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1400&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1400&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1400&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1400&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1400&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=1400&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1519043412032-7e5e497f0bb0?q=80&w=1400&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1400&auto=format&fit=crop"
-];
-
-// ======================================================
-// PRE-EXISTING BLOGS
-// ======================================================
-const preExistingBlogs = [
-    {
-        title: "The Rise of AI in Web Development",
-        category: "AI & Web Dev",
-        description: "Exploring how AI tools like Claude are revolutionizing the way we build web applications. From code generation to UI design, AI is becoming an indispensable tool for modern developers.",
-        image: defaultImages[0],
-        publisher: "TechGuru",
-        likes: ["User1", "User2", "User3"],
-        upvotes: ["User1", "User2", "User3"],
-        downvotes: [],
-        views: 245,
-        comments: [
-            { author: "DevNinja", text: "This is game-changing! AI tools have reduced my development time by 40%.", timestamp: Date.now() - 86400000 }
-        ]
-    },
-    {
-        title: "Firebase Real-time Database vs Firestore",
-        category: "Database",
-        description: "A comprehensive comparison between Firebase Realtime Database and Cloud Firestore. Learn which one suits your project needs and understand the key differences in architecture, pricing, and scalability.",
-        image: defaultImages[1],
-        publisher: "DatabaseMaster",
-        likes: ["User2", "User4"],
-        upvotes: ["User2", "User4"],
-        downvotes: [],
-        views: 189,
-        comments: [
-            { author: "CloudEnthusiast", text: "Firestore is definitely the future. Better querying capabilities!", timestamp: Date.now() - 172800000 }
-        ]
-    },
-    {
-        title: "Building Scalable Backend Systems",
-        category: "Backend",
-        description: "Best practices for designing scalable backend architecture. We'll cover microservices, load balancing, caching strategies, and how to handle millions of concurrent users without breaking a sweat.",
-        image: defaultImages[2],
-        publisher: "ScaleExpert",
-        likes: ["User1", "User3", "User5"],
-        upvotes: ["User1", "User3", "User5"],
-        downvotes: [],
-        views: 312,
-        comments: [
-            { author: "ArchitectNerd", text: "Great insights on caching! Definitely saving this article.", timestamp: Date.now() - 259200000 }
-        ]
-    },
-    {
-        title: "Modern CSS Features You Should Know",
-        category: "Frontend",
-        description: "Discover the latest CSS features that are changing frontend development. From CSS Grid to container queries, learn how to write more efficient and responsive styles with modern techniques.",
-        image: defaultImages[3],
-        publisher: "StyleMaster",
-        likes: ["User2", "User3"],
-        upvotes: ["User2", "User3"],
-        downvotes: [],
-        views: 156,
-        comments: []
-    },
-    {
-        title: "JavaScript Async/Await Deep Dive",
-        category: "JavaScript",
-        description: "Master asynchronous JavaScript with async/await. This guide covers promises, error handling, performance optimization, and common pitfalls to avoid when writing modern async code.",
-        image: defaultImages[4],
-        publisher: "JSExplorer",
-        likes: ["User4", "User5", "User1"],
-        upvotes: ["User4", "User5", "User1"],
-        downvotes: [],
-        views: 278,
-        comments: [
-            { author: "AsyncMaster", text: "The error handling section was super helpful!", timestamp: Date.now() - 345600000 }
-        ]
-    },
-    {
-        title: "The Future of Web3 and Blockchain",
-        category: "Web3",
-        description: "Exploring the intersection of blockchain technology and web development. Understanding smart contracts, NFTs, and how decentralized applications will shape the future of the internet.",
-        image: defaultImages[5],
-        publisher: "BlockchainPioneer",
-        likes: ["User1"],
-        upvotes: ["User1"],
-        downvotes: ["User6"],
-        views: 203,
-        comments: []
-    },
-    {
-        title: "Testing Strategies for React Applications",
-        category: "Testing",
-        description: "Learn comprehensive testing strategies for React apps. Cover unit testing, integration testing, and end-to-end testing with tools like Jest, React Testing Library, and Cypress.",
-        image: defaultImages[6],
-        publisher: "TestMaster",
-        likes: ["User3", "User4"],
-        upvotes: ["User3", "User4"],
-        downvotes: [],
-        views: 167,
-        comments: [
-            { author: "QAEnthusiast", text: "Finally a guide that explains React Testing Library properly!", timestamp: Date.now() - 432000000 }
-        ]
-    },
-    {
-        title: "Performance Optimization Techniques",
-        category: "Performance",
-        description: "Essential techniques to optimize your web application performance. Learn about code splitting, lazy loading, image optimization, and how to achieve lightning-fast load times.",
-        image: defaultImages[7],
-        publisher: "PerfOptimist",
-        likes: ["User2", "User5", "User6"],
-        upvotes: ["User2", "User5", "User6"],
-        downvotes: [],
-        views: 221,
-        comments: []
-    }
-];
-
-// ======================================================
-// UTILITY FUNCTIONS
-// ======================================================
-function sanitizeInput(input) {
-    if (typeof input !== "string") return "";
-    const map = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" };
-    return input.replace(/[&<>"']/g, (char) => map[char]);
-}
-
-function getFallbackImage() {
-    return defaultImages[Math.floor(Math.random() * defaultImages.length)];
-}
-
-function calculateReadingTime(text) {
-    const wordsPerMinute = 200;
-    const wordCount = text.trim().split(/\s+/).length;
-    const minutes = Math.ceil(wordCount / wordsPerMinute);
-    return minutes === 1 ? "1 min read" : `${minutes} min read`;
-}
-
-function formatDate(timestamp) {
-    const date = new Date(timestamp);
-    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-}
-
-function getTimeAgo(timestamp) {
-    const now = Date.now();
-    const diff = now - timestamp;
-    const minutes = Math.floor(diff / 60000);
-    const hours = Math.floor(diff / 3600000);
-    const days = Math.floor(diff / 86400000);
-
-    if (minutes < 1) return "Just now";
-    if (minutes < 60) return `${minutes}m ago`;
-    if (hours < 24) return `${hours}h ago`;
-    if (days < 7) return `${days}d ago`;
-    return formatDate(timestamp);
-}
-
-function isAdmin() {
-    return currentUser && currentUser.isAdmin;
-}
-
-function displayAdminBadge() {
-    if (isAdmin()) {
-        document.getElementById("adminBadge").style.display = "inline-block";
-    }
-}
-
-// ======================================================
-// CLOCK
-// ======================================================
-function updateClock() {
-    const date = new Date();
-    const time = date.toLocaleTimeString();
-    const dateStr = date.toDateString();
-    document.getElementById("clockTime").innerText = time;
-    document.getElementById("clockDate").innerText = dateStr;
-}
-
-updateClock();
-setInterval(updateClock, 1000);
-
-// ======================================================
-// AUTHENTICATION
-// ======================================================
-function initializeAuth() {
-    const authModal = document.getElementById("authModal");
-    const authUsername = document.getElementById("authUsername");
-    const authPassword = document.getElementById("authPassword");
-    const authPrompt = document.getElementById("authPrompt");
-    const authError = document.getElementById("authError");
-    const authSubmitBtn = document.getElementById("authSubmitBtn");
-    const authGuestBtn = document.getElementById("authGuestBtn");
-
-    const savedUser = localStorage.getItem("blogUser");
-    if (savedUser) {
-        currentUser = JSON.parse(savedUser);
-        authModal.style.display = "none";
-        document.body.style.overflow = "auto";
-        displayAdminBadge();
-        loadBlogs();
-        return;
-    }
-
-    authUsername.addEventListener("input", () => {
-        authError.textContent = "";
-        if (authUsername.value === ADMIN_USERNAME) {
-            authPassword.style.display = "block";
-            authPrompt.textContent = "👑 Admin Login - Enter password";
-        } else {
-            authPassword.style.display = "none";
-            authPrompt.textContent = "Enter your username";
-        }
-    });
-
-    authSubmitBtn.addEventListener("click", () => {
-        const username = authUsername.value.trim();
-        const password = authPassword.value;
-
-        authError.textContent = "";
-
-        if (!username || username.length < 3) {
-            authError.textContent = "Username must be at least 3 characters";
-            return;
-        }
-
-        if (username === ADMIN_USERNAME) {
-            if (password !== ADMIN_PASSWORD) {
-                authError.textContent = "❌ Incorrect admin password";
-                authPassword.value = "";
-                return;
-            }
-        }
-
-        currentUser = { username, isAdmin: username === ADMIN_USERNAME };
-        localStorage.setItem("blogUser", JSON.stringify(currentUser));
-        authModal.style.display = "none";
-        document.body.style.overflow = "auto";
-        displayAdminBadge();
-        loadBlogs();
-    });
-
-    authGuestBtn.addEventListener("click", () => {
-        const username = authUsername.value.trim();
-        if (!username || username.length < 3) {
-            authError.textContent = "Username must be at least 3 characters";
-            return;
-        }
-        currentUser = { username, isAdmin: false };
-        localStorage.setItem("blogUser", JSON.stringify(currentUser));
-        authModal.style.display = "none";
-        document.body.style.overflow = "auto";
-        displayAdminBadge();
-        loadBlogs();
-    });
-
-    authUsername.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") {
-            if (authUsername.value === ADMIN_USERNAME && authPassword.style.display !== "none") {
-                authPassword.focus();
-            } else {
-                authSubmitBtn.click();
-            }
-        }
-    });
-
-    authPassword.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") {
-            authSubmitBtn.click();
-        }
-    });
-
-    setTimeout(() => authUsername.focus(), 100);
-}
-
-// ======================================================
-// POPULATE PRE-EXISTING BLOGS
-// ======================================================
-async function populatePreExistingBlogs() {
-    try {
-        const snapshot = await getDocs(collection(db, "blogs"));
-        if (snapshot.empty) {
-            console.log("No blogs found, adding pre-existing blogs...");
-            for (const blogData of preExistingBlogs) {
-                await addDoc(collection(db, "blogs"), {
-                    ...blogData,
-                    createdAt: Date.now() - Math.random() * 432000000,
-                    updatedAt: Date.now()
-                });
-            }
-            console.log("Pre-existing blogs added!");
-        }
-    } catch (error) {
-        console.error("Error checking/adding blogs:", error);
-    }
-}
-
-// ======================================================
-// LOAD BLOGS
-// ======================================================
-async function loadBlogs() {
-    document.getElementById("blogFeed").innerHTML = "<h3>Loading...</h3>";
-
-    try {
-        await populatePreExistingBlogs();
-
-        const q = query(collection(db, "blogs"), orderBy("createdAt", "desc"));
-        const querySnapshot = await getDocs(q);
-
-        allBlogs = [];
-        const categories = new Set();
-
-        if (!querySnapshot.empty) {
-            querySnapshot.forEach((docSnap) => {
-                const blogData = { id: docSnap.id, ...docSnap.data() };
-                allBlogs.push(blogData);
-                localBlogCache[docSnap.id] = blogData;
-                categories.add(docSnap.data().category);
-            });
-        }
-
-        populateCategoryFilter(Array.from(categories));
-        filteredBlogs = [...allBlogs];
-        displayBlogs();
-
-    } catch (error) {
-        console.error("Error loading blogs:", error);
-        document.getElementById("blogFeed").innerHTML = "<h3>Failed to load blogs. Please refresh.</h3>";
-    }
-}
-
-// ======================================================
-// POPULATE CATEGORY FILTER
-// ======================================================
-function populateCategoryFilter(categories) {
-    const currentValue = document.getElementById("categoryFilter").value;
-    const categoryFilter = document.getElementById("categoryFilter");
-    categoryFilter.innerHTML = '<option value="">All Categories</option>';
-
-    categories.forEach(category => {
-        const option = document.createElement('option');
-        option.value = category;
-        option.innerText = category;
-        categoryFilter.appendChild(option);
-    });
-
-    categoryFilter.value = currentValue;
-}
-
-// ======================================================
-// FILTER & SORT BLOGS
-// ======================================================
-function filterAndSortBlogs() {
-    const searchTerm = document.getElementById("searchInput").value.toLowerCase();
-    const selectedCategory = document.getElementById("categoryFilter").value;
-    const sortBy = document.getElementById("sortSelect").value;
-
-    filteredBlogs = allBlogs.filter(blog => {
-        const matchesSearch = 
-            blog.title.toLowerCase().includes(searchTerm) ||
-            blog.description.toLowerCase().includes(searchTerm) ||
-            blog.category.toLowerCase().includes(searchTerm);
-
-        const matchesCategory = !selectedCategory || blog.category === selectedCategory;
-        return matchesSearch && matchesCategory;
-    });
-
-    switch (sortBy) {
-        case 'oldest':
-            filteredBlogs.sort((a, b) => a.createdAt - b.createdAt);
-            break;
-        case 'mostUpvoted':
-            filteredBlogs.sort((a, b) => (b.upvotes?.length || 0) - (a.upvotes?.length || 0));
-            break;
-        case 'mostViewed':
-            filteredBlogs.sort((a, b) => (b.views || 0) - (a.views || 0));
-            break;
-        case 'mostCommented':
-            filteredBlogs.sort((a, b) => (b.comments?.length || 0) - (a.comments?.length || 0));
-            break;
-        case 'latest':
-        default:
-            filteredBlogs.sort((a, b) => b.createdAt - a.createdAt);
-            break;
-    }
-
-    displayBlogs();
-}
-
-// ======================================================
-// CREATE BLOG CARD
-// ======================================================
-function createBlogCard(blog, id) {
-    const isOwner = currentUser.username === blog.publisher;
-    const isAdminUser = isAdmin();
-    const canDelete = isOwner || isAdminUser;
-
-    const hasUpvoted = blog.upvotes?.includes(currentUser.username);
-    const hasDownvoted = blog.downvotes?.includes(currentUser.username);
-
-    const readTime = calculateReadingTime(blog.description);
-    const sanitizedTitle = sanitizeInput(blog.title);
-    const sanitizedCategory = sanitizeInput(blog.category);
-    const sanitizedPublisher = sanitizeInput(blog.publisher);
-    const sanitizedDesc = sanitizeInput(blog.description.substring(0, 150));
-
-    const upvoteCount = blog.upvotes?.length || 0;
-    const downvoteCount = blog.downvotes?.length || 0;
-    const heatScore = upvoteCount * 2 - downvoteCount;
-    const commentCount = blog.comments?.length || 0;
-
-    return `
-    <div class="blogCard" data-blog-id="${id}">
-        <div class="blogImage">
-            <img src="${blog.image || getFallbackImage()}" 
-                 alt="${sanitizedTitle}"
-                 onerror="this.src='${getFallbackImage()}'" />
-        </div>
-
-        <div class="blogContent">
-            <div class="blogMeta">
-                <span class="badge">${sanitizedCategory}</span>
-                <span>📖 ${readTime}</span>
-                <span>By ${sanitizedPublisher}</span>
-            </div>
-
-            <h3 class="blogTitle">${sanitizedTitle}</h3>
-
-            <p class="blogDesc">${sanitizedDesc}...</p>
-
-            <div class="blogStats">
-                <span class="statItem upvote-count-${id}">⬆️ ${upvoteCount} upvotes</span>
-                <span class="statItem comment-count-${id}">💬 ${commentCount} comments</span>
-                <span class="statItem">👁️ ${blog.views || 0} views</span>
-                <span class="statItem heat-score-${id}">🔥 ${heatScore} heat</span>
-            </div>
-
-            <div class="engagementBar">
-                <button class="voteBtn upvote-btn-${id} ${hasUpvoted ? 'voted' : ''}" onclick="upvoteBlog('${id}')" data-blog-id="${id}">
-                    ⬆️ ${hasUpvoted ? 'Upvoted' : 'Upvote'}
-                </button>
-                <button class="voteBtn downvote-btn-${id} ${hasDownvoted ? 'downvoted' : ''}" onclick="downvoteBlog('${id}')" data-blog-id="${id}">
-                    ⬇️ ${hasDownvoted ? 'Downvoted' : 'Downvote'}
-                </button>
-                <button class="actionBtn" onclick="openFullBlog('${id}')">
-                    💬 ${commentCount} Comments
-                </button>
-                <button class="actionBtn" onclick="openFullBlog('${id}')">
-                    👁️ Read Full
-                </button>
-                ${isOwner ? `
-                    <button class="editBtn" onclick="editBlog('${id}')">
-                        ✏️ Edit
-                    </button>
-                ` : ''}
-                ${canDelete ? `
-                    <button class="deleteBtn" onclick="deleteBlog('${id}', '${sanitizedPublisher}')">
-                        🗑️ Delete
-                    </button>
-                ` : ''}
-            </div>
-        </div>
-    </div>
-    `;
-}
-
-// ======================================================
-// DISPLAY BLOGS
-// ======================================================
-function displayBlogs() {
-    const blogFeed = document.getElementById("blogFeed");
-    if (filteredBlogs.length === 0) {
-        blogFeed.innerHTML = "<h3>No posts found. Create one to get started!</h3>";
-        return;
-    }
-
-    let html = "";
-    filteredBlogs.forEach(blog => {
-        html += createBlogCard(blog, blog.id);
-    });
-
-    blogFeed.innerHTML = html;
-}
-
-// ======================================================
-// SMOOTH UPVOTE - NO PAGE RELOAD
-// ======================================================
-window.upvoteBlog = async function (blogId) {
-    try {
-        const blogRef = doc(db, "blogs", blogId);
-        const blogSnap = await getDoc(blogRef);
-        if (!blogSnap.exists()) return;
-
-        const blogData = blogSnap.data();
-        const alreadyUpvoted = blogData.upvotes?.includes(currentUser.username);
-
-        let updatedUpvotes = [...(blogData.upvotes || [])];
-        let updatedDownvotes = [...(blogData.downvotes || [])];
-
-        if (alreadyUpvoted) {
-            updatedUpvotes = updatedUpvotes.filter(u => u !== currentUser.username);
-        } else {
-            updatedUpvotes.push(currentUser.username);
-            updatedDownvotes = updatedDownvotes.filter(d => d !== currentUser.username);
-        }
-
-        // Update Firebase
-        await updateDoc(blogRef, {
-            upvotes: updatedUpvotes,
-            downvotes: updatedDownvotes
-        });
-
-        // Update local cache
-        localBlogCache[blogId].upvotes = updatedUpvotes;
-        localBlogCache[blogId].downvotes = updatedDownvotes;
-        
-        // Find and update in allBlogs
-        const blogIndex = allBlogs.findIndex(b => b.id === blogId);
-        if (blogIndex !== -1) {
-            allBlogs[blogIndex].upvotes = updatedUpvotes;
-            allBlogs[blogIndex].downvotes = updatedDownvotes;
-        }
-
-        // Smooth UI update
-        updateBlogCardUI(blogId);
-
-    } catch (error) {
-        console.error("Error:", error);
-    }
-};
-
-// ======================================================
-// SMOOTH DOWNVOTE - NO PAGE RELOAD
-// ======================================================
-window.downvoteBlog = async function (blogId) {
-    try {
-        const blogRef = doc(db, "blogs", blogId);
-        const blogSnap = await getDoc(blogRef);
-        if (!blogSnap.exists()) return;
-
-        const blogData = blogSnap.data();
-        const alreadyDownvoted = blogData.downvotes?.includes(currentUser.username);
-
-        let updatedDownvotes = [...(blogData.downvotes || [])];
-        let updatedUpvotes = [...(blogData.upvotes || [])];
-
-        if (alreadyDownvoted) {
-            updatedDownvotes = updatedDownvotes.filter(d => d !== currentUser.username);
-        } else {
-            updatedDownvotes.push(currentUser.username);
-            updatedUpvotes = updatedUpvotes.filter(u => u !== currentUser.username);
-        }
-
-        // Update Firebase
-        await updateDoc(blogRef, {
-            upvotes: updatedUpvotes,
-            downvotes: updatedDownvotes
-        });
-
-        // Update local cache
-        localBlogCache[blogId].upvotes = updatedUpvotes;
-        localBlogCache[blogId].downvotes = updatedDownvotes;
-        
-        // Find and update in allBlogs
-        const blogIndex = allBlogs.findIndex(b => b.id === blogId);
-        if (blogIndex !== -1) {
-            allBlogs[blogIndex].upvotes = updatedUpvotes;
-            allBlogs[blogIndex].downvotes = updatedDownvotes;
-        }
-
-        // Smooth UI update
-        updateBlogCardUI(blogId);
-
-    } catch (error) {
-        console.error("Error:", error);
-    }
-};
-
-// ======================================================
-// UPDATE BLOG CARD UI SMOOTHLY
-// ======================================================
-function updateBlogCardUI(blogId) {
-    const blog = localBlogCache[blogId];
-    if (!blog) return;
-
-    const upvoteCount = blog.upvotes?.length || 0;
-    const downvoteCount = blog.downvotes?.length || 0;
-    const heatScore = upvoteCount * 2 - downvoteCount;
-    const hasUpvoted = blog.upvotes?.includes(currentUser.username);
-    const hasDownvoted = blog.downvotes?.includes(currentUser.username);
-
-    // Update stats
-    const upvoteStatEl = document.querySelector(`.upvote-count-${blogId}`);
-    if (upvoteStatEl) {
-        upvoteStatEl.textContent = `⬆️ ${upvoteCount} upvotes`;
-    }
-
-    const heatScoreEl = document.querySelector(`.heat-score-${blogId}`);
-    if (heatScoreEl) {
-        heatScoreEl.textContent = `🔥 ${heatScore} heat`;
-    }
-
-    // Update buttons
-    const upvoteBtn = document.querySelector(`.upvote-btn-${blogId}`);
-    if (upvoteBtn) {
-        upvoteBtn.classList.toggle('voted', hasUpvoted);
-        upvoteBtn.textContent = hasUpvoted ? '⬆️ Upvoted' : '⬆️ Upvote';
-    }
-
-    const downvoteBtn = document.querySelector(`.downvote-btn-${blogId}`);
-    if (downvoteBtn) {
-        downvoteBtn.classList.toggle('downvoted', hasDownvoted);
-        downvoteBtn.textContent = hasDownvoted ? '⬇️ Downvoted' : '⬇️ Downvote';
-    }
-}
-
-// ======================================================
-// MODAL FUNCTIONS
-// ======================================================
-const modal = document.getElementById("blogModal");
-const openModal = document.getElementById("openModal");
-const publishBlog = document.getElementById("publishBlog");
-
-openModal.addEventListener("click", () => {
-    currentEditingId = null;
-    document.getElementById("modalTitle").innerText = "Create New Post";
-    document.getElementById("blogTitle").value = "";
-    document.getElementById("blogCategory").value = "";
-    document.getElementById("blogImage").value = "";
-    document.getElementById("blogDesc").value = "";
-    publishBlog.innerText = "Publish Post";
-    clearModalErrors();
-    modal.classList.add("active");
-    document.getElementById("blogTitle").focus();
-});
-
-modal.addEventListener("click", (e) => {
-    if (e.target === modal) closeModal();
-});
-
-document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && modal.classList.contains("active")) {
-        closeModal();
-    }
-});
-
-function closeModal() {
-    modal.classList.remove("active");
-    clearModalErrors();
-}
-
-function clearModalErrors() {
-    document.getElementById("titleError").innerText = "";
-    document.getElementById("categoryError").innerText = "";
-    document.getElementById("imageError").innerText = "";
-    document.getElementById("descError").innerText = "";
-}
-
-// ======================================================
-// VALIDATE & PUBLISH BLOG
-// ======================================================
-function validateBlogInput() {
-    clearModalErrors();
-
-    const title = document.getElementById("blogTitle").value.trim();
-    const category = document.getElementById("blogCategory").value.trim();
-    const image = document.getElementById("blogImage").value.trim();
-    const description = document.getElementById("blogDesc").value.trim();
-
-    let isValid = true;
-
-    if (!title || title.length < 5) {
-        document.getElementById("titleError").innerText = "Title must be at least 5 characters";
-        isValid = false;
-    }
-
-    if (!category || category.length < 3) {
-        document.getElementById("categoryError").innerText = "Category must be at least 3 characters";
-        isValid = false;
-    }
-
-    if (description.length < 10) {
-        document.getElementById("descError").innerText = "Description must be at least 10 characters";
-        isValid = false;
-    }
-
-    return isValid ? { title: sanitizeInput(title), category: sanitizeInput(category), image, description: sanitizeInput(description) } : null;
-}
-
-publishBlog.addEventListener("click", async () => {
-    const validatedData = validateBlogInput();
-    if (!validatedData) return;
-
-    publishBlog.disabled = true;
-    const isEditing = currentEditingId !== null;
-    publishBlog.innerText = isEditing ? "Updating..." : "Publishing...";
-
-    try {
-        if (isEditing) {
-            await updateDoc(doc(db, "blogs", currentEditingId), {
-                ...validatedData,
-                updatedAt: Date.now()
-            });
-        } else {
-            await addDoc(collection(db, "blogs"), {
-                ...validatedData,
-                publisher: currentUser.username,
-                createdAt: Date.now(),
-                upvotes: [],
-                downvotes: [],
-                likes: [],
-                comments: [],
-                views: 0
-            });
-        }
-
-        document.getElementById("blogTitle").value = "";
-        document.getElementById("blogCategory").value = "";
-        document.getElementById("blogImage").value = "";
-        document.getElementById("blogDesc").value = "";
-
-        closeModal();
-        loadBlogs();
-
-    } catch (error) {
-        console.error("Error publishing:", error);
-        alert("Failed to publish. Please try again.");
-    } finally {
-        publishBlog.disabled = false;
-        publishBlog.innerText = isEditing ? "Update Post" : "Publish Post";
-    }
-});
-
-// ======================================================
-// EDIT BLOG
-// ======================================================
-window.editBlog = async function (id) {
-    const blog = allBlogs.find(b => b.id === id);
-    if (!blog) return;
-
-    if (currentUser.username !== blog.publisher) {
-        alert("Only the author can edit this post");
-        return;
-    }
-
-    currentEditingId = id;
-    document.getElementById("modalTitle").innerText = "Edit Post";
-    document.getElementById("blogTitle").value = blog.title;
-    document.getElementById("blogCategory").value = blog.category;
-    document.getElementById("blogImage").value = blog.image || "";
-    document.getElementById("blogDesc").value = blog.description;
-    publishBlog.innerText = "Update Post";
-    clearModalErrors();
-    modal.classList.add("active");
-};
-
-// ======================================================
-// DELETE BLOG
-// ======================================================
-window.deleteBlog = async function (id, publisher) {
-    if (currentUser.username !== publisher && !isAdmin()) {
-        alert("Only the author or admin can delete this post");
-        return;
-    }
-
-    if (!confirm("Are you sure? This cannot be undone.")) return;
-
-    try {
-        await deleteDoc(doc(db, "blogs", id));
-        loadBlogs();
-        alert("Post deleted!");
-    } catch (error) {
-        console.error("Error deleting:", error);
-        alert("Failed to delete post");
-    }
-};
-
-// ======================================================
-// INCREMENT VIEWS
-// ======================================================
-async function incrementViewCount(blogId) {
-    try {
-        const blogRef = doc(db, "blogs", blogId);
-        const blogSnap = await getDoc(blogRef);
-        if (blogSnap.exists()) {
-            const currentViews = blogSnap.data().views || 0;
-            await updateDoc(blogRef, {
-                views: currentViews + 1
-            });
-            localBlogCache[blogId].views = currentViews + 1;
-        }
-    } catch (error) {
-        console.error("Error incrementing views:", error);
-    }
-}
-
-// ======================================================
-// OPEN FULL BLOG
-// ======================================================
-window.openFullBlog = async function (blogId) {
-    try {
-        const blogRef = doc(db, "blogs", blogId);
-        const blogSnap = await getDoc(blogRef);
-        if (!blogSnap.exists()) return;
-
-        const blog = blogSnap.data();
-        incrementViewCount(blogId);
-        currentBlogId = blogId;
-
-        document.getElementById("fullBlogImage").src = blog.image || getFallbackImage();
-        document.getElementById("fullCategory").innerText = `📁 ${sanitizeInput(blog.category)}`;
-        document.getElementById("fullPublisher").innerText = `✍️ By ${sanitizeInput(blog.publisher)} • ${formatDate(blog.createdAt)}`;
-        document.getElementById("fullReadTime").innerText = `📖 ${calculateReadingTime(blog.description)}`;
-        document.getElementById("fullViews").innerText = `👁️ ${(blog.views || 0) + 1} views`;
-        document.getElementById("fullTitle").innerText = sanitizeInput(blog.title);
-        document.getElementById("fullDescription").innerText = sanitizeInput(blog.description);
-
-        const upvoteCount = blog.upvotes?.length || 0;
-        const downvoteCount = blog.downvotes?.length || 0;
-        const heatScore = upvoteCount * 2 - downvoteCount;
-        const commentCount = blog.comments?.length || 0;
-
-        document.getElementById("upvoteCount").innerText = upvoteCount;
-        document.getElementById("commentCount").innerText = commentCount;
-        document.getElementById("heatScore").innerText = heatScore;
-
-        const hasUpvoted = blog.upvotes?.includes(currentUser.username);
-        const hasDownvoted = blog.downvotes?.includes(currentUser.username);
-
-        document.getElementById("upvoteBtn").className = `reaction ${hasUpvoted ? 'voted' : ''}`;
-        document.getElementById("downvoteBtn").className = `reaction ${hasDownvoted ? 'downvoted' : ''}`;
-
-        document.getElementById("upvoteBtn").textContent = hasUpvoted ? "⬆️ Upvoted" : "⬆️ Upvote";
-        document.getElementById("downvoteBtn").textContent = hasDownvoted ? "⬇️ Downvoted" : "⬇️ Downvote";
-
-        document.getElementById("upvoteBtn").onclick = () => upvoteBlog(blogId);
-        document.getElementById("downvoteBtn").onclick = () => downvoteBlog(blogId);
-
-        loadComments(blogId);
-        document.getElementById("fullBlog").classList.add("active");
-
-    } catch (error) {
-        console.error("Error opening blog:", error);
-        alert("Failed to load post");
-    }
-};
-
-// ======================================================
-// CLOSE FULL BLOG
-// ======================================================
-window.closeFullBlog = function () {
-    document.getElementById("fullBlog").classList.remove("active");
-    document.getElementById("commentInput").value = "";
-};
-
-const closeFullBlogBtn = document.getElementById("closeFullBlog");
-closeFullBlogBtn.addEventListener("click", closeFullBlog);
-
-document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && document.getElementById("fullBlog").classList.contains("active")) {
-        closeFullBlog();
-    }
-});
-
-document.getElementById("fullBlog").addEventListener("click", (e) => {
-    if (e.target.id === "fullBlog") closeFullBlog();
-});
-
-// ======================================================
-// LOAD COMMENTS
-// ======================================================
-async function loadComments(blogId) {
-    try {
-        const blogRef = doc(db, "blogs", blogId);
-        const blogSnap = await getDoc(blogRef);
-        if (!blogSnap.exists()) return;
-
-        const comments = blogSnap.data().comments || [];
-        const commentsList = document.getElementById("commentsList");
-
-        if (comments.length === 0) {
-            commentsList.innerHTML = '<div class="noComments">No comments yet. Be the first!</div>';
-            return;
-        }
-
-        let html = "";
-        comments.forEach((comment, index) => {
-            const timeAgo = getTimeAgo(comment.timestamp);
-            const isCommentOwner = currentUser.username === comment.author;
-
-            html += `
-            <div class="commentCard">
-                <div class="commentHeader">
-                    <span class="commentAuthor">${sanitizeInput(comment.author)}</span>
-                    <span class="commentTime">${timeAgo}</span>
-                </div>
-                <p class="commentText">${sanitizeInput(comment.text)}</p>
-                <div class="commentActions">
-                    ${isCommentOwner || isAdmin() ? `
-                        <button class="deleteCommentBtn" onclick="deleteComment('${blogId}', ${index})">Delete</button>
-                    ` : ''}
-                </div>
-            </div>
-            `;
-        });
-
-        commentsList.innerHTML = html;
-    } catch (error) {
-        console.error("Error loading comments:", error);
-    }
-}
-
-// ======================================================
-// POST COMMENT - SMOOTH UPDATE
-// ======================================================
-document.getElementById("postCommentBtn").addEventListener("click", async () => {
-    if (!currentBlogId) return;
-
-    const commentText = document.getElementById("commentInput").value.trim();
-    if (!commentText || commentText.length < 2) {
-        alert("Comment must be at least 2 characters");
-        return;
-    }
-
-    const btn = document.getElementById("postCommentBtn");
-    btn.disabled = true;
-    btn.innerText = "Posting...";
-
-    try {
-        const blogRef = doc(db, "blogs", currentBlogId);
-        const newComment = {
-            author: currentUser.username,
-            text: sanitizeInput(commentText),
-            timestamp: Date.now()
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+        import {
+            getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, getDoc,
+            query, orderBy, where, limit, startAfter
+        } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCHkxuxZ-KWzQEoZt-XLXz1XX8ObTENQR4",
+            authDomain: "dracoblog-27113.firebaseapp.com",
+            projectId: "dracoblog-27113",
+            storageBucket: "dracoblog-27113.appspot.com",
+            messagingSenderId: "1086959854616",
+            appId: "1:1086959854616:web:64ac860d7a4a28706bcf6d",
+            measurementId: "G-1RDC1ZZMYY"
         };
 
-        await updateDoc(blogRef, { comments: arrayUnion(newComment) });
-        
-        // Update local cache
-        if (!localBlogCache[currentBlogId].comments) {
-            localBlogCache[currentBlogId].comments = [];
-        }
-        localBlogCache[currentBlogId].comments.push(newComment);
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-        // Update blog stats smoothly
-        const commentCount = localBlogCache[currentBlogId].comments.length;
-        document.getElementById("commentCount").innerText = commentCount;
+        let currentUser = null;
+        let allPosts = [];
+        let allCommunities = [];
+        let currentFeed = 'home';
+        let currentSort = 'newest';
+        let currentOpenPostId = null;
 
-        document.getElementById("commentInput").value = "";
-        loadComments(currentBlogId);
+        const ADMIN_USERNAME = "abhi67";
+        const ADMIN_PASSWORD = "admin67";
 
-    } catch (error) {
-        console.error("Error posting comment:", error);
-        alert("Failed to post comment");
-    } finally {
-        btn.disabled = false;
-        btn.innerText = "Post Comment";
-    }
-});
-
-// ======================================================
-// DELETE COMMENT
-// ======================================================
-window.deleteComment = async function (blogId, index) {
-    if (!confirm("Delete this comment?")) return;
-
-    try {
-        const blogRef = doc(db, "blogs", blogId);
-        const blogSnap = await getDoc(blogRef);
-        const comments = blogSnap.data().comments || [];
-
-        const updatedComments = comments.filter((_, i) => i !== index);
-        await updateDoc(blogRef, { comments: updatedComments });
-
-        // Update local cache
-        localBlogCache[blogId].comments = updatedComments;
-
-        // Update comment count smoothly
-        if (currentBlogId === blogId) {
-            document.getElementById("commentCount").innerText = updatedComments.length;
+        // ==================== TOAST ====================
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => { toast.remove(); }, 3000);
         }
 
-        loadComments(blogId);
-    } catch (error) {
-        console.error("Error deleting comment:", error);
-    }
-};
+        // ==================== AUTH ====================
+        window.checkAdminUsername = function() {
+            const username = document.getElementById('authUsername').value.trim();
+            const passwordGroup = document.getElementById('passwordGroup');
+            if (username === ADMIN_USERNAME) {
+                passwordGroup.style.display = 'block';
+            } else {
+                passwordGroup.style.display = 'none';
+            }
+        };
 
-// ======================================================
-// SEARCH & FILTER LISTENERS
-// ======================================================
-document.getElementById("searchInput").addEventListener("input", filterAndSortBlogs);
-document.getElementById("categoryFilter").addEventListener("change", filterAndSortBlogs);
-document.getElementById("sortSelect").addEventListener("change", filterAndSortBlogs);
+        window.authenticate = function() {
+            const username = document.getElementById('authUsername').value.trim();
+            const password = document.getElementById('authPassword').value;
+            const authError = document.getElementById('authError');
+            
+            authError.style.display = 'none';
 
-// ======================================================
-// INITIALIZE
-// ======================================================
-initializeAuth();
+            if (!username || username.length < 3) {
+                authError.textContent = '❌ Username must be at least 3 characters';
+                authError.style.display = 'block';
+                return;
+            }
 
-</script>
+            // Check if user already exists on this device
+            const savedUser = localStorage.getItem('dracoUser');
+            if (savedUser) {
+                const existingUser = JSON.parse(savedUser);
+                if (existingUser.username !== username) {
+                    authError.textContent = '❌ This device is locked to username: ' + existingUser.username + '. You cannot change it.';
+                    authError.style.display = 'block';
+                    return;
+                }
+                currentUser = existingUser;
+            } else {
+                // New user on this device
+                if (username === ADMIN_USERNAME) {
+                    if (password !== ADMIN_PASSWORD) {
+                        authError.textContent = '❌ Incorrect admin password';
+                        authError.style.display = 'block';
+                        document.getElementById('authPassword').value = '';
+                        return;
+                    }
+                    currentUser = {
+                        username,
+                        isAdmin: true,
+                        joinDate: Date.now(),
+                        postKarma: 0,
+                        posts: []
+                    };
+                } else {
+                    currentUser = {
+                        username,
+                        isAdmin: false,
+                        joinDate: Date.now(),
+                        postKarma: 0,
+                        posts: []
+                    };
+                }
 
+                localStorage.setItem('dracoUser', JSON.stringify(currentUser));
+            }
+
+            closeModal('authModal');
+            updateUserDisplay();
+            loadInitialData();
+            showToast(`Welcome back, ${currentUser.username}!`);
+        };
+
+        window.authenticateAsGuest = function() {
+            const savedUser = localStorage.getItem('dracoUser');
+            if (savedUser) {
+                const existingUser = JSON.parse(savedUser);
+                currentUser = existingUser;
+                closeModal('authModal');
+                updateUserDisplay();
+                loadInitialData();
+                showToast(`Welcome back, ${currentUser.username}!`);
+                return;
+            }
+
+            const username = 'Guest_' + Math.floor(Math.random() * 10000);
+            currentUser = {
+                username,
+                isAdmin: false,
+                joinDate: Date.now(),
+                postKarma: 0,
+                posts: []
+            };
+
+            localStorage.setItem('dracoUser', JSON.stringify(currentUser));
+            closeModal('authModal');
+            updateUserDisplay();
+            loadInitialData();
+            showToast(`Welcome, ${currentUser.username}!`);
+        };
+
+        window.logout = function() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('dracoUser');
+                window.location.reload();
+            }
+        };
+
+        // ==================== UI ====================
+        function updateUserDisplay() {
+            const avatar = currentUser.username[0].toUpperCase();
+            document.getElementById('userAvatarDisplay').textContent = avatar;
+            document.getElementById('userDisplay').textContent = currentUser.username;
+        }
+
+        window.openCreatePostModal = function() {
+            if (!currentUser) {
+                alert('Please log in first');
+                return;
+            }
+            loadCommunitySelect();
+            document.getElementById('createPostModal').classList.add('active');
+        };
+
+        window.openCreateCommunityModal = function() {
+            if (!currentUser) {
+                alert('Please log in first');
+                return;
+            }
+            document.getElementById('createCommunityModal').classList.add('active');
+        };
+
+        window.closeModal = function(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        };
+
+        // ==================== COMMUNITIES ====================
+        window.submitCommunity = async function() {
+            const name = document.getElementById('communityName').value.trim();
+            const description = document.getElementById('communityDescription').value.trim();
+
+            if (!name || name.length < 3) {
+                showToast('Community name must be at least 3 characters', 'error');
+                return;
+            }
+
+            if (!description || description.length < 5) {
+                showToast('Description must be at least 5 characters', 'error');
+                return;
+            }
+
+            try {
+                const newCommunity = {
+                    name,
+                    description,
+                    creator: currentUser.username,
+                    createdAt: Date.now(),
+                    members: [currentUser.username]
+                };
+
+                const docRef = await addDoc(collection(db, 'communities'), newCommunity);
+                newCommunity.id = docRef.id;
+                allCommunities.unshift(newCommunity);
+
+                document.getElementById('communityName').value = '';
+                document.getElementById('communityDescription').value = '';
+                closeModal('createCommunityModal');
+
+                loadCommunities();
+                showToast(`Community "${name}" created successfully! 🎉`);
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('Failed to create community', 'error');
+            }
+        };
+
+        async function loadCommunities() {
+            try {
+                const commSnap = await getDocs(query(collection(db, 'communities'), orderBy('createdAt', 'desc')));
+                allCommunities = [];
+                commSnap.forEach(docSnap => {
+                    allCommunities.push({ id: docSnap.id, ...docSnap.data() });
+                });
+                renderCommunities();
+                loadCommunitySelect();
+            } catch (error) {
+                console.error('Error loading communities:', error);
+            }
+        }
+
+        function renderCommunities() {
+            const container = document.getElementById('communitiesContainer');
+            if (allCommunities.length === 0) {
+                container.innerHTML = '<div style="padding: 12px 20px; font-size: 12px; color: var(--text-secondary);">No communities yet</div>';
+                return;
+            }
+
+            container.innerHTML = allCommunities.map(comm => `
+                <div class="community-item" title="${comm.description}">
+                    🏘️ ${comm.name}
+                </div>
+            `).join('');
+        }
+
+        function loadCommunitySelect() {
+            const select = document.getElementById('postCommunity');
+            const currentOptions = Array.from(select.options).map(o => o.value);
+            
+            allCommunities.forEach(comm => {
+                if (!currentOptions.includes(comm.id)) {
+                    const option = document.createElement('option');
+                    option.value = comm.id;
+                    option.textContent = comm.name;
+                    select.appendChild(option);
+                }
+            });
+        }
+
+        // ==================== POSTS ====================
+        window.submitPost = async function() {
+            const title = document.getElementById('postTitle').value.trim();
+            const content = document.getElementById('postContent').value.trim();
+            const image = document.getElementById('postImage').value.trim();
+            const communityId = document.getElementById('postCommunity').value;
+            const shareToCommuntiy = document.getElementById('shareToCommuntiy').checked;
+
+            if (!title || title.length < 5) {
+                showToast('Title must be at least 5 characters', 'error');
+                return;
+            }
+
+            if (!content || content.length < 10) {
+                showToast('Content must be at least 10 characters', 'error');
+                return;
+            }
+
+            try {
+                const newPost = {
+                    title: title || '',
+                    content: content || '',
+                    image: image || '',
+                    author: currentUser.username,
+                    communityId: communityId || 'general',
+                    createdAt: Date.now(),
+                    upvotes: [],
+                    downvotes: [],
+                    views: 0,
+                    comments: [],
+                    sharedToCommunity: shareToCommuntiy
+                };
+
+                const docRef = await addDoc(collection(db, 'posts'), newPost);
+                newPost.id = docRef.id;
+                allPosts.unshift(newPost);
+
+                if (!currentUser.posts) currentUser.posts = [];
+                currentUser.posts.push(newPost.id);
+                localStorage.setItem('dracoUser', JSON.stringify(currentUser));
+
+                // Share to community if checked
+                if (shareToCommuntiy) {
+                    await sharePostToCommunity(newPost);
+                }
+
+                document.getElementById('postTitle').value = '';
+                document.getElementById('postContent').value = '';
+                document.getElementById('postImage').value = '';
+                closeModal('createPostModal');
+
+                loadFeed();
+                updateUserDisplay();
+                showToast('Post created successfully! 🚀');
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('Failed to create post', 'error');
+            }
+        };
+
+        // ==================== SHARE TO COMMUNITY ====================
+        async function sharePostToCommunity(post) {
+            try {
+                const communityMessage = {
+                    text: post.title + '\n\n' + post.content,
+                    author: currentUser.username,
+                    channel: "general",
+                    timestamp: Date.now(),
+                    authorImage: null,
+                    originalPostId: post.id
+                };
+
+                await addDoc(collection(db, 'communityMessages'), communityMessage);
+                showToast('✨ Post shared to community!', 'success');
+            } catch (error) {
+                console.error('Error sharing to community:', error);
+                showToast('Warning: Could not share to community', 'error');
+            }
+        }
+
+        // ==================== VOTING ====================
+        window.upvotePost = async function(postId) {
+            const post = allPosts.find(p => p.id === postId);
+            if (!post) return;
+
+            if (!Array.isArray(post.upvotes)) post.upvotes = [];
+            if (!Array.isArray(post.downvotes)) post.downvotes = [];
+
+            const hasUpvoted = post.upvotes.includes(currentUser.username);
+            
+            if (hasUpvoted) {
+                post.upvotes = post.upvotes.filter(u => u !== currentUser.username);
+            } else {
+                post.upvotes.push(currentUser.username);
+                post.downvotes = post.downvotes.filter(d => d !== currentUser.username);
+            }
+
+            try {
+                await updateDoc(doc(db, 'posts', postId), {
+                    upvotes: post.upvotes,
+                    downvotes: post.downvotes
+                });
+                loadFeed();
+                if (currentOpenPostId === postId) {
+                    openFullscreenPost(postId);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+
+        window.downvotePost = async function(postId) {
+            const post = allPosts.find(p => p.id === postId);
+            if (!post) return;
+
+            if (!Array.isArray(post.upvotes)) post.upvotes = [];
+            if (!Array.isArray(post.downvotes)) post.downvotes = [];
+
+            const hasDownvoted = post.downvotes.includes(currentUser.username);
+            
+            if (hasDownvoted) {
+                post.downvotes = post.downvotes.filter(d => d !== currentUser.username);
+            } else {
+                post.downvotes.push(currentUser.username);
+                post.upvotes = post.upvotes.filter(u => u !== currentUser.username);
+            }
+
+            try {
+                await updateDoc(doc(db, 'posts', postId), {
+                    upvotes: post.upvotes,
+                    downvotes: post.downvotes
+                });
+                loadFeed();
+                if (currentOpenPostId === postId) {
+                    openFullscreenPost(postId);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+
+        // ==================== COMMENTS ====================
+        window.submitComment = async function() {
+            if (!currentOpenPostId) return;
+
+            const commentText = document.getElementById('commentInput').value.trim();
+            if (!commentText || commentText.length < 2) {
+                showToast('Comment must be at least 2 characters', 'error');
+                return;
+            }
+
+            try {
+                const post = allPosts.find(p => p.id === currentOpenPostId);
+                if (!post) return;
+
+                if (!Array.isArray(post.comments)) post.comments = [];
+
+                const newComment = {
+                    text: commentText,
+                    author: currentUser.username,
+                    createdAt: Date.now()
+                };
+
+                post.comments.push(newComment);
+
+                await updateDoc(doc(db, 'posts', currentOpenPostId), {
+                    comments: post.comments
+                });
+
+                document.getElementById('commentInput').value = '';
+                renderComments(post.comments);
+                showToast('Comment posted! 💬');
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('Failed to post comment', 'error');
+            }
+        };
+
+        function renderComments(comments) {
+            const container = document.getElementById('commentsContainer');
+            
+            if (!comments || comments.length === 0) {
+                container.innerHTML = '<div class="no-comments">No comments yet. Be the first to comment!</div>';
+                return;
+            }
+
+            container.innerHTML = comments.map(comment => `
+                <div class="comment">
+                    <div class="comment-author">${comment.author}</div>
+                    <div class="comment-time">${timeAgo(comment.createdAt)}</div>
+                    <div class="comment-text">${comment.text}</div>
+                </div>
+            `).join('');
+        }
+
+        // ==================== FULLSCREEN POST ====================
+        window.openFullscreenPost = function(postId) {
+            const post = allPosts.find(p => p.id === postId);
+            if (!post) return;
+
+            currentOpenPostId = postId;
+
+            const upvotes = (post.upvotes && Array.isArray(post.upvotes)) ? post.upvotes.length : 0;
+            const downvotes = (post.downvotes && Array.isArray(post.downvotes)) ? post.downvotes.length : 0;
+            const hasUpvoted = post.upvotes?.includes(currentUser?.username);
+            const hasDownvoted = post.downvotes?.includes(currentUser?.username);
+            const isAuthor = post.author === currentUser?.username;
+
+            document.getElementById('fullscreenPostTitle').textContent = post.title;
+            document.getElementById('fullscreenPostMeta').innerHTML = `
+                <span>• ${timeAgo(post.createdAt)}</span>
+                <span>• by ${post.author}</span>
+                ${post.sharedToCommunity ? '<span>• 📚 Shared</span>' : ''}
+            `;
+            document.getElementById('fullscreenPostContent').textContent = post.content;
+
+            const imgElement = document.getElementById('fullscreenPostImage');
+            if (post.image && post.image !== '') {
+                imgElement.src = post.image;
+                imgElement.style.display = 'block';
+                imgElement.onerror = function() { this.style.display = 'none'; };
+            } else {
+                imgElement.style.display = 'none';
+            }
+
+            document.getElementById('fullscreenPostVoting').innerHTML = `
+                <button class="fullscreen-vote-btn ${hasUpvoted ? 'upvoted' : ''}" onclick="upvotePost('${post.id}')">▲ ${upvotes} Upvote</button>
+                <button class="fullscreen-vote-btn ${hasDownvoted ? 'downvoted' : ''}" onclick="downvotePost('${post.id}')">▼ ${downvotes} Downvote</button>
+                ${isAuthor ? `<button class="fullscreen-vote-btn" style="color: var(--danger);" onclick="deletePost('${post.id}')">🗑️ Delete</button>` : ''}
+            `;
+
+            renderComments(post.comments || []);
+            document.getElementById('commentInput').value = '';
+
+            document.getElementById('fullscreenPostModal').classList.add('active');
+        };
+
+        window.closeFullscreenPost = function() {
+            currentOpenPostId = null;
+            document.getElementById('fullscreenPostModal').classList.remove('active');
+        };
+
+        // ==================== FEED ====================
+        window.switchFeed = function(feed) {
+            currentFeed = feed;
+            document.querySelectorAll('.sidebar-item').forEach(item => item.classList.remove('active'));
+            event.target.closest('.sidebar-item').classList.add('active');
+            
+            const titles = {
+                'home': '🏠 Home',
+                'trending': '🔥 Trending',
+                'recent': '⏰ Recent',
+                'top': '⭐ Top Rated'
+            };
+            document.getElementById('feedTitle').textContent = titles[feed];
+            loadFeed();
+        };
+
+        window.applySorting = function() {
+            currentSort = document.getElementById('sortSelect').value;
+            loadFeed();
+        };
+
+        async function loadInitialData() {
+            try {
+                const postsSnap = await getDocs(query(collection(db, 'posts'), orderBy('createdAt', 'desc')));
+                allPosts = [];
+                postsSnap.forEach(docSnap => {
+                    allPosts.push({ id: docSnap.id, ...docSnap.data() });
+                });
+                loadCommunities();
+                loadFeed();
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+
+        function loadFeed() {
+            let posts = [...allPosts];
+
+            if (currentFeed === 'trending') {
+                posts = posts.sort((a, b) => {
+                    const scoreA = (a.upvotes?.length || 0) - (a.downvotes?.length || 0);
+                    const scoreB = (b.upvotes?.length || 0) - (b.downvotes?.length || 0);
+                    return scoreB - scoreA;
+                });
+            } else if (currentFeed === 'top') {
+                posts = posts.sort((a, b) => {
+                    const scoreA = (a.upvotes?.length || 0);
+                    const scoreB = (b.upvotes?.length || 0);
+                    return scoreB - scoreA;
+                });
+            }
+
+            switch(currentSort) {
+                case 'trending':
+                    posts.sort((a, b) => {
+                        const scoreA = (a.upvotes?.length || 0) - (a.downvotes?.length || 0);
+                        const scoreB = (b.upvotes?.length || 0) - (b.downvotes?.length || 0);
+                        return scoreB - scoreA;
+                    });
+                    break;
+                case 'top':
+                    posts.sort((a, b) => {
+                        const scoreA = (a.upvotes?.length || 0);
+                        const scoreB = (b.upvotes?.length || 0);
+                        return scoreB - scoreA;
+                    });
+                    break;
+                default:
+                    posts.sort((a, b) => b.createdAt - a.createdAt);
+            }
+
+            renderFeed(posts);
+            updateTrending();
+        }
+
+        function renderFeed(posts) {
+            const container = document.getElementById('feedContainer');
+            
+            if (posts.length === 0) {
+                container.innerHTML = '<div class="no-content">No posts found. Be the first to post!</div>';
+                return;
+            }
+
+            container.innerHTML = posts.map(post => {
+                const upvotes = (post.upvotes && Array.isArray(post.upvotes)) ? post.upvotes.length : 0;
+                const downvotes = (post.downvotes && Array.isArray(post.downvotes)) ? post.downvotes.length : 0;
+                const hasUpvoted = post.upvotes?.includes(currentUser?.username);
+                const hasDownvoted = post.downvotes?.includes(currentUser?.username);
+                const isAuthor = post.author === currentUser?.username;
+
+                return `
+                    <div class="post" onclick="openFullscreenPost('${post.id}')">
+                        <div class="post-voting" onclick="event.stopPropagation()">
+                            <button class="vote-btn ${hasUpvoted ? 'upvoted' : ''}" onclick="upvotePost('${post.id}')">▲</button>
+                            <div class="vote-count">${upvotes - downvotes}</div>
+                            <button class="vote-btn ${hasDownvoted ? 'downvoted' : ''}" onclick="downvotePost('${post.id}')">▼</button>
+                        </div>
+                        <div class="post-content">
+                            <div class="post-header">
+                                <span class="post-meta">• ${timeAgo(post.createdAt)}</span>
+                                <span class="post-meta">• by ${post.author}</span>
+                                ${post.sharedToCommunity ? '<span class="shared-badge">📚 Shared</span>' : ''}
+                            </div>
+                            <div class="post-title">${post.title}</div>
+                            <div class="post-description">${post.content}</div>
+                            ${post.image && post.image !== '' ? `<img src="${post.image}" alt="Post image" class="post-image" onerror="this.style.display='none'">` : ''}
+                            <div class="post-footer" onclick="event.stopPropagation()">
+                                <button class="post-action">👁️ ${post.views || 0} Views</button>
+                                <button class="post-action">💬 ${(post.comments && post.comments.length) || 0} Comments</button>
+                                ${isAuthor ? `<button class="post-action" style="color: var(--danger);" onclick="deletePost('${post.id}')">🗑️ Delete</button>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.deletePost = async function(postId) {
+            if (!confirm('Are you sure you want to delete this post?')) return;
+            try {
+                const post = allPosts.find(p => p.id === postId);
+                if (!post) return;
+
+                if (post.author !== currentUser.username && !currentUser.isAdmin) {
+                    showToast('You do not have permission to delete this post', 'error');
+                    return;
+                }
+
+                await deleteDoc(doc(db, 'posts', postId));
+                allPosts = allPosts.filter(p => p.id !== postId);
+                
+                if (currentUser.posts && Array.isArray(currentUser.posts)) {
+                    currentUser.posts = currentUser.posts.filter(id => id !== postId);
+                    localStorage.setItem('dracoUser', JSON.stringify(currentUser));
+                }
+
+                closeFullscreenPost();
+                loadFeed();
+                showToast('Post deleted successfully');
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('Failed to delete post', 'error');
+            }
+        };
+
+        function updateTrending() {
+            const trending = allPosts
+                .sort((a, b) => ((b.upvotes?.length || 0) - (b.downvotes?.length || 0)) - ((a.upvotes?.length || 0) - (a.downvotes?.length || 0)))
+                .slice(0, 5);
+
+            document.getElementById('trendingContainer').innerHTML = trending.map(post => `
+                <div class="trending-item">
+                    <div class="trending-title">${post.title}</div>
+                    <div class="trending-count">⬆️ ${(post.upvotes?.length || 0) - (post.downvotes?.length || 0)}</div>
+                </div>
+            `).join('') || '<div class="no-content">No trending posts</div>';
+        }
+
+        // ==================== SEARCH ====================
+        window.searchPosts = function() {
+            const term = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = allPosts.filter(p => 
+                p.title.toLowerCase().includes(term) || 
+                p.content.toLowerCase().includes(term)
+            );
+            renderFeed(filtered);
+        };
+
+        // ==================== UTILITIES ====================
+        function timeAgo(timestamp) {
+            const now = Date.now();
+            const diff = now - timestamp;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            const days = Math.floor(diff / 86400000);
+
+            if (minutes < 1) return 'just now';
+            if (minutes < 60) return `${minutes}m ago`;
+            if (hours < 24) return `${hours}h ago`;
+            if (days < 7) return `${days}d ago`;
+            return new Date(timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        }
+
+        window.goHome = function() {
+            window.location.reload();
+        };
+
+        // ==================== INIT ====================
+        const saved = localStorage.getItem('dracoUser');
+        if (saved) {
+            currentUser = JSON.parse(saved);
+            document.getElementById('authModal').classList.remove('active');
+            updateUserDisplay();
+            loadInitialData();
+        }
+    </script>
 </body>
 </html>
