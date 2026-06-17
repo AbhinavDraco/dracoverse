@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GG7CQ1TL2G"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DracoCommunity</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GG7CQ1TL2G"></script>
+    <link rel="icon" type="image/png" sizes="32x32" href="rag.jpg">
+    <link rel="icon" type="image/png" sizes="16x16" href="rag.jpg">
+    <link rel="shortcut icon" href="favicon.ico">
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -58,7 +59,6 @@
         body::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
         body::-webkit-scrollbar-thumb:hover { background: var(--accent-light); }
 
-        /* ======================== LAYOUT ======================== */
         .layout {
             display: grid;
             grid-template-columns: 280px 1fr 320px;
@@ -70,7 +70,6 @@
             overflow: hidden;
         }
 
-        /* ======================== SIDEBAR ======================== */
         .sidebar {
             display: flex;
             flex-direction: column;
@@ -96,6 +95,8 @@
             flex: 1;
             overflow-y: auto;
             padding: 0;
+            display: flex;
+            flex-direction: column;
         }
 
         .sidebar-inner::-webkit-scrollbar { width: 4px; }
@@ -240,7 +241,6 @@
             border-radius: 50%;
         }
 
-        /* ======================== MAIN AREA ======================== */
         .main-area {
             display: flex;
             flex-direction: column;
@@ -261,9 +261,7 @@
             flex-shrink: 0;
         }
 
-        .channel-info {
-            flex: 1;
-        }
+        .channel-info { flex: 1; }
 
         .channel-title {
             font-size: 16px;
@@ -279,10 +277,7 @@
             margin-top: 2px;
         }
 
-        .header-btns {
-            display: flex;
-            gap: 8px;
-        }
+        .header-btns { display: flex; gap: 8px; }
 
         .header-btn {
             width: 36px;
@@ -310,6 +305,32 @@
             color: var(--danger);
             border-color: var(--danger);
         }
+
+        .header-btn.active {
+            background: rgba(129, 140, 255, 0.3);
+            border-color: var(--accent);
+        }
+
+        /* Search bar */
+        .search-bar-wrap {
+            padding: 10px 20px;
+            border-bottom: 1px solid var(--border);
+            display: none;
+            flex-shrink: 0;
+        }
+        .search-bar-wrap.show { display: block; }
+        .search-input {
+            width: 100%;
+            padding: 8px 12px;
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            transition: all var(--transition);
+        }
+        .search-input:focus { outline: none; border-color: var(--accent); }
 
         .messages-container {
             flex: 1;
@@ -518,7 +539,6 @@
 
         .send-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(129, 140, 255, 0.3); }
 
-        /* ======================== RIGHT SIDEBAR ======================== */
         .right-sidebar {
             display: flex;
             flex-direction: column;
@@ -527,7 +547,10 @@
             border-radius: 8px;
             overflow: hidden;
             height: 100%;
+            transition: all var(--transition);
         }
+
+        .right-sidebar.hidden { display: none; }
 
         .sidebar-header {
             padding: 15px 20px;
@@ -559,9 +582,7 @@
             font-size: 12px;
         }
 
-        .member-item:hover {
-            background: rgba(129, 140, 255, 0.1);
-        }
+        .member-item:hover { background: rgba(129, 140, 255, 0.1); }
 
         .member-avatar {
             width: 28px;
@@ -576,10 +597,7 @@
             flex-shrink: 0;
         }
 
-        .member-info {
-            flex: 1;
-            min-width: 0;
-        }
+        .member-info { flex: 1; min-width: 0; }
 
         .member-name {
             font-weight: 600;
@@ -588,10 +606,7 @@
             text-overflow: ellipsis;
         }
 
-        .member-role {
-            font-size: 10px;
-            color: var(--text-secondary);
-        }
+        .member-role { font-size: 10px; color: var(--text-secondary); }
 
         .member-online {
             width: 8px;
@@ -601,7 +616,6 @@
             flex-shrink: 0;
         }
 
-        /* ======================== MODALS ======================== */
         .modal {
             display: none;
             position: fixed;
@@ -661,9 +675,7 @@
 
         .modal-body { padding: 20px; }
 
-        .form-group {
-            margin-bottom: 16px;
-        }
+        .form-group { margin-bottom: 16px; }
 
         .form-label {
             display: block;
@@ -719,7 +731,67 @@
             color: var(--accent);
         }
 
-        /* ======================== NOTIFICATIONS ======================== */
+        .poll-container {
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px;
+            max-width: 500px;
+            margin-top: 8px;
+        }
+
+        .poll-title {
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--accent);
+            font-size: 14px;
+        }
+
+        .poll-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            margin-bottom: 8px;
+            background: rgba(129, 140, 255, 0.05);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all var(--transition);
+            border: 1px solid var(--border);
+        }
+
+        .poll-option:hover {
+            background: rgba(129, 140, 255, 0.1);
+            border-color: var(--accent);
+        }
+
+        .poll-option.voted {
+            background: rgba(129, 140, 255, 0.15);
+            border-color: var(--accent);
+        }
+
+        .poll-bar {
+            flex: 1;
+            height: 20px;
+            background: rgba(129, 140, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .poll-fill {
+            height: 100%;
+            background: var(--accent);
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 6px;
+        }
+
+        .poll-text { font-size: 11px; color: var(--text-secondary); }
+        .poll-label { font-size: 12px; font-weight: 600; min-width: 80px; }
+
         .notification-popup {
             position: fixed;
             top: 20px;
@@ -775,31 +847,11 @@
             flex-shrink: 0;
         }
 
-        .notif-avatar img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-        }
+        .notif-avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
 
-        .notif-author {
-            font-weight: 600;
-            color: var(--accent);
-            font-size: 13px;
-        }
-
-        .notif-channel {
-            font-size: 11px;
-            color: var(--text-secondary);
-        }
-
-        .notif-message {
-            font-size: 12px;
-            color: var(--text-secondary);
-            line-height: 1.4;
-            margin-bottom: 8px;
-            word-break: break-word;
-        }
+        .notif-author { font-weight: 600; color: var(--accent); font-size: 13px; }
+        .notif-channel { font-size: 11px; color: var(--text-secondary); }
+        .notif-message { font-size: 12px; color: var(--text-secondary); line-height: 1.4; margin-bottom: 8px; word-break: break-word; }
 
         .notif-progress {
             height: 2px;
@@ -830,9 +882,7 @@
             justify-content: center;
         }
 
-        .notif-close:hover {
-            color: var(--accent);
-        }
+        .notif-close:hover { color: var(--accent); }
 
         .toast {
             position: fixed;
@@ -851,7 +901,6 @@
         .toast.success { border-color: var(--success); }
         .toast.error { border-color: var(--danger); color: var(--danger); }
 
-        /* ======================== RESPONSIVE ======================== */
         @media (max-width: 1200px) {
             .layout { grid-template-columns: 1fr 300px; }
             .sidebar { display: none; }
@@ -947,8 +996,13 @@
                     <button class="header-btn" id="searchToggleBtn" title="Search">🔍</button>
                     <button class="header-btn" id="bookmarksBtn" title="Bookmarks">⭐</button>
                     <button class="header-btn" id="membersToggleBtn" title="Members">👥</button>
-                    <button class="header-btn danger" id="deleteAllBtn" style="display:none;" title="Delete all">🗑️</button>
+                    <button class="header-btn danger" id="deleteAllBtn" style="display:none;" title="Delete all messages">🗑️</button>
                 </div>
+            </div>
+
+            <!-- SEARCH BAR (hidden by default) -->
+            <div class="search-bar-wrap" id="searchBarWrap">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search messages in this channel..." />
             </div>
 
             <div class="messages-container" id="messagesContainer">
@@ -976,10 +1030,7 @@
         </div>
     </div>
 
-    <!-- NOTIFICATIONS CONTAINER -->
     <div id="notificationsContainer"></div>
-
-    <!-- TOAST CONTAINER -->
     <div id="toastContainer"></div>
 
     <!-- AUTH MODAL -->
@@ -1048,475 +1099,840 @@
         </div>
     </div>
 
+    <!-- POLL MODAL -->
+    <div class="modal" id="pollModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">📊 Create Poll</div>
+                <button class="modal-close" onclick="closeModal('pollModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Poll Question</label>
+                    <input type="text" class="form-input" id="pollQuestion" placeholder="Ask a question..." maxlength="100">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Options (one per line)</label>
+                    <textarea class="form-textarea" id="pollOptions" placeholder="Option 1&#10;Option 2&#10;Option 3" maxlength="500"></textarea>
+                </div>
+                <button class="btn-primary" onclick="createPoll()">Create Poll</button>
+                <button class="btn-primary btn-secondary" onclick="closeModal('pollModal')">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-        import {
-            getFirestore, collection, addDoc, doc, updateDoc, getDoc, deleteDoc,
-            query, orderBy, onSnapshot, where
-        } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import {
+    getFirestore, collection, addDoc, doc, updateDoc, getDoc, deleteDoc,
+    query, orderBy, onSnapshot, getDocs, writeBatch
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCHkxuxZ-KWzQEoZt-XLXz1XX8ObTENQR4",
-            authDomain: "dracoblog-27113.firebaseapp.com",
-            projectId: "dracoblog-27113",
-            storageBucket: "dracoblog-27113.appspot.com",
-            messagingSenderId: "1086959854616",
-            appId: "1:1086959854616:web:64ac860d7a4a28706bcf6d"
-        };
+const firebaseConfig = {
+    apiKey: "AIzaSyCHkxuxZ-KWzQEoZt-XLXz1XX8ObTENQR4",
+    authDomain: "dracoblog-27113.firebaseapp.com",
+    projectId: "dracoblog-27113",
+    storageBucket: "dracoblog-27113.appspot.com",
+    messagingSenderId: "1086959854616",
+    appId: "1:1086959854616:web:64ac860d7a4a28706bcf6d"
+};
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-        const ADMIN_USERNAME = "abhi67";
-        const ADMIN_PASSWORD = "admin67";
+const ADMIN_USERNAME = "abhi67";
+const MANAGER_USERNAME = "zekken";
+const ADMIN_PASSWORD = "admin67";
+const MANAGER_PASSWORD = "sush67";
+// Single localStorage key used everywhere
+const STORAGE_KEY = "communityUser";
 
-        let currentUser = null;
-        let currentChannel = "general";
-        let allMessages = [];
-        let unsubscribe = null;
-        let bookmarkedMsgs = [];
-        let channelUnread = {};
+let currentUser = null;
+let currentChannel = "general";
+let allMessages = [];
+let unsubscribe = null;
+let bookmarkedMsgs = [];
+let channelUnread = {};
+let userMessageCounts = {};
+let rightSidebarVisible = true;
+// Track the timestamp of the most-recent message we have already seen
+// so we don't fire a notification for old messages on first load.
+let latestSeenTimestamp = 0;
+let searchQuery = "";
 
-        // ==================== UTILITIES ====================
-        function sanitize(s) {
-            if (typeof s !== "string") return "";
-            return s.replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
-        }
+// ==================== UTILITIES ====================
+function sanitize(s) {
+    if (typeof s !== "string") return "";
+    return s.replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+}
 
-        function initials(u) { return (u||"?").substring(0,2).toUpperCase(); }
+function initials(u) { return (u || "?").substring(0, 2).toUpperCase(); }
 
-        function timeAgo(ts) {
-            const d = Date.now()-ts, m=Math.floor(d/60000), h=Math.floor(d/3600000), dy=Math.floor(d/86400000);
-            if (m<1) return "just now";
-            if (m<60) return m+"m ago";
-            if (h<24) return h+"h ago";
-            if (dy<7) return dy+"d ago";
-            return new Date(ts).toLocaleDateString();
-        }
+function timeAgo(ts) {
+    const d = Date.now() - ts, m = Math.floor(d / 60000), h = Math.floor(d / 3600000), dy = Math.floor(d / 86400000);
+    if (m < 1) return "just now";
+    if (m < 60) return m + "m ago";
+    if (h < 24) return h + "h ago";
+    if (dy < 7) return dy + "d ago";
+    return new Date(ts).toLocaleDateString();
+}
 
-        window.toast = function(msg, type = "success") {
-            const c = document.getElementById("toastContainer");
-            const t = document.createElement("div");
-            t.className = `toast ${type}`;
-            t.innerHTML = `<span>${msg}</span>`;
-            c.appendChild(t);
-            setTimeout(() => { t.remove(); }, 3000);
-        };
+window.toast = function(msg, type = "success") {
+    const c = document.getElementById("toastContainer");
+    const t = document.createElement("div");
+    t.className = `toast ${type}`;
+    t.textContent = msg;
+    c.appendChild(t);
+    setTimeout(() => { t.remove(); }, 3000);
+};
 
-        // ==================== AUTH ====================
-        window.authenticate = function() {
-            const username = document.getElementById("authUsername").value.trim();
-            const password = document.getElementById("authPassword").value;
-            const authError = document.getElementById("authError");
-
-            authError.style.display = "none";
-
-            if (!username || username.length < 3) {
-                authError.textContent = "Username must be at least 3 characters";
-                authError.style.display = "block";
-                return;
-            }
-
-            if (username === ADMIN_USERNAME && password !== ADMIN_PASSWORD) {
-                authError.textContent = "Incorrect admin password";
-                authError.style.display = "block";
-                return;
-            }
-
-            currentUser = {
-                username,
-                isAdmin: username === ADMIN_USERNAME,
-                bio: "",
-                status: "Online",
-                avatar: null
-            };
-
-            localStorage.setItem("communityUser", JSON.stringify(currentUser));
+// ==================== AUTH ====================
+function checkAuthStatus() {
+    const savedUser = localStorage.getItem(STORAGE_KEY);
+    if (savedUser) {
+        try {
+            currentUser = JSON.parse(savedUser);
             document.getElementById("authModal").classList.remove("show");
             initSidebar();
             loadMessages();
-            toast(`Welcome, ${username}!`);
-        };
-
-        window.authenticateAsGuest = function() {
-            const username = document.getElementById("authUsername").value.trim();
-            if (!username || username.length < 3) {
-                toast("Username must be at least 3 characters", "error");
-                return;
-            }
-
-            currentUser = {
-                username,
-                isAdmin: false,
-                bio: "",
-                status: "Online",
-                avatar: null
-            };
-
-            localStorage.setItem("communityUser", JSON.stringify(currentUser));
-            document.getElementById("authModal").classList.remove("show");
-            initSidebar();
-            loadMessages();
-            toast(`Welcome, ${username}!`);
-        };
-
-        document.getElementById("authUsername").addEventListener("input", function() {
-            const passwordGroup = document.getElementById("passwordGroup");
-            if (this.value === ADMIN_USERNAME) {
-                passwordGroup.style.display = "block";
-            } else {
-                passwordGroup.style.display = "none";
-            }
-        });
-
-        document.getElementById("authPassword").addEventListener("keypress", (e) => {
-            if (e.key === "Enter") authenticate();
-        });
-
-        // ==================== SIDEBAR ====================
-        function initSidebar() {
-            if (!currentUser) return;
-            const avatar = document.getElementById("sidebarAvatar");
-            if (currentUser.avatar) {
-                avatar.innerHTML = `<img src="${currentUser.avatar}" />`;
-            } else {
-                avatar.textContent = initials(currentUser.username);
-            }
-            document.getElementById("sidebarUsername").textContent = currentUser.username + (currentUser.isAdmin ? " 👑" : "");
-            document.getElementById("deleteAllBtn").style.display = currentUser.isAdmin ? "flex" : "none";
+            return true;
+        } catch (e) {
+            localStorage.removeItem(STORAGE_KEY);
+            return false;
         }
+    }
+    return false;
+}
 
-        // ==================== MESSAGES ====================
-        function loadMessages() {
-            const container = document.getElementById("messagesContainer");
-            container.innerHTML = '<div class="no-msgs">⏳ Loading...</div>';
-            const q = query(collection(db, "communityMessages"), orderBy("timestamp", "asc"));
-            if (unsubscribe) unsubscribe();
-            unsubscribe = onSnapshot(q, snap => {
-                allMessages = [];
-                snap.forEach(d => allMessages.push({ id: d.id, ...d.data() }));
-                renderMessages();
-                updateStats();
+window.authenticate = function() {
+    const username = document.getElementById("authUsername").value.trim();
+    const password = document.getElementById("authPassword").value;
+    const authError = document.getElementById("authError");
+
+    authError.style.display = "none";
+
+    if (!username || username.length < 3) {
+        authError.textContent = "Username must be at least 3 characters";
+        authError.style.display = "block";
+        return;
+    }
+
+    let role = 'user';
+    if (username === ADMIN_USERNAME) {
+        if (password !== ADMIN_PASSWORD) {
+            authError.textContent = "Incorrect admin password";
+            authError.style.display = "block";
+            document.getElementById("authPassword").value = '';
+            return;
+        }
+        role = 'admin';
+    } else if (username === MANAGER_USERNAME) {
+        if (password !== MANAGER_PASSWORD) {
+            authError.textContent = "Incorrect manager password";
+            authError.style.display = "block";
+            document.getElementById("authPassword").value = '';
+            return;
+        }
+        role = 'manager';
+    }
+
+    currentUser = { username, role, bio: "", status: "Online", avatar: null };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(currentUser));
+    document.getElementById("authModal").classList.remove("show");
+    initSidebar();
+    loadMessages();
+    toast(`Welcome, ${username}!`);
+};
+
+window.authenticateAsGuest = function() {
+    const username = document.getElementById("authUsername").value.trim();
+    if (!username || username.length < 3) {
+        toast("Username must be at least 3 characters", "error");
+        return;
+    }
+    currentUser = { username, role: 'user', bio: "", status: "Online", avatar: null };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(currentUser));
+    document.getElementById("authModal").classList.remove("show");
+    initSidebar();
+    loadMessages();
+    toast(`Welcome, ${username}!`);
+};
+
+document.getElementById("authUsername").addEventListener("input", function() {
+    const passwordGroup = document.getElementById("passwordGroup");
+    if (this.value === ADMIN_USERNAME || this.value === MANAGER_USERNAME) {
+        passwordGroup.style.display = "block";
+    } else {
+        passwordGroup.style.display = "none";
+    }
+});
+
+document.getElementById("authUsername").addEventListener("keypress", (e) => {
+    if (e.key === "Enter") authenticate();
+});
+document.getElementById("authPassword").addEventListener("keypress", (e) => {
+    if (e.key === "Enter") authenticate();
+});
+
+// ==================== SIDEBAR ====================
+function initSidebar() {
+    if (!currentUser) return;
+    const avatar = document.getElementById("sidebarAvatar");
+    if (currentUser.avatar) {
+        avatar.innerHTML = `<img src="${currentUser.avatar}" />`;
+    } else {
+        avatar.textContent = initials(currentUser.username);
+    }
+
+    let userDisplay = currentUser.username;
+    if (currentUser.role === 'admin') userDisplay += ' 👑';
+    else if (currentUser.role === 'manager') userDisplay += ' ⭐';
+    document.getElementById("sidebarUsername").textContent = userDisplay;
+    document.getElementById("deleteAllBtn").style.display = currentUser.role === 'admin' ? "flex" : "none";
+}
+
+// Sidebar profile button opens profile modal
+document.getElementById("userProfileBtn").addEventListener("click", () => {
+    if (!currentUser) return;
+    document.getElementById("profileBio").value = currentUser.bio || "";
+    document.getElementById("profileStatus").value = currentUser.status || "Online";
+    document.getElementById("profileModal").classList.add("show");
+});
+
+// ==================== MEMBERS TOGGLE ====================
+document.getElementById("membersToggleBtn").addEventListener("click", () => {
+    rightSidebarVisible = !rightSidebarVisible;
+    document.getElementById("rightSidebar").classList.toggle("hidden");
+    document.getElementById("membersToggleBtn").classList.toggle("active");
+});
+
+// ==================== SEARCH TOGGLE ====================
+document.getElementById("searchToggleBtn").addEventListener("click", () => {
+    const wrap = document.getElementById("searchBarWrap");
+    const btn = document.getElementById("searchToggleBtn");
+    const showing = wrap.classList.toggle("show");
+    btn.classList.toggle("active", showing);
+    if (showing) {
+        document.getElementById("searchInput").focus();
+    } else {
+        searchQuery = "";
+        document.getElementById("searchInput").value = "";
+        renderMessages();
+    }
+});
+
+document.getElementById("searchInput").addEventListener("input", function() {
+    searchQuery = this.value.trim().toLowerCase();
+    renderMessages();
+});
+
+// ==================== MESSAGES ====================
+function loadMessages() {
+    const container = document.getElementById("messagesContainer");
+    container.innerHTML = '<div class="no-msgs">⏳ Loading...</div>';
+
+    const q = query(collection(db, "communityMessages"), orderBy("timestamp", "asc"));
+    if (unsubscribe) unsubscribe();
+
+    unsubscribe = onSnapshot(q, snap => {
+        const prevCount = allMessages.length;
+        allMessages = [];
+        userMessageCounts = {};
+
+        snap.forEach(d => {
+            const msg = { id: d.id, ...d.data() };
+            allMessages.push(msg);
+            if (!userMessageCounts[msg.author]) userMessageCounts[msg.author] = 0;
+            userMessageCounts[msg.author]++;
+        });
+
+        // On first load, just set the baseline timestamp — no notifications
+        if (prevCount === 0 && allMessages.length > 0) {
+            latestSeenTimestamp = Math.max(...allMessages.map(m => m.timestamp || 0));
+        } else if (allMessages.length > 0) {
+            // Only notify for genuinely new messages (timestamp newer than anything we've seen)
+            const newMsgs = allMessages.filter(
+                m => (m.timestamp || 0) > latestSeenTimestamp && m.author !== currentUser?.username
+            );
+            newMsgs.forEach(m => {
+                if (m.channel !== currentChannel) {
+                    channelUnread[m.channel] = (channelUnread[m.channel] || 0) + 1;
+                    showNotification(m.author, m.text || "📊 Poll", m.channel, m.authorImage);
+                }
             });
+            if (newMsgs.length > 0) {
+                latestSeenTimestamp = Math.max(...allMessages.map(m => m.timestamp || 0));
+            }
         }
 
-        function renderMessages() {
-            const msgs = allMessages.filter(m => m.channel === currentChannel);
-            const container = document.getElementById("messagesContainer");
-            const wasAtBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 80;
+        renderMessages();
+        updateStats();
+        updateUnreadBadges();
+    });
+}
 
-            if (!msgs.length) {
-                container.innerHTML = '<div class="no-msgs">💬 No messages yet. Be the first!</div>';
-                return;
-            }
+function renderMessages() {
+    let msgs = allMessages.filter(m => m.channel === currentChannel);
 
-            container.innerHTML = msgs.map(msg => buildMsgHTML(msg)).join("");
-            
-            if (wasAtBottom) container.scrollTop = container.scrollHeight;
-        }
+    // Apply search filter if active
+    if (searchQuery) {
+        msgs = msgs.filter(m =>
+            (m.text || "").toLowerCase().includes(searchQuery) ||
+            (m.author || "").toLowerCase().includes(searchQuery) ||
+            (m.pollQuestion || "").toLowerCase().includes(searchQuery)
+        );
+    }
 
-        function buildMsgHTML(msg) {
-            const isOwn = msg.author === currentUser?.username;
-            const sName = sanitize(msg.author);
-            const sText = sanitize(msg.text || "");
+    const container = document.getElementById("messagesContainer");
+    // Detect if user is near bottom before re-render
+    const wasAtBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 120;
 
-            // Check if this is a shared blog post
-            if (msg.originalPostId) {
-                const lines = (msg.text || "").split('\n\n');
-                const blogTitle = sanitize(lines[0] || "Blog Post");
-                const blogContent = sanitize(lines.slice(1).join('\n\n').substring(0, 100) || "");
-                
-                return `
-                <div class="msg-group${isOwn ? " own" : ""}">
-                    <div class="msg-avatar" data-user="${sName}">${msg.authorImage ? `<img src="${msg.authorImage}" />` : initials(msg.author)}</div>
-                    <div class="msg-body">
-                        <div class="msg-header">
-                            <span class="msg-name" data-user="${sName}">${sName}</span>
-                            <span class="msg-time">${timeAgo(msg.timestamp)}</span>
-                        </div>
-                        <div style="background: var(--secondary); padding: 14px; border-radius: 8px; border: 1px solid var(--border); cursor: pointer; transition: all var(--transition); max-width: 500px;" onclick="window.open('blogs.html?postId=${msg.originalPostId}', '_blank')" onmouseover="this.style.borderColor='var(--accent)'; this.style.backgroundColor='rgba(129, 140, 255, 0.1)';" onmouseout="this.style.borderColor='var(--border)'; this.style.backgroundColor='var(--secondary)';">
-                            <div style="font-weight: 700; color: var(--accent); margin-bottom: 6px; font-size: 14px;">📚 ${blogTitle}</div>
-                            <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; line-height: 1.4;">${blogContent}${blogContent.length > 0 ? '...' : ''}</div>
-                            <div style="font-size: 11px; color: var(--accent); font-weight: 600; padding-top: 6px; border-top: 1px solid var(--border);">👉 Click to view full blog</div>
-                        </div>
-                        <div class="msg-actions">
-                            <button class="msg-action-btn" onclick="toggleBookmark('${msg.id}', '${blogTitle.substring(0,50).replace(/'/g, "\\'")}')" >⭐ Bookmark</button>
-                            ${isOwn ? `<button class="msg-action-btn" onclick="deleteMessage('${msg.id}')">🗑️ Delete</button>` : ''}
-                        </div>
-                    </div>
-                </div>`;
-            }
+    if (!msgs.length) {
+        container.innerHTML = searchQuery
+            ? '<div class="no-msgs">🔍 No messages match your search.</div>'
+            : '<div class="no-msgs">💬 No messages yet. Be the first!</div>';
+        return;
+    }
 
-            return `
+    container.innerHTML = msgs.map(msg => buildMsgHTML(msg)).join("");
+
+    // Scroll to bottom if user was already there, or on initial load
+    if (wasAtBottom || container.scrollHeight === container.clientHeight) {
+        container.scrollTop = container.scrollHeight;
+    }
+}
+
+function buildMsgHTML(msg) {
+    const isOwn = msg.author === currentUser?.username;
+    const sName = sanitize(msg.author);
+    const sText = sanitize(msg.text || "");
+    const isAdmin = currentUser?.role === 'admin';
+    const isManager = currentUser?.role === 'manager';
+
+    const msgCount = userMessageCounts[msg.author] || 0;
+    let userBadge = '';
+    if (msgCount >= 200) {
+        userBadge = '<span style="display:inline-block;background:rgba(234,179,8,0.15);color:#eab308;padding:2px 8px;border-radius:4px;font-size:9px;font-weight:700;margin-left:4px;">💎 Diamond</span>';
+    } else if (msgCount >= 100) {
+        userBadge = '<span style="display:inline-block;background:rgba(34,197,94,0.15);color:#22c55e;padding:2px 8px;border-radius:4px;font-size:9px;font-weight:700;margin-left:4px;">⚡ Active User</span>';
+    }
+
+    const canDelete = isAdmin || (isManager && isOwn) || isOwn;
+
+    // Poll message
+    if (msg.type === 'poll') {
+        const pollOptions = msg.options || [];
+        const totalVotes = pollOptions.reduce((sum, opt) => sum + (opt.votes || 0), 0);
+
+        const pollHTML = `
+            <div class="poll-container">
+                <div class="poll-title">📊 ${sanitize(msg.pollQuestion)}</div>
+                ${pollOptions.map((opt, idx) => {
+                    const voteCount = opt.votes || 0;
+                    const percentage = totalVotes > 0 ? Math.round((voteCount / totalVotes) * 100) : 0;
+                    const voted = msg.userVotes?.[currentUser?.username] === idx;
+                    return `
+                        <div class="poll-option${voted ? ' voted' : ''}" onclick="votePoll('${msg.id}', ${idx})">
+                            <div class="poll-label">${sanitize(opt.text)}</div>
+                            <div class="poll-bar">
+                                <div class="poll-fill" style="width:${percentage}%">
+                                    <span class="poll-text">${percentage}%</span>
+                                </div>
+                            </div>
+                            <span class="poll-text">${voteCount}</span>
+                        </div>`;
+                }).join('')}
+                <div style="margin-top:10px;font-size:11px;color:var(--text-secondary);text-align:center;">Total votes: ${totalVotes}</div>
+            </div>`;
+
+        return `
             <div class="msg-group${isOwn ? " own" : ""}">
-                <div class="msg-avatar" data-user="${sName}">${msg.authorImage ? `<img src="${msg.authorImage}" />` : initials(msg.author)}</div>
+                <div class="msg-avatar">${msg.authorImage ? `<img src="${msg.authorImage}" />` : initials(msg.author)}</div>
                 <div class="msg-body">
                     <div class="msg-header">
-                        <span class="msg-name" data-user="${sName}">${sName}</span>
+                        <span class="msg-name">${sName}</span>
                         <span class="msg-time">${timeAgo(msg.timestamp)}</span>
+                        ${userBadge}
                     </div>
-                    <div class="msg-bubble">
-                        ${sText}
-                        ${msg.imageUrl ? `<img src="${msg.imageUrl}" class="msg-image" />` : ''}
-                    </div>
+                    ${pollHTML}
                     <div class="msg-actions">
-                        <button class="msg-action-btn" onclick="startReply('${msg.id}', '${sName.replace(/'/g, "\\'")}', '${sText.substring(0,50).replace(/'/g, "\\'")}')" >↩️ Reply</button>
-                        <button class="msg-action-btn" onclick="toggleBookmark('${msg.id}', '${sText.substring(0,50).replace(/'/g, "\\'")}')" >⭐ Bookmark</button>
-                        ${isOwn ? `<button class="msg-action-btn" onclick="deleteMessage('${msg.id}')">🗑️ Delete</button>` : ''}
+                        ${canDelete ? `<button class="msg-action-btn" onclick="deleteMessage('${msg.id}')">🗑️ Delete</button>` : ''}
                     </div>
                 </div>
             </div>`;
-        }
+    }
 
-        window.sendMessage = async function() {
-            const input = document.getElementById("msgInput");
-            const text = input.value.trim();
-            if (!text || !currentUser) return;
-
-            const btn = document.getElementById("sendBtn");
-            btn.disabled = true;
-
-            try {
-                const payload = {
-                    text,
-                    author: currentUser.username,
-                    channel: currentChannel,
-                    timestamp: Date.now(),
-                    authorImage: currentUser.avatar
-                };
-                await addDoc(collection(db, "communityMessages"), payload);
-                input.value = "";
-                input.style.height = "auto";
-            } catch (err) {
-                console.error(err);
-                toast("Failed to send", "error");
-            } finally {
-                btn.disabled = false;
-            }
-        };
-
-        window.deleteMessage = async function(msgId) {
-            if (!confirm("Delete this message?")) return;
-            try {
-                await deleteDoc(doc(db, "communityMessages", msgId));
-                toast("Message deleted");
-            } catch (err) {
-                toast("Failed to delete", "error");
-            }
-        };
-
-        window.toggleBookmark = function(msgId, text) {
-            const idx = bookmarkedMsgs.indexOf(msgId);
-            if (idx > -1) {
-                bookmarkedMsgs.splice(idx, 1);
-                toast("Removed from bookmarks");
-            } else {
-                bookmarkedMsgs.push(msgId);
-                toast("Added to bookmarks ⭐");
-            }
-            localStorage.setItem("bookmarkedMsgs", JSON.stringify(bookmarkedMsgs));
-        };
-
-        // ==================== CHANNELS ====================
-        window.switchChannel = function(ch, desc) {
-            currentChannel = ch;
-            document.querySelectorAll(".channel-item[data-channel]").forEach(el => {
-                el.classList.toggle("active", el.dataset.channel === ch);
-            });
-            document.getElementById("channelTitleEl").textContent = "# " + ch;
-            document.getElementById("channelSubEl").textContent = desc;
-            channelUnread[ch] = 0;
-            updateStats();
-            renderMessages();
-        };
-
-        document.querySelectorAll(".channel-item[data-channel]").forEach(el => {
-            el.addEventListener("click", () => {
-                switchChannel(el.dataset.channel, el.dataset.desc);
-            });
-        });
-
-        // ==================== STATS & MEMBERS ====================
-        function updateStats() {
-            const members = new Set(allMessages.map(m => m.author));
-            document.getElementById("statMembers").textContent = members.size || 1;
-            renderMembers();
-        }
-
-        function renderMembers() {
-            const members = [...new Set(allMessages.map(m => m.author))];
-            const list = document.getElementById("membersList");
-            list.innerHTML = members.map(u => `
-                <div class="member-item" data-user="${u}">
-                    <div class="member-avatar">${initials(u)}</div>
-                    <div class="member-info">
-                        <div class="member-name">${u}${u === ADMIN_USERNAME ? ' 👑' : ''}</div>
-                        <div class="member-role">${u === currentUser?.username ? 'You' : 'Member'}</div>
-                    </div>
-                    <div class="member-online"></div>
+    // Regular message
+    return `
+        <div class="msg-group${isOwn ? " own" : ""}">
+            <div class="msg-avatar">${msg.authorImage ? `<img src="${msg.authorImage}" />` : initials(msg.author)}</div>
+            <div class="msg-body">
+                <div class="msg-header">
+                    <span class="msg-name">${sName}</span>
+                    <span class="msg-time">${timeAgo(msg.timestamp)}</span>
+                    ${userBadge}
                 </div>
-            `).join("");
-        }
-
-        // ==================== IMPROVED NOTIFICATIONS ====================
-        function showNotification(username, messageText, channel, avatarUrl) {
-            const container = document.getElementById("notificationsContainer");
-            const notif = document.createElement("div");
-            notif.className = "notification-popup";
-
-            const avatarHTML = avatarUrl 
-                ? `<img src="${avatarUrl}" alt="${username}"/>`
-                : initials(username);
-
-            notif.innerHTML = `
-                <button class="notif-close" onclick="this.parentElement.remove()">✕</button>
-                <div class="notif-header">
-                    <div class="notif-avatar">${avatarHTML}</div>
-                    <div>
-                        <div class="notif-author">${sanitize(username)}</div>
-                        <div class="notif-channel">#${sanitize(channel)}</div>
-                    </div>
+                <div class="msg-bubble">
+                    ${sText}
+                    ${msg.imageUrl ? `<br><img src="${msg.imageUrl}" class="msg-image" />` : ''}
                 </div>
-                <div class="notif-message">${sanitize(messageText || "[Image]").substring(0, 100)}</div>
-                <div class="notif-progress"></div>
-            `;
+                <div class="msg-actions">
+                    <button class="msg-action-btn" onclick="toggleBookmark('${msg.id}')">⭐ Bookmark</button>
+                    ${canDelete ? `<button class="msg-action-btn" onclick="deleteMessage('${msg.id}')">🗑️ Delete</button>` : ''}
+                </div>
+            </div>
+        </div>`;
+}
 
-            container.appendChild(notif);
+window.sendMessage = async function() {
+    const input = document.getElementById("msgInput");
+    const text = input.value.trim();
+    if (!text || !currentUser) return;
 
-            setTimeout(() => {
-                if (notif.parentElement) {
-                    notif.classList.add("closing");
-                    setTimeout(() => notif.remove(), 300);
-                }
-            }, 5000);
+    const btn = document.getElementById("sendBtn");
+    btn.disabled = true;
 
-            notif.addEventListener("click", function(e) {
-                if (!e.target.closest(".notif-close")) {
-                    switchChannel(channel, `View ${channel} messages`);
-                    this.remove();
-                }
+    try {
+        await addDoc(collection(db, "communityMessages"), {
+            text,
+            author: currentUser.username,
+            channel: currentChannel,
+            timestamp: Date.now(),
+            authorImage: currentUser.avatar || null,
+            type: 'message'
+        });
+        input.value = "";
+        input.style.height = "auto";
+    } catch (err) {
+        console.error(err);
+        toast("Failed to send", "error");
+    } finally {
+        btn.disabled = false;
+    }
+};
+
+window.deleteMessage = async function(msgId) {
+    if (!confirm("Delete this message?")) return;
+    try {
+        await deleteDoc(doc(db, "communityMessages", msgId));
+        toast("Message deleted");
+    } catch (err) {
+        toast("Failed to delete", "error");
+    }
+};
+
+window.deleteAllMessages = async function() {
+    if (!currentUser || currentUser.role !== 'admin') {
+        toast("Only admins can delete all messages", "error");
+        return;
+    }
+    if (!confirm("⚠️ This will DELETE ALL messages in all channels. This cannot be undone. Are you absolutely sure?")) return;
+    const confirmed = prompt("Type DELETE to confirm:");
+    if (confirmed !== "DELETE") { toast("Cancelled"); return; }
+
+    try {
+        const snapshot = await getDocs(collection(db, "communityMessages"));
+        const batch = writeBatch(db);
+        snapshot.docs.forEach(d => batch.delete(d.ref));
+        await batch.commit();
+        toast("✨ All messages deleted");
+    } catch (err) {
+        toast("Failed to delete all messages", "error");
+    }
+};
+
+window.votePoll = async function(pollId, optionIndex) {
+    if (!currentUser) return;
+    try {
+        const docRef = doc(db, "communityMessages", pollId);
+        const docSnap = await getDoc(docRef);
+        if (!docSnap.exists()) return;
+
+        const data = docSnap.data();
+        const options = [...(data.options || [])];
+        const userVotes = { ...(data.userVotes || {}) };
+
+        // Remove previous vote
+        if (userVotes[currentUser.username] !== undefined) {
+            const prevIdx = userVotes[currentUser.username];
+            if (options[prevIdx]) options[prevIdx] = { ...options[prevIdx], votes: Math.max(0, (options[prevIdx].votes || 1) - 1) };
+        }
+
+        // Add new vote
+        if (options[optionIndex]) {
+            options[optionIndex] = { ...options[optionIndex], votes: (options[optionIndex].votes || 0) + 1 };
+        }
+        userVotes[currentUser.username] = optionIndex;
+
+        await updateDoc(docRef, { options, userVotes });
+        toast("Vote recorded! 🗳️");
+    } catch (err) {
+        console.error(err);
+        toast("Failed to vote", "error");
+    }
+};
+
+// ==================== POLL CREATION ====================
+window.createPoll = async function() {
+    const question = document.getElementById("pollQuestion").value.trim();
+    const optionsText = document.getElementById("pollOptions").value.trim();
+
+    if (!question) { toast("Please enter a poll question", "error"); return; }
+    if (!optionsText) { toast("Please enter poll options", "error"); return; }
+
+    const options = optionsText.split('\n').map(o => o.trim()).filter(Boolean).slice(0, 10);
+    if (options.length < 2) { toast("Please enter at least 2 options", "error"); return; }
+
+    try {
+        await addDoc(collection(db, "communityMessages"), {
+            type: 'poll',
+            pollQuestion: question,
+            options: options.map(text => ({ text, votes: 0 })),
+            author: currentUser.username,
+            channel: currentChannel,
+            timestamp: Date.now(),
+            authorImage: currentUser.avatar || null,
+            userVotes: {},
+            voters: []
+        });
+        document.getElementById("pollQuestion").value = "";
+        document.getElementById("pollOptions").value = "";
+        closeModal("pollModal");
+        toast("Poll created! 📊");
+    } catch (err) {
+        toast("Failed to create poll", "error");
+    }
+};
+
+// ==================== CHANNELS ====================
+window.switchChannel = function(ch, desc) {
+    currentChannel = ch;
+    document.querySelectorAll(".channel-item[data-channel]").forEach(el => {
+        el.classList.toggle("active", el.dataset.channel === ch);
+    });
+    document.getElementById("channelTitleEl").textContent = "# " + ch;
+    document.getElementById("channelSubEl").textContent = desc;
+    channelUnread[ch] = 0;
+    // Clear search when switching channels
+    searchQuery = "";
+    document.getElementById("searchInput").value = "";
+    updateUnreadBadges();
+    renderMessages();
+};
+
+document.querySelectorAll(".channel-item[data-channel]").forEach(el => {
+    el.addEventListener("click", () => switchChannel(el.dataset.channel, el.dataset.desc));
+});
+
+// ==================== STATS, MEMBERS & BADGES ====================
+function updateStats() {
+    const members = new Set(allMessages.map(m => m.author));
+    document.getElementById("statMembers").textContent = members.size || (currentUser ? 1 : 0);
+    const totalUnread = Object.values(channelUnread).reduce((a, b) => a + b, 0);
+    document.getElementById("statUnread").textContent = totalUnread;
+    renderMembers();
+}
+
+function updateUnreadBadges() {
+    document.querySelectorAll(".channel-item[data-channel]").forEach(el => {
+        const ch = el.dataset.channel;
+        const badge = document.getElementById("badge-" + ch);
+        if (!badge) return;
+        const count = channelUnread[ch] || 0;
+        badge.textContent = count;
+        badge.classList.toggle("show", count > 0);
+    });
+    const totalUnread = Object.values(channelUnread).reduce((a, b) => a + b, 0);
+    document.getElementById("statUnread").textContent = totalUnread;
+}
+
+function renderMembers() {
+    const members = [...new Set(allMessages.map(m => m.author))];
+    const list = document.getElementById("membersList");
+    list.innerHTML = members.map(u => {
+        const msgCount = userMessageCounts[u] || 0;
+        let roleIcon = '';
+        if (u === ADMIN_USERNAME) roleIcon = ' 👑';
+        else if (u === MANAGER_USERNAME) roleIcon = ' ⭐';
+        return `
+        <div class="member-item">
+            <div class="member-avatar">${initials(u)}</div>
+            <div class="member-info">
+                <div class="member-name">${sanitize(u)}${roleIcon}</div>
+                <div class="member-role">${msgCount} messages</div>
+            </div>
+            <div class="member-online"></div>
+        </div>`;
+    }).join("");
+}
+
+// ==================== NOTIFICATIONS ====================
+function showNotification(username, messageText, channel, avatarUrl) {
+    const container = document.getElementById("notificationsContainer");
+    const notif = document.createElement("div");
+    notif.className = "notification-popup";
+    notif.style.position = "relative";
+
+    const avatarHTML = avatarUrl
+        ? `<img src="${avatarUrl}" alt="${sanitize(username)}"/>`
+        : initials(username);
+
+    notif.innerHTML = `
+        <button class="notif-close" onclick="this.parentElement.remove()">✕</button>
+        <div class="notif-header">
+            <div class="notif-avatar">${avatarHTML}</div>
+            <div>
+                <div class="notif-author">${sanitize(username)}</div>
+                <div class="notif-channel">#${sanitize(channel)}</div>
+            </div>
+        </div>
+        <div class="notif-message">${sanitize((messageText || "[Message]").substring(0, 100))}</div>
+        <div class="notif-progress"></div>`;
+
+    container.appendChild(notif);
+
+    setTimeout(() => {
+        if (notif.parentElement) {
+            notif.classList.add("closing");
+            setTimeout(() => notif.remove(), 300);
+        }
+    }, 5000);
+
+    notif.addEventListener("click", function(e) {
+        if (!e.target.closest(".notif-close")) {
+            switchChannel(channel, channel + " messages");
+            this.remove();
+        }
+    });
+
+    playNotificationSound();
+}
+
+function playNotificationSound() {
+    try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.frequency.value = 800;
+        gain.gain.setValueAtTime(0.3, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.1);
+    } catch(e) {}
+}
+
+// ==================== MODALS ====================
+window.closeModal = function(modalId) {
+    document.getElementById(modalId).classList.remove("show");
+};
+
+document.getElementById("openProfileBtn").addEventListener("click", () => {
+    if (!currentUser) return;
+    document.getElementById("profileBio").value = currentUser.bio || "";
+    document.getElementById("profileStatus").value = currentUser.status || "Online";
+    document.getElementById("profileModal").classList.add("show");
+});
+
+document.getElementById("openPollBtn").addEventListener("click", () => {
+    document.getElementById("pollQuestion").value = "";
+    document.getElementById("pollOptions").value = "";
+    document.getElementById("pollModal").classList.add("show");
+});
+
+window.saveProfile = function() {
+    if (!currentUser) return;
+    currentUser.bio = document.getElementById("profileBio").value.trim();
+    currentUser.status = document.getElementById("profileStatus").value;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(currentUser));
+    closeModal("profileModal");
+    toast("Profile updated ✨");
+};
+
+document.getElementById("bookmarksBtn").addEventListener("click", () => {
+    const bookmarked = allMessages.filter(m => bookmarkedMsgs.includes(m.id));
+    const list = document.getElementById("bookmarksList");
+    if (!bookmarked.length) {
+        list.innerHTML = '<div style="text-align:center;color:var(--text-secondary);padding:20px;">No bookmarks yet</div>';
+    } else {
+        list.innerHTML = bookmarked.map(msg => `
+            <div style="background:var(--secondary);border-radius:6px;padding:12px;margin-bottom:8px;border-left:3px solid var(--accent);">
+                <div style="font-weight:600;margin-bottom:4px;">${sanitize(msg.author)}</div>
+                <div style="font-size:13px;color:var(--text-secondary);margin-bottom:6px;">${sanitize(msg.text || '[Poll]')}</div>
+                <div style="font-size:11px;color:var(--text-secondary);">#${msg.channel} · ${timeAgo(msg.timestamp)}</div>
+            </div>`).join("");
+    }
+    document.getElementById("bookmarksModal").classList.add("show");
+});
+
+window.toggleBookmark = function(msgId) {
+    const idx = bookmarkedMsgs.indexOf(msgId);
+    if (idx > -1) {
+        bookmarkedMsgs.splice(idx, 1);
+        toast("Removed from bookmarks");
+    } else {
+        bookmarkedMsgs.push(msgId);
+        toast("Added to bookmarks ⭐");
+    }
+    localStorage.setItem("bookmarkedMsgs", JSON.stringify(bookmarkedMsgs));
+};
+
+// ==================== INPUT ====================
+document.getElementById("msgInput").addEventListener("keydown", e => {
+    if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+    }
+});
+
+document.getElementById("sendBtn").addEventListener("click", sendMessage);
+
+document.getElementById("imageUploadBtn").addEventListener("click", () => {
+    document.getElementById("imageInput").click();
+});
+
+document.getElementById("imageInput").addEventListener("change", async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.size > 2 * 1024 * 1024) { toast("Image must be less than 2MB", "error"); return; }
+
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+        try {
+            await addDoc(collection(db, "communityMessages"), {
+                text: document.getElementById("msgInput").value.trim() || "[Image]",
+                author: currentUser.username,
+                channel: currentChannel,
+                timestamp: Date.now(),
+                imageUrl: event.target.result,
+                authorImage: currentUser.avatar || null,
+                type: 'message'
             });
-
-            playNotificationSound();
+            document.getElementById("msgInput").value = "";
+            e.target.value = "";
+            toast("Image sent! 🖼️");
+        } catch (err) {
+            toast("Failed to send image", "error");
         }
+    };
+    reader.readAsDataURL(file);
+});
 
-        function playNotificationSound() {
-            try {
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                oscillator.frequency.value = 800;
-                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-                
-                oscillator.start(audioContext.currentTime);
-                oscillator.stop(audioContext.currentTime + 0.1);
-            } catch(err) {}
-        }
+document.getElementById("deleteAllBtn").addEventListener("click", deleteAllMessages);
 
-        // ==================== MODALS ====================
-        window.closeModal = function(modalId) {
-            document.getElementById(modalId).classList.remove("show");
-        };
+// ==================== INIT ====================
+bookmarkedMsgs = JSON.parse(localStorage.getItem("bookmarkedMsgs") || "[]");
+checkAuthStatus();
 
-        document.getElementById("openProfileBtn").addEventListener("click", () => {
-            document.getElementById("profileBio").value = currentUser.bio || "";
-            document.getElementById("profileStatus").value = currentUser.status || "Online";
-            document.getElementById("profileModal").classList.add("show");
-        });
+// Helper function to dynamically append popups and force index.html authentications
+window.triggerAuthRedirectPopup = function(actionMessage) {
+    // Destroy any existing modal instances to avoid layout stack bugs
+    const oldModal = document.getElementById('forcedGuestAuthModal');
+    if (oldModal) oldModal.remove();
 
-        window.saveProfile = function() {
-            currentUser.bio = document.getElementById("profileBio").value.trim();
-            currentUser.status = document.getElementById("profileStatus").value;
-            localStorage.setItem("communityUser", JSON.stringify(currentUser));
-            closeModal("profileModal");
-            toast("Profile updated ✨");
-        };
+    // Create modal element
+    const modalHtml = `
+        <div id="forcedGuestAuthModal" style="position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 100000; display: flex; align-items: center; justify-content: center; font-family: 'Poppins', sans-serif;">
+            <div style="background: #1a1a1b; border: 1px solid #343536; padding: 30px; border-radius: 12px; text-align: center; max-width: 400px; width: 90%; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                <div style="font-size: 40px; margin-bottom: 15px;">🔒</div>
+                <h3 style="color: #fff; margin-bottom: 10px; font-weight: 700;">Authentication Required</h3>
+                <p style="color: #818890; font-size: 14px; margin-bottom: 25px;">You must be logged into a verified profile to ${actionMessage}.</p>
+                <button id="modalRedirectLoginBtn" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #818cf8, #6366f1); color: white; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; transition: 0.2s;">
+                    Log In / Sign Up
+                </button>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
 
-        document.getElementById("bookmarksBtn").addEventListener("click", () => {
-            const bookmarked = allMessages.filter(m => bookmarkedMsgs.includes(m.id));
-            const list = document.getElementById("bookmarksList");
-            if (!bookmarked.length) {
-                list.innerHTML = '<div style="text-align: center; color: var(--text-secondary); padding: 20px;">No bookmarks yet</div>';
-            } else {
-                list.innerHTML = bookmarked.map(msg => `
-                    <div style="background: var(--secondary); border-radius: 6px; padding: 12px; margin-bottom: 8px; border-left: 3px solid var(--accent);">
-                        <div style="font-weight: 600; margin-bottom: 4px;">${sanitize(msg.author)}</div>
-                        <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 6px;">${sanitize(msg.text || '[Image]')}</div>
-                        <div style="font-size: 11px; color: var(--text-secondary);">#${msg.channel} · ${timeAgo(msg.timestamp)}</div>
-                    </div>
-                `).join("");
-            }
-            document.getElementById("bookmarksModal").classList.add("show");
-        });
+    document.getElementById('modalRedirectLoginBtn').addEventListener('click', () => {
+        // Flag local storage to lock guest login routes next time
+        localStorage.setItem('guest_upgrade_prompt', 'true');
+        window.location.href = "index.html";
+    });
+};
 
-        // ==================== INPUT ====================
-        document.getElementById("msgInput").addEventListener("keydown", e => {
-            if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                sendMessage();
-            }
-        });
+// Check structural auth states
+window.isCurrentUserGuest = function() {
+    const tdiUser = JSON.parse(localStorage.getItem('tdi_user') || '{}');
+    const dracoUser = JSON.parse(localStorage.getItem('dracoUser') || '{}');
+    return (tdiUser.role === 'guest' || dracoUser.role === 'guest');
+};
 
-        document.getElementById("sendBtn").addEventListener("click", sendMessage);
 
-        document.getElementById("imageUploadBtn").addEventListener("click", () => {
-            document.getElementById("imageInput").click();
-        });
-
-        document.getElementById("imageInput").addEventListener("change", async (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-            if (file.size > 2 * 1024 * 1024) {
-                toast("Image must be less than 2MB", "error");
-                return;
-            }
-            const reader = new FileReader();
-            reader.onload = async (event) => {
-                try {
-                    const payload = {
-                        text: document.getElementById("msgInput").value.trim() || "[Image]",
-                        author: currentUser.username,
-                        channel: currentChannel,
-                        timestamp: Date.now(),
-                        imageUrl: event.target.result,
-                        authorImage: currentUser.avatar
-                    };
-                    await addDoc(collection(db, "communityMessages"), payload);
-                    document.getElementById("msgInput").value = "";
-                    toast("Image sent! 🖼️");
-                } catch (err) {
-                    toast("Failed to send image", "error");
-                }
-            };
-            reader.readAsDataURL(file);
-        });
-
-        // ==================== INITIALIZATION ====================
-        const saved = localStorage.getItem("communityUser");
-        if (saved) {
-            currentUser = JSON.parse(saved);
-            document.getElementById("authModal").classList.remove("show");
-            initSidebar();
-            loadMessages();
-        }
-
-        bookmarkedMsgs = JSON.parse(localStorage.getItem("bookmarkedMsgs") || "[]");
-
-        // Track unread
-        onSnapshot(query(collection(db, "communityMessages"), orderBy("timestamp", "desc")), (snap) => {
-            snap.docs.slice(0, 1).forEach(d => {
-                const msg = d.data();
-                if (msg.channel !== currentChannel && msg.author !== currentUser?.username) {
-                    channelUnread[msg.channel] = (channelUnread[msg.channel] || 0) + 1;
-                    showNotification(msg.author, msg.text, msg.channel, msg.authorImage);
-                }
-            });
-        });
     </script>
+    <script>
+// Copy helper verification engine to check local user configuration roles
+window.triggerAuthRedirectPopup = function(actionMessage) {
+    const oldModal = document.getElementById('forcedGuestAuthModal');
+    if (oldModal) oldModal.remove();
+
+    const modalHtml = `
+        <div id="forcedGuestAuthModal" style="position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 100000; display: flex; align-items: center; justify-content: center; font-family: 'Poppins', sans-serif;">
+            <div style="background: #1a1a1b; border: 1px solid #343536; padding: 30px; border-radius: 12px; text-align: center; max-width: 400px; width: 90%; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                <div style="font-size: 40px; margin-bottom: 15px;">🔒</div>
+                <h3 style="color: #fff; margin-bottom: 10px; font-weight: 700;">Authentication Required</h3>
+                <p style="color: #818890; font-size: 14px; margin-bottom: 25px;">You must be logged into a verified profile to ${actionMessage}.</p>
+                <button id="modalRedirectLoginBtn" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #818cf8, #6366f1); color: white; border: none; border-radius: 6px; font-weight: 700; cursor: pointer;">
+                    Log In / Sign Up
+                </button>
+            </div>
+        </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+    document.getElementById('modalRedirectLoginBtn').addEventListener('click', () => {
+        localStorage.setItem('guest_upgrade_prompt', 'true');
+        window.location.href = "index.html";
+    });
+};
+
+window.isCurrentUserGuest = function() {
+    const tdiUser = JSON.parse(localStorage.getItem('tdi_user') || '{}');
+    const dracoUser = JSON.parse(localStorage.getItem('dracoUser') || '{}');
+    return (tdiUser.role === 'guest' || dracoUser.role === 'guest' || (typeof currentUser !== 'undefined' && currentUser && currentUser.role === 'guest'));
+};
+
+// ==================== CHAT INTERACTION PROTECTION LYNCHPIN ====================
+
+// A. Paste this check right at the start inside your text submission function (e.g., inside sendMessage() or enter key hooks)
+async function handleSendMessage() {
+    if (window.isCurrentUserGuest()) {
+        window.triggerAuthRedirectPopup("chat inside community channels");
+        return;
+    }
+    // ... your original Firebase addDoc text transmission process goes here ...
+}
+
+// B. REPLACE your old imageUploadBtn configuration listener with this:
+document.getElementById("imageUploadBtn").addEventListener("click", (e) => {
+    if (window.isCurrentUserGuest()) {
+        e.stopImmediatePropagation();
+        window.triggerAuthRedirectPopup("upload media contents");
+        return;
+    }
+    document.getElementById("imageInput").click();
+});
+
+// C. UI Soft Lock implementation on page load
+document.addEventListener("DOMContentLoaded", () => {
+    if (window.isCurrentUserGuest()) {
+        const msgInput = document.getElementById("msgInput");
+        const sendBtn = document.querySelector(".send-btn");
+        if (msgInput) {
+            msgInput.placeholder = "🔒 Please log in to join the conversation...";
+            msgInput.disabled = true; // Hard locks guest typing capabilities
+            msgInput.style.opacity = "0.5";
+        }
+        if (sendBtn) {
+            sendBtn.style.opacity = "0.5";
+            sendBtn.style.cursor = "not-allowed";
+        }
+    }
+});
+</script>
+    <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
